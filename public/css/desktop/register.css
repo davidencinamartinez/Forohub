@@ -1,0 +1,76 @@
+/* REGISTER FORM DIV */
+
+	#registerPanel {	height: auto;
+						width: 90%;
+						background-color: #2F2F2F;
+						margin: auto;
+						margin-top: 20px;
+						margin-bottom: 20px;
+						padding: 20px;
+						position: relative;
+						display: flex;
+						text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+						border: 2px solid black;
+						color: white;
+	}
+
+	#registerPanel input:not([type="checkbox"]) {
+		width: 200px;
+		padding: 6px;
+	}
+
+	/* FORM */
+
+		#inputForm {	height: auto;
+						width: 40%;
+						float: left;
+		}
+
+		/* PASSWORD IMAGES */
+
+			form > img {	vertical-align: middle;
+			}
+
+		/* SUBMIT BUTTON */
+
+			#reg_done {	border: solid 1px black;
+						font-weight: bold;
+			}	
+
+			#reg_done:hover {	background-color: #FF8C00;
+								transition: 0.5s;
+								transform: perspective(1px) scale(1.05);
+								 
+
+			}
+
+	/* PRIVACY POLICY */
+
+		#privacyPolicy {	height: auto;
+							width: 60%;
+							float: right;
+							margin-left: 10px;
+		}
+
+/* SUCCESS PANEL */
+
+	#successPanel {	height: auto;
+					width: 50%;
+					margin: auto;
+					padding: 20px;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					text-align: center;
+					font-size: 24px;
+	}
+
+	/* SUCCESS IMG */
+	
+		#successImg {	height: 180px;
+						vertical-align: middle;
+		}
+
+	/* SUCCESS LINK */
+
+		#successLink {	color: #FF8C00;
+						text-decoration: none;
+		}

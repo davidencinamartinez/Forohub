@@ -1,0 +1,90 @@
+/* CATEGORIES */
+
+	#catPanel {	margin: 10px 0px 10px 10px;
+				width: 100%;
+				background-color: #2F2F2F;
+				border: 2px solid black;
+				border-collapse: collapse;
+				text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	/* CATEGORY INFO */
+
+		.catInfo {	padding: 2px;
+					width: 70px;
+					width: 80%;
+					border: 1px solid black;
+					padding: 5px;
+		}
+
+		/* CATEGORY IMAGE */
+
+			.catInfo > img {	height: 40px;
+								width: 65px;
+								border-left: 0px;
+								float: left;
+			}
+
+		/* CATEGORY LINK */
+
+			.catInfo > a:link {	text-decoration: none;
+								color: white;
+			}
+
+			.catInfo > a:hover {	color: #FF8C00;
+			}
+
+			.catInfo > a:visited {	color: #DEDEDE;
+			}			
+
+			.catInfo > a:visited:hover {	color: #FF8C00;
+			}
+
+		/* CATEGORY NAME */
+		
+			.catName {	font-size: 18px;
+						padding: 10px;
+			}
+
+		/* CATEGORY DESCRIPTION */
+		
+			.catDesc {	font-size: 13px;
+						padding: 10px;
+			}			
+
+	/* CATEGORY LAST MESSAGE */
+
+		.catLastMsg {	width: 20%;
+						border: 1px solid black;
+						text-align: center;
+						background-color: #FF8C00;
+						overflow: hidden;
+					    text-overflow: ellipsis;
+					    white-space: nowrap;
+					    max-width: 0;
+		}
+
+/* MISC PANEL */
+
+	#miscPanel {	margin: 20px 0px 0px 10px;
+					height: auto;
+					width: 80%;
+					padding: 10px;
+					background-color: #2F2F2F;
+					float: right;
+					text-align: center;
+					border: 1px solid black;
+					border-radius: 10px 0px 0px 10px;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					text-align: center;
+	}
+
+	/* ADS */
+		
+		.RightAdsContainer {	width: 300px;
+								height: 600px;
+								border: 1px solid white;
+								margin: auto auto 20px auto;
+								text-align: center;
+								background-color: black;
+		}

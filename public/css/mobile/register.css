@@ -1,0 +1,67 @@
+/* REGISTER FORM DIV */
+
+	#registerPanel {	height: auto;
+						width: 90%;
+						background-color: #2F2F2F;
+						margin: 8px auto;
+						padding: 8px;
+						position: relative;
+						display: flex;
+						text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+						border: 1px solid black;
+						font-size: 16px;
+	}
+
+	/* FORM */
+
+		#inputForm form input[type="text"], #inputForm form input[type="password"] {
+			margin: 8px auto;
+			font-size: 16px; 
+			padding: 2px;
+		}
+
+		/* PASSWORD IMAGES */
+
+			form > img {	vertical-align: middle;
+							width: 30px;
+			}
+
+/* SUCCESS PANEL */
+
+	#successPanel {	height: auto;
+					margin: auto;
+					padding: 20px;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					text-align: center;
+					font-size: 22px;
+	}
+
+	/* SUCCESS IMG */
+	
+		#successImg {	height: 160px;
+						vertical-align: middle;
+		}
+
+	/* SUCCESS LINK */
+
+		#successLink {	color: #FF8C00;
+						text-decoration: none;
+		}
+
+@media screen and (orientation:landscape) {
+
+	#registerPanel {	font-size: 2.5vw;
+						margin: 1vw auto;
+						padding: 1vw;
+	}
+
+	#inputForm form input[type="text"], #inputForm form input[type="password"] {
+		font-size: 2.5vw;
+		padding: 0.25vw;
+		margin: 1vw auto;
+	}
+
+	form > img {	width: 4vw;
+	}
+
+}

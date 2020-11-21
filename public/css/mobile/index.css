@@ -1,0 +1,94 @@
+/* THREADS PANEL */
+
+	#threadsPanel {	width: 90%;
+					margin: auto;
+	}
+
+	/* THREAD INFO */
+
+		.threadInfo {	border-bottom: solid 1px black;
+						padding: 0.5vh;
+						width: 100%;
+						display: inline-table;
+						background-color: #2F2F2F;
+		}
+
+		.threadInfo:nth-of-type(1) {	border-top: solid 1px black;
+										margin-top: 1vh;
+		}
+
+		/* THREAD CATEGORY IMAGE */
+
+			.threadCategory img {	width: 12vw;
+									padding-right: 1vw;
+			}
+
+		/* THREAD NAME */		
+
+			.threadName {	font-size: 16px;
+							width: 100%;
+							text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+			}
+
+			.threadName > b > a:link {	color: white;
+										text-decoration: none;
+			}
+
+			.threadName > b > a:visited {	color: #DEDEDE;
+			}			
+
+		/* THREAD STATISTICS */
+
+			.threadStats {	font-size: 10px;
+			}
+
+/* STATS */
+
+	#forumStats {	width: 90%;
+				    background-color: #2F2F2F;
+				    border: solid 1px black;
+				    -webkit-border-radius: 8px;
+				    margin: auto;
+				    font-size: 1.5vh;
+	}
+
+	#forumStats li:first-child {	border-top: none;
+	}
+
+	#forumStats li {	list-style-type: none;
+					    border-top: solid 1px black;
+					    padding: 0.75vh;
+	}
+	
+	
+/* ADVERTISEMENT */
+
+	#mobileAdsContainerTop {	height: 300px;
+								width: max-content;
+								margin: auto;
+								margin-top: 1vh;
+	}
+
+	#mobileAdsContainerBottom {	height: 300px;
+								width: max-content;
+								margin: 1vh auto;
+	}
+
+@media screen and (orientation:landscape) {
+
+	.threadName {	font-size: 18px;
+					width: 100%;
+	}
+
+	.contentTitle {	font-size: 24px;
+	}
+
+	.threadStats {	font-size: 12px;
+	}
+
+	#forumStats {	font-size: 12px;
+	}
+
+	#forumStats li {	padding: 0.75vw;
+	}
+}

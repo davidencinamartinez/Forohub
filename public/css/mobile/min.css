@@ -1,0 +1,227 @@
+/* HTML / BODY */
+
+	* {	margin: 0;
+		padding: 0;
+	}
+
+	html, body {	background-color: #8E8E8E;
+					font-family: 'Lato', sans-serif;
+					-moz-font-family: 'Lato', sans-serif;
+					color: white;
+					-moz-appearance: none;
+					width: 100%;
+	}
+
+/* ERROR */
+
+	.error {	font-weight: bold;
+				font-size: 12px;
+				color: #FF4040;
+				text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	.error:nth-of-type(1) {	display: contents;
+							padding: 1vh;
+							z-index: 2;
+							text-align: center;
+	}
+
+/* USER HEADER PANEL */
+
+	.header {	padding: 2.5vw;
+				background-color: #4F4F4F;
+				border-bottom: solid 2px black;
+				right: 0;
+	}
+
+	/* USER TOP BUTTONS */
+
+		.userPanel {	font-size: 1em;
+						padding: 10px;
+						border: solid 2px black;
+						text-align: center;
+						outline: none;
+						font-weight: bold;
+						transition: 0.4s;
+						margin: 0 0 1vh 0;
+						border-radius: 6px;
+		}
+
+		.userPanel:active {	background-color: #FF8C00;
+							transform: perspective(1px) scale(1.05);
+							transition: 0.5s;
+		}
+
+		.userPanel:nth-of-type(3) {	float: right;
+		}
+
+		/* USER LOGIN FORM */
+
+		.userForm {	padding: 0;
+					background-color: white;
+					max-height: 0;
+					color: black;
+					overflow: hidden;
+					transition: max-height 0.2s ease-out;
+					font-size: 3vw;
+					border-radius: 10px;
+					text-align: center;
+					background-color: #8E8E8E;
+		}
+
+		#loginForm {	padding: 2.5vw;
+						text-align: center;
+						margin: auto;
+		}
+
+		#loginForm > input {	text-align: center;
+								padding: 0.5vh;
+								border: solid 1px black;
+								margin: 0.5vh;
+								width: 50%;
+								font-size: 3vw;
+		}
+
+		#loginButton:active {	background-color: #FF8C00;
+								transform: perspective(1px) scale(1.05);
+								transition: 0.5s;
+		}
+
+/* TITLES */
+
+	.contentTitle {	text-align: center;
+					font-size: 2.5vh;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					margin: 1vh;
+	}
+
+/* PAGINATOR */
+
+	.pageSelector {	display: inline-block;
+	  				text-align: center;
+	  				margin: 2.5vh;
+	}
+
+	.pageSelector li {	display: contents;
+	}
+
+	.page-link {	color: white;
+					background-color: #2F2F2F;
+					padding: 6px 10px;
+					text-decoration: none;
+					border: 1px solid black;
+					font-size: 2.5vh;  
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	.page-link:hover {	background-color: #4F4F4F;
+	}
+
+	span:not([aria-hidden="true"]).page-link {	background-color: #FF8C00;
+	}
+
+/* WYSIWYG */
+
+	#replyButtons {	text-align: center;
+					padding: 16px;
+	}
+
+	.wysiwyg {	font-size: 20px;
+				padding: 6px;
+				border-radius: 6px;
+				box-shadow: none;
+				outline: none;
+				border: solid 1px black;
+	}
+
+	.wysiwyg:active {	background-color: #FF8C00;
+						transition: 0.4s;
+	}
+
+	/* MESSAGE */
+
+		#userMsg {	min-height: 15vh;
+					height: auto;
+					width: 75%;
+					font-size: 18px;
+					background-color: #8E8E8E;
+					margin: auto;
+					padding: 25px;
+					border-radius: 6px;
+					outline: none;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		}
+
+		/* IMAGE */
+
+			#userMsg img, iframe {	max-width: 100%;
+			}
+
+/* FOOTER */
+
+	#footer {	background-color: #2F2F2F;
+				position: relative;
+				margin-top: 20px;
+				overflow: hidden;
+  				left: 0;
+  				bottom: 0;
+  				height: auto;
+  				width: 100%;
+  				border-top: 2px solid black;
+  				color: white;
+  				text-align: center;
+  				padding-top: 5px;
+  				padding-bottom: 5px;
+  				margin-bottom: 0;
+  	}
+
+	/* SOCIAL */
+
+		.socialDiv {	margin: 0 0 0 1vh;
+		}
+
+		.socialNetwork {	width: 6vw;
+	 						float: left;
+	 						margin-left: 5px;
+	 						border: 1px solid black;
+	 						border-radius: 15%;
+	 	}
+
+	/* GO UP BUTTON */
+
+		#goUpButton {	padding: 0.5vh; 
+						float: right; 
+						margin: 0 1vh 0 0;
+						width: 25vw;
+		}
+
+		#goUpButton > a {	text-decoration: none;
+							color: black;
+		}
+
+@media screen and (orientation:landscape) {
+
+	.error {	font-size: 14px;
+	}
+
+	.page-link {	font-size: 2.5vw;
+	}
+
+	.contentTitle {	font-size: 3vw;
+	}
+
+	#goUpButton {	width: 20vw;
+					padding: 2.5vh;
+	}
+
+	#replyButtons {	text-align: center;
+					padding: 16px;
+	}
+
+	.wysiwyg {	font-size: 20px;
+				border-radius: 6px;
+				box-shadow: none;
+				outline: none;
+				border: solid 1px black;
+	}
+}

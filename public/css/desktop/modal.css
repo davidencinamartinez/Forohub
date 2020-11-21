@@ -1,0 +1,211 @@
+/* MODAL */
+
+	.modal {
+		position: fixed;
+	    z-index: 1;
+	    padding-top: 200px;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    overflow: auto;
+	    background-color: rgba(0,0,0,0.5);
+	}
+
+	.modal-content {
+		background-color: ghostwhite;
+		text-align: center;
+		margin: auto;
+		display: flow-root;
+		width: fit-content;
+		border: solid 1px black;
+		border-radius: 6px;
+		color: black;
+		width: -moz-max-content;
+	}
+
+/* MODAL HEADER + ELEMENTS */
+
+	.modal-header {
+		text-align: right;
+		margin-bottom: 20px;
+	}
+
+	.modal-close {
+		outline: 0;
+		background: none;
+		border: none;
+		font-size: 20px;
+		cursor: pointer;
+		padding: 8px;
+	}
+
+/* MODAL BODY + ELEMENTS */
+
+	.modal-logo {
+		width: 250px;
+	}
+
+	/* PROFILE */
+
+		/* PROFILE PICTURE */
+
+		.modal-profile-avatar {	
+			margin: 0px 20px 0px 20px;
+			float: left;
+		}
+
+		.modal-profile-avatar img {	
+			border: solid 1px black;
+			width: 180px;
+			border-radius: 10px;
+			margin-bottom: 20px;
+		}
+
+		/* PROFILE DATA */
+
+		.modal-profile-data {	
+			text-align: left;
+			width: 250px;
+			float: right;
+		}
+
+		.modal-profile-data div {	
+			margin-bottom: 10px;
+		}
+
+		.modal-profile-data div input {	
+			width: 90%;
+			border-width: 0px 0px 1px 0px;
+			padding: 5px 0px 5px 0px;
+		}
+
+		.modal-profile-data-upvotes, .modal-profile-data-downvotes {	
+			border: solid 1px black;
+			padding: 10px;
+		} 
+
+
+	.modal-body {
+		padding: 0px 20px 0px 20px;
+	}
+
+	.modal-body > form {
+		margin: 0px 20px 0px 20px;
+		display: inline-table;
+		color: black;
+	}
+
+	.modal-input {
+		text-align: end;
+		margin-bottom: 6px;
+	}
+
+	.modal-input > input {
+	    font-size: 16px;
+	    padding: 12px;
+	}
+
+	/* MODAL ERRORS */
+
+		.modal-error {
+			margin-bottom: 10px;
+			font-size: 12px;
+			padding: 5px 0px 5px 0px;
+			background-color: rgba(255,0,0,0.25);
+			text-align: left;
+			border: solid 1px red;
+			line-break: auto;
+		}
+
+		.modal-error > ul {
+			padding-left: 20px;
+		}
+
+		.modal-error > ul > li {
+			margin-bottom: 10px;
+		}
+
+	/* MODAL SUCCESS */
+
+		.modal-success {
+			margin-bottom: 10px;
+			font-size: 12px;
+			padding: 10px;
+			background-color: rgb(27 255 0 / 25%);
+			text-align: center;
+			border: solid 1px green;
+			line-break: auto;
+		}
+
+	/* MODAL REWARDS */
+
+		.modal-rewards {
+			width: 600px;
+			display: inline-table;
+
+		}
+
+		.modal-rewards-text {
+			width: 100%;
+		    border-radius: 6px;
+		    height: auto;
+		    background: #4f4f4f;
+		    margin-bottom: 10px;
+		    color: white;
+		    display: grid;
+		    text-align: left;
+		    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		}
+
+		.reward-title {
+			padding: 10px 0px 0px 10px;
+		}
+
+		.reward-description {
+			padding: 0px 0px 6px 10px;
+		}
+
+		.reward {
+			margin: 4px;
+		    border: solid 1px black;
+		    border-radius: 6px;
+		    width: 64px;
+		    filter: grayscale(1);
+		    background-image: linear-gradient(to right top, #ffb600, #ffc918, #fddb2c, #fbed40, #f8ff55);
+		}
+
+		.reward:hover {
+			box-shadow: 0px 0px 4px 2px black;
+			cursor: pointer;
+		}
+
+		.reward[data-unlocked="true"] {
+			filter: none;
+		}
+
+		.reward[data-unlocked="true"]:hover {
+			box-shadow: 0px 0px 4px 2px green;
+		}
+
+/* MODAL FOOTER + ELEMENTS */
+
+	.modal-footer {
+		margin: 10px 0px 10px 0px;
+		text-align: center;
+	}
+
+	.modal-footer > p > a {
+		color: #bb0000;
+		text-decoration: none;
+	}
+
+	.modal-button {
+		font-weight: bold;
+		border: solid 1px black;
+		padding: 10px;
+		margin: 5px;
+		border-radius: 4px;
+		background-color: ghostwhite;
+		cursor: pointer;
+	}

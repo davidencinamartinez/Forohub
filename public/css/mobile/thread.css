@@ -1,0 +1,100 @@
+/* THREAD TITLE */
+
+	#threadTitle {	text-align: center;
+					font-size: 2.5vh;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					margin: 1vh;
+	}
+
+/* MESSAGES */
+
+	.msgPost {	width: 95%;
+			    background-color: #2F2F2F;
+			    border: solid 1px black;
+			    -webkit-border-radius: 8px;
+			    margin: 1vh auto;
+			    font-size: 16px;
+	}
+	
+	.msgPost li {	list-style-type: none;
+				    border-top: solid 1px black;
+				    padding: 7.5px;
+				    word-break: break-word;
+	}
+	
+	.msgPost li:first-child {	border-top: none;
+	}
+
+	/* MESSAGE CREATOR */
+
+
+		.userInfo img {	height: 40px;
+						width: 40px;
+						float: right;
+						border-radius: 6px;
+		}
+
+		.userInfo .userName {	font-weight: bold;
+
+		}
+
+		.userName a {	text-decoration: none;
+						color: white;
+		}
+
+		.userName a:hover {	color: #FF8C00;
+		}
+		
+	/* MESSAGE CONTENT */
+
+		.msgText {	background-color: #4F4F4F;
+					border-radius: 0px 0px 7px 7px;
+		}
+
+		.msgText img {	max-width: 100%;
+		}
+
+/* REPLY */
+
+	#replyPanel {	float: right;
+					margin: 1vh;
+	}
+
+	#replyPost {	width: 100%;
+				    display: inline-block;
+				    background-color: #2F2F2F;
+					border: solid 1px black top bottom;
+				    margin: 1vh auto;
+				    word-break: break-all;
+	}
+
+	iframe {	border: solid 1px black;
+				height: 50%;
+				max-width: 100%;
+	}
+
+	#replyButton {	margin: 1vh;
+					float: right;
+	}
+
+@media screen and (orientation:landscape) {
+
+	#threadTitle {	font-size: 3.5vw;
+	}
+
+	.msgPost li {	font-size: 18px;
+					padding: 0.75vw;
+	}
+
+	.userInfo img {	width: 40px;
+					height: 40px;
+	}
+
+	#userMsg {	min-height: 20vw;
+				padding: 2vw;
+				font-size: 3vw;
+	}
+
+	#replyButton {	margin: 4vw;
+	}
+}

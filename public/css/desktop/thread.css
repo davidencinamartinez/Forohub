@@ -1,0 +1,227 @@
+/* THREADS PANEL */
+
+        .threads-panel {
+            width: 70%;
+            margin: 20px;
+        }
+
+        /* THREAD */
+
+            .thread {
+                width: 80%;
+                float: right; 
+                min-width: 600px;
+                max-width: 1000px;
+            }
+
+            /* THREAD DATA */
+
+                .thread-data {
+                    border: solid 1px black;
+                    display: flex;
+                    margin-bottom: 10px;
+                    border-radius: 10px;
+                    transition: 0.25s;
+                    font-size: 14px;
+                }
+
+                .thread-data:hover {
+                    box-shadow: 1px 1px 5px 0px #2d2d2d;
+                    transition: 0.25s;
+                }
+
+                /* THREAD VOTES */
+
+                    .thread-votes {
+                        min-width: 50px;
+                        display: inline-grid;
+                        float: left;
+                        background-color: #FFB600;
+                        border-right: solid 1px black;
+                        text-align: center;
+                        border-radius: 8px 0px 0px 8px;
+                    }
+
+                    .thread-votes-data {
+                        margin: auto;
+                        display: grid; 
+                        font-size: 20px;
+                    }
+
+                    .thread-vote {
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                    }
+
+                    .thread-vote:hover {
+                        cursor: pointer;
+                    }
+
+                    .thread-vote-count {
+                        color: white;
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                    }
+
+                    .upvote {
+                        color: green;
+                    }
+
+                    .downvote {
+                        color: darkred;
+                    }
+
+                    .upvote:hover {
+                        color: springgreen;
+                    }
+
+                    .downvote:hover {
+                        color: red;
+                    }
+
+                    .upvote-active {
+                        color: springgreen;
+                    }
+
+                    .downvote-active {
+                        color: red;
+                    }
+
+            /* THREAD CONTENT */
+
+                .thread-content {
+                    padding: 6px;
+                    width: 100%;
+                    border-radius: 0px 8px 8px 0px;
+                    background-color: #6b6b6b;
+                    text-align: justify;
+                }
+
+                /* THREAD COMMUNITY */
+
+                    .thread-community {
+                        border: solid 1px black;
+                        width: max-content;
+                        padding: 4px 4px 4px 4px;
+                        background: #2f2f2f;
+                        margin-bottom: 4px;
+                        border-radius: 10px;
+                        display: inline-block;
+                    }
+
+                    .thread-community-logo {
+                        border-radius: 50%;
+                        width: 20px;
+                        height: 20px;
+                        border: solid 2px black;
+                        vertical-align: middle;
+                    }
+
+                    .thread-community-name {
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        color: white;
+                        text-decoration: none;
+                    }
+
+                    .thread-community-join {
+                        float: right;
+                    }
+
+                /* THREAD AUTHOR */
+
+                    .thread-author {
+                        display: block;
+                        font-weight: bold;
+                        font-size: 14px;
+                    }
+
+                /* THREAD TITLE */
+
+                    .thread-title {
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        color: white;
+                        margin: 10px 10px 0px 10px;
+                        text-align: justify;
+                    }
+
+                /* THREAD BODY */
+
+                    .thread-body {
+                        width: 95%;
+                        padding: 10px;
+                        margin: 0px;
+                    }
+
+                    .thread-body div img {
+                        background-color: ghostwhite;
+                        border-radius: 6px;
+                        max-width: 1030px;
+                        width: 100%;
+                        border: solid 1px black;
+                    }
+
+                    .thread-body .picture {
+                        text-align: center;
+                        border-radius: 6px;
+                    }
+
+                    .blurry {
+                        overflow: hidden;
+                        cursor: pointer;
+                    }
+
+                     .blurry > img {
+                        filter: blur(50px);
+                    }
+
+                    .media-embed {
+                        background-color: ghostwhite;
+                        border-radius: 4px;
+                        max-width: 1030px;
+                        width: 100%;
+                        border: solid 1px black;
+                        height: 315px !important;
+                    }
+
+                    .media-embed iframe {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                /* THREAD INFO */
+
+                    .thread-info {
+                        padding: 10px;
+                    }
+
+                /* THREAD QUICK REPLY */
+
+                    .thread-quick-reply {
+                        margin: 10px 0px 10px 10px;
+                        display: none;
+                    }
+
+                    .thread-quick-reply-text {
+                        width: 95%;
+                        padding: 5px;
+                        outline: none;
+                        border-radius: 4px;
+                        resize: none;
+                        border: solid 1px black;
+                    }
+
+                    .thread-quick-reply-send {
+                        float: left;
+                        margin: 5px 0px 5px 0px;
+                    }
+
+                    .thread-quick-reply-cancel {
+                        background-color: rgba(225,0,0,0.75);
+                        margin: 5px 0px 0px 5px;
+                        border-radius: 2px;
+                        border: none;
+                        padding: 6px;
+                        outline: none;
+                    }
+
+                    .thread-quick-reply-cancel:hover {
+                        background-color: rgba(225,0,0,0.85);
+                    }

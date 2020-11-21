@@ -1,0 +1,119 @@
+/* NEW THREAD PANEL */
+
+	#newThreadPanel {	height: auto;
+						width: 90%;
+						background-color: #2F2F2F;
+						margin: auto;
+						margin-top: 20px;
+						margin-bottom: 20px;
+						padding: 20px;
+						position: relative;
+						display: grid;
+						text-align: center;
+						border: 2px solid black;
+						text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+/* NEW THREAD TITLE */
+
+	input[name="thread_title"] {	width: 60%;
+									padding: 10px;
+									font-size: 14px;
+									text-shadow: none;
+	}
+
+/* NEW THREAD CATEGORY */
+
+	select[name="thread_category"] {	border-radius: 3px;
+										outline: none;
+										font-weight: bold;
+	}
+
+	select[name="thread_category"] > option {	border-radius: 3px;
+												font-weight: bold;
+												font-family: 'Lato', sans-serif;
+	}
+
+/* REPLY */
+
+	#replyPost {	width: 100%;
+					text-align: center;
+					
+					margin-top: 10px;
+					padding: 10px 0px 10px 0px;
+					float: left;
+	}
+
+	/* REPLY BUTTONS */
+
+		#replyButtons {	margin: auto;
+						background-color: #4F4F4F;
+						width: 70%;
+						padding: 10px;
+						border: solid 1px black;
+		}
+
+		#replyButtons > button {	width: 5%;
+									border-radius: 3px;
+									border: solid 1px black;
+									padding: 5px;
+									font-size: 20px;
+									text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+		}
+
+		#replyButtons > button:hover {	background-color: #FF8C00;
+										transition: 0.5s;
+										transform: perspective(1px) scale(1.10);
+		}
+
+		#replyButtons > button:focus {	outline: none;
+		}
+
+	/* REPLY MESSAGE */
+
+		div[name="replyMsg"] {	
+								width: 70%;
+								background-color: white;
+								color: black;
+								min-height: 200px;
+								outline: none;
+								font-family: 'Lato', sans-serif;
+								font-size: 14px;
+								text-align: left;
+								border: solid 1px black;
+								padding: 10px;
+								margin: auto;
+		}
+
+		/* REPLY IMAGE */
+
+			div[name="replyMsg"] img {	max-width: 100%;
+			}
+
+		/* REPLY YOUTUBE EMBED */
+
+			div[name="replyMsg"] iframe {	height: 315px;
+											width: 560px;
+											display: block;
+					    					margin: 30px auto 30px auto;
+											border: 1px solid black;
+			}
+
+	/* REPLY BUTTON */
+
+		#replyButton {	font-size: 16px;
+						font-weight: bold;
+						width: 150px;
+						margin: 10px;
+						padding: 5px;
+						border: 1px solid black;
+						outline: none;
+						border-radius: 5px;
+						font-family: 'Lato', sans-serif;
+		}
+
+		#replyButton:hover {	background-color: #FF8C00;
+								transition: 0.5s;
+								transform: perspective(1px) scale(1.05);
+								backface-visibility: hidden;
+		}

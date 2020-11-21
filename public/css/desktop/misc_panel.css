@@ -1,0 +1,84 @@
+/* MISC PANEL */
+
+	.misc-panel {	width: 25.5%;
+					padding: 10px;
+					background-color: #2F2F2F;
+					float: right;
+					text-align: center;
+					border: 1px solid black;
+					border-radius: 10px;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					margin-right: 10px;
+	}
+
+	/* TOP USER */
+
+		.misc-panel img {	width: 200px;
+							border: solid 2px black;
+							border-radius: 6px;
+		}
+
+		.misc-panel > a:link { color: white;
+                               text-decoration: none;
+                               font-size: 20px;
+        }
+
+        .misc-panel > a:hover {    color: #FFB600;
+        }
+
+        .misc-panel > a:visited {  color: #dedede;
+        }           
+
+        .misc-panel > a:visited:hover {    color: #FFB600;
+        }
+
+    /* TOPS */ 
+
+    	.misc-panel button {	width: 200px;
+    	}
+
+
+	/* ADS */
+		
+		.right-ads-container {	width: 300px;
+								height: 600px;
+								border: 1px solid white;
+								margin: auto auto 20px auto;
+								text-align: center;
+								background-color: black;
+		}
+
+	/* CLOCK */
+
+		.clock {	background-color: black;
+					border: solid 1px white;
+				    width: fit-content;
+				    margin: auto;
+				    padding: 20px;
+				    font-size: 30px;
+				    border-radius: 30px;
+		}
+
+	/* IF ERROR */
+
+		#noData {	height: auto;
+					width: 50%;
+					background-color: #2F2F2F;
+					margin: auto;
+					margin-top: 20px;
+					margin-bottom: 20px;
+					padding: 10px 0px 10px 0px;
+					position: relative;
+					text-align: center;
+					text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					border: 2px solid black;
+		}
+
+		#noData > img {	width: 70%;
+						height: 70%;
+						margin: auto;
+		}
+
+		#noData > h1 {	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+						color: #FF4040;
+		}

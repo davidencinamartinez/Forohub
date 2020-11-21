@@ -1,0 +1,56 @@
+/* REGISTER */
+
+	.register-label {
+		font-size: 14px;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		color: white;
+	}
+
+/* NOTIFICATIONS */
+
+	@keyframes notify {
+		from, 50%,
+		to {
+	    	opacity: 1;
+	  	}
+	  	25%,
+	  	75% {
+	    	opacity: 0;
+	  	}
+	}
+
+	.notification-bar {
+		z-index: 1;
+		bottom: 0;
+		display: grid;
+		width: 100%;
+		position: fixed;
+		margin-bottom: 30px;
+	}
+
+	.notification-bar div {
+		z-index: 1;
+		transition: 0.5s;
+		margin: 5px auto;
+		border: solid 2px black;
+		padding: 10px;
+		position: relative;
+		background-color: ghostwhite;
+		width: max-content;
+		animation: notify 2s infinite;
+		border-radius: 10px;
+	}
+
+/* TEXT HOVERABLE */
+
+	.remarkable-text {
+		font-weight: bold;
+		color: white;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		margin: 0px 10px 0px 10px;
+	}
+
+	.remarkable-text:hover {
+		color: #FFB600;
+		cursor: pointer;
+	}

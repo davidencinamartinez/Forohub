@@ -1,0 +1,39 @@
+/* FOOTER */
+
+  .footer { background-color: #4F4F4F;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+            left: 0;
+            bottom: 0;
+            height: auto;
+            width: 100%;
+            border-top: 2px solid black;
+            color: white;
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-bottom: 0;
+  }
+
+  /* SOCIAL */
+
+    .social-network { float: left;
+    }
+
+  	.social-network img {	width: 20px;
+               						float: left;
+               						margin-left: 5px;
+               						border: 1px solid black;
+               						border-radius: 5px;
+   	}
+
+  /* INFO */
+
+    .info { margin: auto;
+    }
+
+    .info a { text-decoration: none;
+              color: white;
+              text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }

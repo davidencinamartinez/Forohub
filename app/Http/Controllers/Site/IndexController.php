@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Http\Controllers\Site;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Community;
+use App\Models\Thread;
+use App\Models\Reward;
+use App\Models\Vote;
+use App\Models\Reply;
+use Carbon\Carbon;
+use Auth;
+use Validator;
+use DB;
+use App\Models\VerifyUser;
+
+class IndexController extends Controller {
+
+    /* INDEX */
+
+    public function index() {
+
+    	$threads = Thread::orderBy('created_at', 'desc')
+        ->with('communities')
+        ->with('author')
+        ->with('first_reply')
+        ->withCount('replies')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->paginate(4);
+
+        $top_communities = Community::withCount('threads')
+        ->whereHas('threads', function($q){
+            $q->whereBetween('created_at', [Carbon::now()->startOfMonth()->subMonth(1),Carbon::now()->endOfMonth()]); // Add subMonth(1)
+        })
+        ->orderBy('threads_count', 'desc')
+        ->take(6)
+        ->get();
+
+        $fh_data = array(
+            'count_communities' => Community::count(),
+            'count_users' => User::count(),
+            'count_threads' => Thread::count(),
+            'count_replies' => Reply::count(),
+        );
+                
+        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->get();
+        
+    	foreach ($threads as $thread) {
+    		if (Auth::user() and $thread->votes->isNotEmpty()) {
+    			if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
+    				$thread->user_has_voted = 'true';
+    				$thread->user_vote_type = 1;
+    			} else {
+    				$thread->user_has_voted = 'true';
+    				$thread->user_vote_type = 0;
+    			}
+    		} 
+    		else {
+    			$thread->user_has_voted = 'false';  			
+    		}
+    	}
+    	return view('layouts.desktop.templates.index', 
+    		[	'threads' => $threads,
+                'fh_data' => $fh_data,
+                'top_communities' => $top_communities,
+                'latest_replies' => $latest_replies
+    		]);
+    }
+
+    /* VOTE THREAD */
+
+    public function voteThread(Request $request) {
+        if ($request->ajax()) {
+            if (Auth::user()) {
+                $validator = Validator::make($request->all(), ['vote_type' => 'min:0|max:1']);
+                if (!$validator->passes()) {
+                    return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);
+                } else {
+                    if (Vote::where('user_id', '=', Auth::user()->id)
+                        ->where('thread_id', '=', $request->thread_id)
+                        ->where('vote_type', '=', $request->vote_type)
+                        ->exists()) {
+                    Vote::where('user_id', '=', Auth::user()->id)
+                        ->where('thread_id', '=', $request->thread_id)
+                        ->where('vote_type', '=', $request->vote_type)
+                        ->delete();
+                        return response()->json([
+                            'response' => '💾 Se han guardado los cambios 💾',
+                            'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
+                        ]);
+                    } else {
+                    Vote::updateOrCreate(
+                        ['user_id' => Auth::user()->id, 'thread_id' => $request->thread_id],
+                        ['vote_type' => $request->vote_type]);
+                    return response()->json([
+                        'response' => '💾 Se han guardado los cambios 💾',
+                        'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
+                    ]);
+                    }
+                }
+            } else {
+               return response()->json(['response' => '😁 Debes estar logeado para poder votar 😁']);
+            }
+        } 
+            return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);
+        
+    }
+    
+    /* TEST */	
+    
+    function test() {
+        $rewards = VerifyUser::latest()->value('user_id');
+        return $rewards;
+    }
+}
+

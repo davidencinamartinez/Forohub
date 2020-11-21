@@ -1,0 +1,78 @@
+/* PROFILE VIEW */
+
+	.contentTitle label {	font-size: 3.5vh;
+	}
+
+	#userInfo {	text-align: left;
+				text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+				margin: 1vh;
+				word-break: break-word;
+	}
+
+	#userInfo label {	font-size: 2.5vh;
+						font-weight: normal;
+	}
+
+	/* USER PROFILE PICTURE */
+
+		#profilePic {	height: 256px;
+						width: 256px;
+						border: solid 1px black;
+						margin: auto;
+						display: block;
+		}
+
+	/* UPDATE FORM */
+
+		#dataInfo {	width: 90%;
+				    background-color: #2F2F2F;
+				    border: solid 1px black;
+				    -webkit-border-radius: 8px;
+				    margin: auto;
+				    font-size: 1.5vh;
+		}
+
+		#dataInfo li:first-child {	border-top: none;
+		}
+
+		#dataInfo li {	list-style-type: none;
+						border-top: solid 1px black;
+						padding: 0.75vh;
+		}
+
+		input[name="user_title"] {	border: none;
+									outline: none;
+									background: none;
+									font-size: 2.5vh;
+									text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+									color: white;
+									word-wrap: break-word;
+    								word-break: break-all;
+    								margin: auto;
+    								width: 100%;
+		}
+
+		input[value="Actualizar"] {	margin: 2.5vh auto;
+									animation: bounceButton 0.75s infinite;
+									background-color: #FF8C00;
+									display: block;
+		}
+
+		@keyframes bounceButton {
+			0% {	transform: perspective(1px) scale(1);
+	  		}
+	  		50% {	transform:perspective(1px) scale(1.1); 
+		  	}
+		 	100% {	transform:perspective(1px) scale(1);
+		  	}
+		}
+
+@media screen and (orientation:landscape) {
+
+	.contentTitle label {	font-size: 4.5vw;
+	}
+
+	#userInfo label, input[name="user_title"] {	font-size: 2.5vw;
+	}
+
+}

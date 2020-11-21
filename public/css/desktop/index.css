@@ -1,0 +1,47 @@
+/* THREAD INDEX */
+
+	.thread-panel {
+		margin: 10px;
+		border: solid 1px black;
+		background-color: rgba(255,255,255,0.75);
+		width: 70%;
+		float: left;
+	}
+
+	.thread-panel td {
+		border: solid 1px black;
+		padding: 3px;
+	}
+
+	.thread-panel-header {
+		background-color: #FFB600;
+		color: white;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	/* THREAD INFO */
+
+		/* TITLE */
+
+		.thread-title b a, .thread-author {
+			text-decoration: none;
+			color: black;
+			font-size: 14px;
+		}
+
+		.thread-title b a:hover, .thread-author:hover {
+			text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+		}
+
+		/* AUTHOR */
+
+		.thread-author, .thread-last a {
+			font-size: 12px;
+
+		}
+
+		.thread-last, .thread-stats {
+			font-size: 14px;
+			text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+
+		}
