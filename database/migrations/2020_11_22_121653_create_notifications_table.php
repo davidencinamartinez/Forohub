@@ -4,23 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRepliesTable extends Migration
-{
+class CreateNotificationsTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('replies', function (Blueprint $table) {
+    public function up() {
+
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('thread_id');
-            $table->foreign('thread_id')->references('id')->on('threads');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('text', 3000);
+            $table->string('notification',100);
+            $table->boolean('read')->default(false);
         });
     }
 
@@ -29,8 +28,7 @@ class CreateRepliesTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('replies');
+    public function down() {
+        Schema::dropIfExists('notifications');
     }
 }

@@ -1,7 +1,7 @@
 <div class="threads-panel">
     @foreach ($threads as $thread)
     <div class="thread">
-        <div class="thread-data">
+        <div class="thread-data" data-id="{{$thread->id}}">
             <div class="thread-votes">
                 <b class="thread-votes-data">
                     @if (Auth::check())
@@ -29,7 +29,11 @@
                         <img class="thread-community-logo" src="/src/communities/logo/{{ $thread->communities->logo }}" alt="{{ $thread->communities->name }}">
                         <b><a class="thread-community-name" href="/c/{{ $thread->communities->tag }}">{{ $thread->communities->tag }}</a></b>
                     </div>
-                    <button class="required-auth thread-community-join">Suscribirse</button>
+                    @if ($thread->user_joined_community == 'true')
+                        <button class="required-auth thread-community-joined">Cancelar suscripción</button>
+                    @else
+                        <button class="required-auth thread-community-join">Suscribirse</button>
+                    @endif
                 </span>
                 <div class="thread-author">
                     <span>Creado por <a href="/u/{{ strtolower($thread->author->name) }}">{{ $thread->author->name }}</a> · </span>
@@ -58,10 +62,8 @@
                 </div>
                 <div class="thread-quick-reply">
                     <div>
-                        <form method="POST" action="/submitReply?thread={{ $thread->id }}">
-                            <textarea class="thread-quick-reply-text" rows="4" placeholder="Deja un comentario..."></textarea>
-                            <button class="thread-quick-reply-send" type="submit">Responder</button>
-                        </form>
+                        <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
+                        <button class="thread-quick-reply-send" type="submit">Responder</button>
                         <button class="thread-quick-reply-cancel">Cancelar</button>
                     </div>
                 </div>

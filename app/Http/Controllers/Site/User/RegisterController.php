@@ -16,6 +16,7 @@ use App\Mail\VerifyMail;
 use App\Models\VerifyUser;
 use Mail;
 use DB;
+use App\Models\Notification;
 
 class RegisterController extends Controller {
 
@@ -69,10 +70,10 @@ class RegisterController extends Controller {
                     'user_id' => $user->id,
                     'token' => sha1(time())
                   ]);
-                  \Mail::to($user->email)->send(new VerifyMail($user));
+                  Mail::to($user->email)->send(new VerifyMail($user));
                   return $user;
     		} else {
-        		return response()->json(['error' =>$validator->getMessageBag()->toArray()]);
+        		return response()->json(['error' => $validator->getMessageBag()->toArray()]);
     		}
     
     }
@@ -87,13 +88,16 @@ class RegisterController extends Controller {
                 $verifyUser->user->verified = 1;
                 $verifyUser->user->save();
                 $status = "Tu cuenta ha sido verificada";
+                Auth::login($user);
+                /* REWARD */
                 DB::table('users_rewards')->insert([
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
-                    'user_id' =>  $verifyUser->user->id,
+                    'user_id' =>  Auth::user()->id,
                     'reward_id' => 1
                 ]);
-                Auth::login($user);
+                Notification::createNotification("Logro desbloqueado: Iniciado");
+                /**/
             } else {
                 $status = "Tu cuenta ya ha sido verificada";
                 Auth::login($user);

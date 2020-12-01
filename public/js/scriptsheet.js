@@ -1,8 +1,4 @@
 $(document).ready(function() {
-	$.get('/test', function(data) {
-		console.log(data);
-	});
-
 	$('.thread-date, .reply-date').each(function(index, el) {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
 	});
@@ -91,10 +87,7 @@ function validateRegister() {
 		}
 	})
 	.fail(function() {
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
+		notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 	});
 }
 
@@ -132,6 +125,8 @@ function createModal() {
 				createElement('div', {class: 'modal-body'}, '.modal-content');
 			// Modal Footer
 				createElement('div', {class: 'modal-footer'}, '.modal-content');
+				// Modal Footer Elements
+					createElement('label', {style: 'font-size: 12px;'}, '.modal-footer', 'Copyright© 2020 Forohub®');
 }
 
 function userVerifiedSuccess() {
@@ -151,31 +146,10 @@ function nsfwModal() {
 		createElement('h1', null, '.modal-body', '🔞'); // Title
 		createElement('p', null, '.modal-body', 'Estás a punto de acceder a contenido NSFW (+18)'); // Message
 		createElement('p', null, '.modal-body', 'Deseas visualizarlo?'); // Message
-	// Modal Footer Elements
 		// Allow Button
-			createElement('button', {class: 'modal-button modal-nsfw-allow'}, '.modal-footer', 'Permitir');	
+		createElement('button', {class: 'modal-button modal-nsfw-allow'}, '.modal-body', 'Permitir');	
 		// Deny Button
-			createElement('button', {class: 'modal-button modal-nsfw-deny'}, '.modal-footer', 'Denegar');	
-}
-
-function loginModal() {
-	createModal(); // Call function
-	// Modal Body Elements
-		createElement('h1', null, '.modal-body', 'Login'); // Title
-		createElement('p', null, '.modal-body', 'Introduce tu usuario y contraseña'); // Message
-		createElement('form', {class: 'modal-form', method: 'POST', action: '/login'}, '.modal-body'); // Form	
-		// Username Input
-			createElement('div', {class: 'modal-input'}, '.modal-form');
-			createElement('input', {type: 'text', maxlength: 20, placeholder: 'Usuario', spellcheck: 'false'}, '.modal-input:last');
-		// Password Input
-			createElement('div', {class: 'modal-input'}, '.modal-form');
-			createElement('input', {type: 'password', maxlength: 64, placeholder: 'Contraseña'}, '.modal-input:last');
-	// Modal Footer Elements
-		// Submit Button
-			createElement('button', null, '.modal-footer', 'Entrar ↪️');
-		// Forgot Password
-			createElement('p', null, '.modal-footer', 'Has olvidado tu contraseña? ');
-			createElement('a', {href: '/forgot'}, '.modal-footer p', 'Click aquí');		
+		createElement('button', {class: 'modal-button modal-nsfw-deny'}, '.modal-body', 'Denegar');	
 }
 
 function registerModal() {
@@ -205,8 +179,6 @@ function registerModal() {
 			createElement('label', {style: 'font-size: 12px;'}, '.modal-input:last', 'Acepto los <a href="" target="_blank">términos y condiciones</a>');
 		// Submit Button
 			createElement('button', {type: 'submit', style: 'margin-top: 10px;'}, '.modal-form', 'Registrarse');
-	// Modal Footer Elements
-		createElement('label', {style: 'font-size: 12px;'}, '.modal-footer', 'Copyright© 2020 Forohub®');
 }
 
 function registerUser() {
@@ -283,8 +255,7 @@ function profileModal() {
 			createElement('b', null, '.modal-profile-data div:last', 'Fecha de registro:');
 			createElement('br', null, '.modal-profile-data div:last');
 			createElement('label', {id: 'profile-date', style: 'text-transform: capitalize'}, '.modal-profile-data div:last');
-	// Modal Footer Elements
-		createElement('button', null, '.modal-footer', 'Guardar cambios');	
+			createElement('button', null, '.modal-body', 'Guardar cambios');	
 
 	$.get('/test', function(data) {
 			$('.modal-body h1').text(data[0].name);
@@ -316,7 +287,7 @@ function submitVote(element) {
 		}
 	});    
 	$.ajax({
-		url: '/ajax/Pvda2ubTcQSFI7bhHgJRP3VS9PrQf8zpK4PuDwg0z57S9uLyWd6zPRy0MPUJasnc',
+		url: '/Pvda2ubTcQSFI7bhHgJRP3VS9PrQf8zpK4PuDwg0z57S9uLyWd6zPRy0MPUJasnc',
 		type: 'POST',
 		data: {
 			_token: $('input[name="_token"]').val(),
@@ -325,7 +296,6 @@ function submitVote(element) {
 		},
 	})
 	.done(function(data) {
-		notifyUser(data.response);
 		if ($(data).has(data.votes)) {
 			$(element).closest('.thread-votes-data').find('.thread-vote-count').fadeOut();
 			$(element).closest('.thread-votes-data').find('.thread-vote-count').text(data.votes).fadeIn();
@@ -335,8 +305,6 @@ function submitVote(element) {
 	})
 	.fail(function(data) {
 		notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
-	})
-	.always(function() {
 	});
 
 }
@@ -350,26 +318,6 @@ function notifyUser(msg) {
 	}, 4000);
 }
 
-function showMoreThreads() {
-	$.get('/test', function(data) {
-		console.log(data);
-	});
-}
-
-
-/*function createThread() {
-	data
-	// Thread 
-		createElement('div', {class: 'thread'}, '.threads-panel');
-		// Thread Data
-			createElement('div', {class: 'thread-data'}, '.threads:last');
-			// Thread Votes
-				createElement('div', {class: 'thread-votes'}, '.thread-data:last');
-				createElement('b', {class: 'thread-votes-data'}, '.thread-votes:last');
-				createElement('span', {class: 'thread-vote upvote', data-thread-id: ''}, '.thread-votes-data:last');
-}
-*/
-
 function loadMore() {
 	$('.threads-panel').load('?page=2');
 	$('.lateral-panel:last').remove();
@@ -380,23 +328,89 @@ function getRewards() {
 	createModal(); // Call function
 	// Modal Body Elements
 		createElement('h1', null, '.modal-body', 'Logros'); // Title
-		// Rewards Text
-		createElement('div', {class: 'modal-rewards-text'}, '.modal-body');
-		createElement('b', {class: 'reward-title'}, '.modal-rewards-text', 'Aquí podrás ver todos tus logros');
-		createElement('label', {class: 'reward-description'}, '.modal-rewards-text', 'Desliza el cursor por encima para obtener más información');
-		// Rewards
-		createElement('div', {class: 'modal-rewards'}, '.modal-body');
-		$.get('/ajax/ttdKHuNiH5AGpk3iVy04ORoMxfimsEW77ggVCbEA9Bvl9ZMbrXFqED7DjgCwkjEi', function(data) {
+		$.get('/ttdKHuNiH5AGpk3iVy04ORoMxfimsEW77ggVCbEA9Bvl9ZMbrXFqED7DjgCwkjEi', function(data) {
+			if (data.length == 0) {
+				createElement('label', null, '.modal-body', 'Ha ocurrido un problema con tu petición (Error 500)');
+			} else {
+				// Rewards Text
+				createElement('div', {class: 'modal-rewards-text'}, '.modal-body');
+				createElement('b', {class: 'reward-title'}, '.modal-rewards-text', 'Aquí podrás ver todos tus logros');
+				createElement('label', {class: 'reward-description'}, '.modal-rewards-text', 'Desliza el cursor por encima para obtener más información');
+				// Rewards
+				createElement('div', {class: 'modal-rewards'}, '.modal-body');
+				$.each(data, function(index, val) {
+					createElement('img', {
+						class: 'reward',
+						src: '/src/rewards/'+val.filename,
+						'data-title': val.name,
+						'data-description': val.text,
+						'data-unlocked': val.user_has_reward
+					}, '.modal-rewards');
+				});
+			}
+		}).fail(function(errorThrown) {
+	        // Modal Error
+			createElement('div', {class: 'modal-error'}, '.modal-body');
+			createElement('ul', null, '.modal-error');
+			createElement('li', null, '.modal-error ul', 'Ha ocurrido un problema con tu petición (Error 500)&nbsp;&nbsp;');
+    	});	
+}
+
+function getNotifications() {
+	createModal(); // Call function
+	// Modal Body Elements
+		createElement('h1', null, '.modal-body', 'Notificaciones');
+		$.get('/yT5rjyh3QA1Pk8kH4A3rLchG1oGgGMtr7Hs3qpwvhgC8UagAaVoSlCZgEzdiMHxn', function(data) {
+			if (data.length == 0) {
+				createElement('label', null, '.modal-body', 'No hay notificaciones');
+			} else {
+				// Notifications
+				createElement('div', {class: 'modal-notifications'}, '.modal-body');
+				$.each(data, function(index, val) {
+					if (val.read == false) {
+						createElement('div', {class: 'modal-notification unread'}, '.modal-notifications');
+					} else {
+						createElement('div', {class: 'modal-notification'}, '.modal-notifications');
+					}
+					// Notification Image
+					createElement('div', {class: 'notification-image'}, '.modal-notification');
+					createElement('img', {src: 'https://w7.pngwing.com/pngs/832/109/png-transparent-gold-trophy-with-ribbon-trophy-gold-medal-golden-trophy-golden-frame-medal-gold.png'}, '.notification-image');
+					// Notification Info
+					createElement('div', {class: 'notification-info'}, '.modal-notification');
+					createElement('b', null, '.notification-info', val.notification);
+					createElement('br', null, '.notification-info');
+					createElement('label', null, '.notification-info', "Hace "+(moment(val.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
+				});
+			}
+		}).fail(function(errorThrown) {
+	        // Modal Error
+			createElement('div', {class: 'modal-error'}, '.modal-body');
+			createElement('ul', null, '.modal-error');
+			createElement('li', null, '.modal-error ul', 'Ha ocurrido un problema con tu petición (Error 500)&nbsp;&nbsp;');
+    	});
+}
+
+function submitQuickReply(element) {
+	$(element).parent().find('.thread-quick-reply-failed, .thread-quick-reply-success').remove();
+	$.post('/bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', 
+		{
+			_token: $('meta[name="csrf-token"]').attr('content'),
+			thread_id: $(element).closest('.thread-data').attr('data-id'),
+			text: $(element).prev('.thread-quick-reply-text').val()
+		}, function(data, textStatus, xhr) {
+			console.log(data)
 			$.each(data, function(index, val) {
-				createElement('img', {
-					class: 'reward',
-					src: '/src/rewards/'+val.filename,
-					'data-title': val.name,
-					'data-description': val.text,
-					'data-unlocked': val.user_has_reward
-				}, '.modal-rewards');
+				if (data.success) {
+					createElement('p', {class: 'thread-quick-reply-success'}, $(element).parent(), val);	
+				} else if (data.remaining_time) {
+					createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), 'Espera '+val+' segundo(s) para enviar el mensaje');	
+				} else {
+					$.each(data.error, function(index, val) {
+						createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), val);	
+					});
+				}
 			});
-		});	
-	// Modal Footer Elements
-		createElement('label', {style: 'font-size: 12px;'}, '.modal-footer', 'Copyright© 2020 Forohub®');
+	}).fail(function(errorThrown) {
+        createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), 'Ha ocurrido un problema con tu petición (Error 500)');	
+	});
 }

@@ -5,9 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reply extends Model
-{
+class Reply extends Model {
+
     use HasFactory;
+
+    protected $fillable = [
+        'created_at',
+        'updated_at',
+        'thread_id',
+        'user_id',
+        'text'
+    ];
+
+    protected $table = 'replies';
 
     public function thread() {
     	return $this->belongsTo(Thread::class, 'thread_id');
@@ -18,10 +28,3 @@ class Reply extends Model
     }
 
 }
-
-/*
-countries -> replies
-post -> communities 
-user -> threads
-
-*/

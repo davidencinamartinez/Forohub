@@ -122,7 +122,33 @@
                     }
 
                     .thread-community-join {
+                        background: linear-gradient(to right, #ffb600 50%, #e5e5e5 50%);
+                        background-size: 200% 100%;
+                        background-position: right bottom;
                         float: right;
+                        border: solid 1px black;
+                        border-radius: 4px;
+                        outline: none;
+                        cursor: pointer;
+                        transition: 0.5s;
+                    }
+
+                    .thread-community-join:hover {
+                        background-position: left bottom;
+                    }
+
+                    .thread-community-joined {
+                        float: right;
+                        border: solid 1px black;
+                        border-radius: 4px;
+                        background-color: #c30000;
+                        outline: none;
+                        cursor: pointer;
+                        transition: 0.5s;
+                    }
+
+                    .thread-community-joined:hover {
+                        background-color: #e80000;
                     }
 
                 /* THREAD AUTHOR */
@@ -209,19 +235,48 @@
                     }
 
                     .thread-quick-reply-send {
+                        background: linear-gradient(to right, #ffb600 50%, #e5e5e5 50%);
+                        background-size: 200% 100%;
+                        background-position: right bottom;
                         float: left;
                         margin: 5px 0px 5px 0px;
+                        border: solid 1px black;
+                        padding: 6px;
+                        outline: none;
+                        cursor: pointer;
+                        transition: 0.5s;
+                    }
+
+                    .thread-quick-reply-send:hover {
+                        background-position: left bottom;
                     }
 
                     .thread-quick-reply-cancel {
-                        background-color: rgba(225,0,0,0.75);
+                        background-color: #c30000;
                         margin: 5px 0px 0px 5px;
                         border-radius: 2px;
-                        border: none;
+                        border: solid 1px black;
                         padding: 6px;
                         outline: none;
+                        transition: 0.5s;
+                        cursor: pointer;
                     }
 
                     .thread-quick-reply-cancel:hover {
-                        background-color: rgba(225,0,0,0.85);
+                        background-color: #e80000;
+                    }
+
+                    .thread-quick-reply-success {
+                        margin-left: 10px;
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        display: inline;
+                        font-weight: bold;
+                        color: limegreen;
+                    }
+
+                    .thread-quick-reply-failed {
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        display: block;
+                        font-weight: bold;
+                        color: #e80000;
                     }

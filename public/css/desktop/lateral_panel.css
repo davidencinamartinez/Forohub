@@ -73,6 +73,11 @@
 		
 		.last-reply {
 			padding: 10px;
+			display: block;
+		    cursor: pointer;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    overflow: hidden;
 		}
 
 		.last-reply:not(:last-child) {

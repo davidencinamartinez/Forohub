@@ -44,4 +44,12 @@ class User extends Authenticatable implements MustVerifyEmail {
     public function verifyUser() {
       return $this->hasOne('App\Models\VerifyUser');
     }
+
+    public function notifications() {
+        return $this->hasMany('App\Models\Notification'); 
+    }
+
+    public function communities() {
+        return $this->belongsTo('App\Models\Community');
+    }
 }

@@ -31,7 +31,9 @@
 			@if (Auth::check())
 				<div class='user-header-panel'>
 					<img class='user-avatar' src='/src/avatars/{{ Auth::user()->avatar }}'>
-					<div class="user-notifications">2</div>
+					@if ($unread_notifications)
+					<div class="user-unread-notifications">{{ $unread_notifications }}</div>
+					@endif
 					<span class='user-welcome'>
 						<b>{{ Auth::user()->name }}</b>
 						<br>
@@ -42,8 +44,8 @@
 					<div class='user-buttons' style='text-align: center; display: inline-block;'>
 					  	<button id="user-profile" onclick="profileModal()">Mi Perfil</button>
 					  	<button id="user-rewards">Logros</button>
-					  	<button id="user-stats">Estadísticas</button>
-						<form id="logout-form" action="<?php echo e(route('logout')); ?>" style="float: right;" method="POST" class="d-none">
+					  	<button id="user-notifications">Notificaciones</button>
+						<form id="logout-form" action="<?php echo e(route('logout')); ?>" style="float: right;" method="POST">
 							{{ csrf_field() }}
 					 		<button type="submit" style="margin-left: 4px;">Salir</button>
 						</form>
@@ -56,6 +58,12 @@
 					<input type='password' name='password' title='Contraseña' placeholder='Contraseña'>
 					<button type='submit' title='Entrar'>Entrar</button>
 				</form>
+				<span class="register-label">
+					<b>Has olvidado tu contraseña?
+						<a style="color: #FFB600; cursor: pointer;" onclick="registerModal()">Click aquí</a>
+					</b>
+				</span>
+				<br>
 				<span class="register-label">
 					<b>No tienes cuenta?
 						<a style="color: #FFB600; cursor: pointer;" onclick="registerModal()">Regístrate</a>

@@ -101,70 +101,70 @@ class CommunitySeeder extends Seeder {
             'updated_at' => Carbon::now()->sub('1 day 22 hours 30 minutes'),
         	'community_id' => 11071967,
             'user_id' => 24111997,
-            'moderator' => 1
+            'subscription_type' => 5000
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 3 hours 10 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 3 hours 10 minutes'),
             'community_id' => 11071967,
             'user_id' => 24111998,
-            'moderator' => 0
+            'subscription_type' => 0
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 2 hours 30 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 2 hours 30 minutes'),
             'community_id' => 11071967,
             'user_id' => 24111999,
-            'moderator' => 0
+            'subscription_type' => 0
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 2 hours 20 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 2 hours 20 minutes'),
             'community_id' => 11071967,
             'user_id' => 24112000,
-            'moderator' => 0
+            'subscription_type' => 0
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 5 hours'),
             'updated_at' => Carbon::now()->sub('1 day 5 hours'),
             'community_id' => 11071968,
             'user_id' => 24111998,
-            'moderator' => 1
+            'subscription_type' => 5000
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 4 hours 10 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 4 hours 10 minutes'),
             'community_id' => 11071969,
             'user_id' => 24111999,
-            'moderator' => 1
+            'subscription_type' => 5000
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 2 hours 50 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 2 hours 50 minutes'),
             'community_id' => 11071970,
             'user_id' => 24112000,
-            'moderator' => 1
+            'subscription_type' => 5000
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('12 hours'),
             'updated_at' => Carbon::now()->sub('12 hours'),
             'community_id' => 11071971,
             'user_id' => 24112001,
-            'moderator' => 1
+            'subscription_type' => 5000
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('11 hours 30 minutes'),
             'updated_at' => Carbon::now()->sub('11 hours 30 minutes'),
             'community_id' => 11071968,
             'user_id' => 24112001,
-            'moderator' => 0
+            'subscription_type' => 0
         ]);
         DB::table('users_communities')->insert([
             'created_at' => Carbon::now()->sub('10 hours'),
             'updated_at' => Carbon::now()->sub('10 hours'),
             'community_id' => 11071972,
             'user_id' => 24111998,
-            'moderator' => 0
+            'subscription_type' => 5000
         ]);
     }
 }

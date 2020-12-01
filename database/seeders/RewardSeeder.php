@@ -67,7 +67,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Interstellar',
-            'text' => 'Has respondido a 100.000 temas',
+            'text' => 'Has respondido a 50.000 temas',
             'filename' => 'khGba7hqwuEo8QtzjGO05Oz7wU2UW1Y.webp'
         ]);
 

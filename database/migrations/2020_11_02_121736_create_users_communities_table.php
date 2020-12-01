@@ -20,7 +20,7 @@ class CreateUsersCommunitiesTable extends Migration
             $table->foreign('community_id')->references('id')->on('communities');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('moderator')->default(0);
+            $table->smallInteger('subscription_type')->default(0); // 0 -> USER / 2000 -> ADMIN / 5000 -> MASTER
         });
     }
 

@@ -39,9 +39,9 @@ class LogController extends Controller
             Auth::user($user)->fresh();
             return redirect()->route('index');
 
-        }else{
+        } else {
             session()->flash('err', 'Invalid credentials');
-            return redirect()->back()->with('err', 'Usuario o contraseña incorrectos.<br>Intentos: 1 de 5.');
+            return redirect()->back()->with('err', $request->getClientIp());
         }
         
         

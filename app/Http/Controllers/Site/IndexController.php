@@ -22,6 +22,8 @@ class IndexController extends Controller {
 
     public function index() {
 
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+
     	$threads = Thread::orderBy('created_at', 'desc')
         ->with('communities')
         ->with('author')
@@ -29,7 +31,7 @@ class IndexController extends Controller {
         ->withCount('replies')
         ->withCount('upvotes')
         ->withCount('downvotes')
-        ->paginate(4);
+        ->paginate(4, ['*'], 'pagina');
 
         $top_communities = Community::withCount('threads')
         ->whereHas('threads', function($q){
@@ -46,7 +48,7 @@ class IndexController extends Controller {
             'count_replies' => Reply::count(),
         );
                 
-        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->get();
+        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->take(5)->get();
         
     	foreach ($threads as $thread) {
     		if (Auth::user() and $thread->votes->isNotEmpty()) {
@@ -62,8 +64,20 @@ class IndexController extends Controller {
     			$thread->user_has_voted = 'false';  			
     		}
     	}
+        
+        foreach ($threads as $thread) {
+            if (Auth::user()) {
+                if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+                        $thread->user_joined_community = 'true';
+                } else {
+                    $thread->user_joined_community = 'false';
+                }
+            }
+        }
+
     	return view('layouts.desktop.templates.index', 
-    		[	'threads' => $threads,
+    		[	'unread_notifications' => $unread_notifications,
+                'threads' => $threads,
                 'fh_data' => $fh_data,
                 'top_communities' => $top_communities,
                 'latest_replies' => $latest_replies
@@ -112,8 +126,23 @@ class IndexController extends Controller {
     /* TEST */	
     
     function test() {
-        $rewards = VerifyUser::latest()->value('user_id');
-        return $rewards;
+        $threads = Thread::orderBy('created_at', 'desc')
+        ->with('communities')
+        ->with('author')
+        ->with('first_reply')
+        ->withCount('replies')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->get();
+        foreach ($threads as $thread) {
+            if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+                    $thread->user_joined_community = 'true';
+            } else {
+                $thread->user_joined_community = 'false';
+            }
+        }
+        return $threads;
+        //return $tete;
     }
 }
 
