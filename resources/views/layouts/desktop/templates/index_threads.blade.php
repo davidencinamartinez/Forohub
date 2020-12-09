@@ -55,10 +55,10 @@
                     {!! $thread->body !!}
                 </div>
                 <div class="thread-info">
-                    <a href="c/{{ $thread->communities->tag }}/t/{{ $thread->id }}">💬 {{ $thread->replies_count }} Respuestas</a>
-                    <span class="remarkable-text">🔗 Compartir</span>
-                    <span class="required-auth remarkable-text">🏴 Reportar</span>
-                    <span class="required-auth remarkable-text activate-reply">↩️ Responder</span>
+                    <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none;">💬</label> {{ $thread->replies_count }} Respuestas</a>
+                    <span class="remarkable-text"><label>🔗</label> Compartir</span>
+                    <span class="required-auth remarkable-text report-thread"><label>❗</label> Reportar</span>
+                    <span class="required-auth remarkable-text activate-reply"><label>↩️</label> Responder</span>
                 </div>
                 <div class="thread-quick-reply">
                     <div>

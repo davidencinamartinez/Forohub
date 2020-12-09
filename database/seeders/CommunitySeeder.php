@@ -44,7 +44,8 @@ class CommunitySeeder extends Seeder {
             'tag' => 'supercoches',
             'title' => 'Supercoches',
             'description' => 'A 280 no tengo amigos',
-            'logo' => '4BcaiQYi50mSuizPM8LI1WYovP7Sty9.webp'
+            'logo' => '4BcaiQYi50mSuizPM8LI1WYovP7Sty9.webp',
+            'background' => 'ObmG5qIEcIZkMtWqEGVFXmkdlwlqSeQx.jpg'
         ]);
         DB::table('communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 2 hours 50 minutes'),

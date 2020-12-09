@@ -21,8 +21,6 @@ Route::get('/', [App\Http\Controllers\Site\IndexController::class, 'index'])->na
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
-
-
 /* USER ROUTES */
 
 Route::get('/register', function () {
@@ -39,7 +37,9 @@ Route::post('/logout', [App\Http\Controllers\Site\User\LogController::class, 'lo
 
 /* THREAD ROUTES */
 
-Route::post('bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'createReply']);
+Route::get('/c/{community_tag}/t/{thread_id}', [App\Http\Controllers\Site\Thread\ThreadController::class, 'getThreadData'])->where('thread_id', '[0-9]+');
+
+Route::post('bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'makeReply']);
 
 /* AJAX CALLS */
 

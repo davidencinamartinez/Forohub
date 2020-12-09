@@ -25,13 +25,6 @@ class ReplySeeder extends Seeder {
             'text' => 'POLE',
         ]);
         DB::table('replies')->insert([
-            'created_at' => Carbon::now()->sub('2 hours 55 minutes'),
-            'updated_at' => Carbon::now()->sub('2 hours 55 minutes'),
-            'thread_id' => 29081996,
-            'user_id' => 24111999,
-            'text' => 'Subpole',
-        ]);
-        DB::table('replies')->insert([
             'created_at' => Carbon::now()->sub('2 hours 20 minutes'),
             'updated_at' => Carbon::now()->sub('2 hours 20 minutes'),
             'thread_id' => 29081996,

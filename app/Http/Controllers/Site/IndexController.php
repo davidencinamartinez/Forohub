@@ -10,6 +10,8 @@ use App\Models\Thread;
 use App\Models\Reward;
 use App\Models\Vote;
 use App\Models\Reply;
+use App\Models\UserReward;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Auth;
 use Validator;
@@ -55,10 +57,11 @@ class IndexController extends Controller {
     			if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
     				$thread->user_has_voted = 'true';
     				$thread->user_vote_type = 1;
-    			} else {
+    			} 
+                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
     				$thread->user_has_voted = 'true';
     				$thread->user_vote_type = 0;
-    			}
+                }
     		} 
     		else {
     			$thread->user_has_voted = 'false';  			
@@ -75,7 +78,11 @@ class IndexController extends Controller {
             }
         }
 
-    	return view('layouts.desktop.templates.index', 
+        if ($threads->isEmpty()) {
+            return redirect()->route('index');
+        }
+
+    	return view('layouts.desktop.templates.index',
     		[	'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
                 'fh_data' => $fh_data,
@@ -97,7 +104,8 @@ class IndexController extends Controller {
                         ->where('thread_id', '=', $request->thread_id)
                         ->where('vote_type', '=', $request->vote_type)
                         ->exists()) {
-                    Vote::where('user_id', '=', Auth::user()->id)
+
+                        Vote::where('user_id', '=', Auth::user()->id)
                         ->where('thread_id', '=', $request->thread_id)
                         ->where('vote_type', '=', $request->vote_type)
                         ->delete();
@@ -106,13 +114,21 @@ class IndexController extends Controller {
                             'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
                         ]);
                     } else {
-                    Vote::updateOrCreate(
-                        ['user_id' => Auth::user()->id, 'thread_id' => $request->thread_id],
-                        ['vote_type' => $request->vote_type]);
-                    return response()->json([
-                        'response' => '💾 Se han guardado los cambios 💾',
-                        'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
-                    ]);
+                        Vote::updateOrCreate(
+                            ['user_id' => Auth::user()->id, 'thread_id' => $request->thread_id],
+                            ['vote_type' => $request->vote_type]);
+
+                        $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
+                        if (Vote::getUserUpvotes($request->thread_id) == 1) {
+                            if (UserReward::userHasReward($thread_author_id, 10) == false) {
+                                UserReward::createUserReward($thread_author_id, 10);
+                                Notification::createNotification($thread_author_id, "Logro desbloqueado: Me gusta", "reward");
+                            }
+                        }
+                        return response()->json([
+                            'response' => '💾 Se han guardado los cambios 💾',
+                            'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
+                        ]);
                     }
                 }
             } else {
@@ -126,22 +142,34 @@ class IndexController extends Controller {
     /* TEST */	
     
     function test() {
-        $threads = Thread::orderBy('created_at', 'desc')
-        ->with('communities')
-        ->with('author')
-        ->with('first_reply')
-        ->withCount('replies')
-        ->withCount('upvotes')
-        ->withCount('downvotes')
-        ->get();
-        foreach ($threads as $thread) {
-            if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
-                    $thread->user_joined_community = 'true';
-            } else {
-                $thread->user_joined_community = 'false';
+            
+           $string = "@dsad, 
+
+           @morfeo";
+
+           $arrrr = [];
+           $lele = preg_match_all("/@[a-zA-Z0-9]{0,20}/", $string, $matches);
+
+           foreach ($matches[0] as $key => $value) {
+            $username = str_replace("@", "", $value);
+            if (User::where('name', $username)->exists()) {
+                $user_id = User::where('name', $username)->value('id');
+                Notification::createNotification($user_id, "Te han mencionado crackLOKO");
             }
-        }
-        return $threads;
+                //
+                //Notification::createNotification(24111997, "Logro desbloqueado: Me gusta");
+                
+                
+            
+            
+           }
+
+
+          
+          
+          
+            
+        
         //return $tete;
     }
 }

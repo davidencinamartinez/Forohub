@@ -102,38 +102,5 @@ class RewardSeeder extends Seeder {
             'text' => 'Sé el usuario Top del mes',
             'filename' => 'N0cTuLBlBwe5eFB81uDqt5hXvt3rlzv.webp'
         ]);
-        
-
-        // REWARD USERS
-        DB::table('users_rewards')->insert([
-            'created_at' => Carbon::now()->sub('2 days'),
-            'updated_at' => Carbon::now()->sub('2 days'),
-        	'user_id' => 24111997,
-            'reward_id' => 1
-        ]);
-        DB::table('users_rewards')->insert([
-            'created_at' => Carbon::now()->sub('11 hours 10 minutes'),
-            'updated_at' => Carbon::now()->sub('11 hours 10 minutes'),
-            'user_id' => 24111998,
-            'reward_id' => 1
-        ]);
-        DB::table('users_rewards')->insert([
-            'created_at' => Carbon::now()->sub('1 day 2 hours 40 minutes'),
-            'updated_at' => Carbon::now()->sub('1 day 2 hours 40 minutes'),
-            'user_id' => 24111999,
-            'reward_id' => 1
-        ]);
-        DB::table('users_rewards')->insert([
-            'created_at' => Carbon::now()->sub('1 day 2 hours 20 minutes'),
-            'updated_at' => Carbon::now()->sub('1 day 2 hours 20 minutes'),
-            'user_id' => 24112000,
-            'reward_id' => 1
-        ]);
-        DB::table('users_rewards')->insert([
-            'created_at' => Carbon::now()->sub('11 hours 40 minutes'),
-            'updated_at' => Carbon::now()->sub('11 hours 40 minutes'),
-            'user_id' => 24112001,
-            'reward_id' => 1
-        ]);
     }
 }

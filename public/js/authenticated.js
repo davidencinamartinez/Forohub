@@ -41,6 +41,14 @@ $(document).ready(function() {
 			$(this).parent().next('.thread-quick-reply').css('display', 'block');
 		}
 	});
+	$('.quote').click(function(event) {
+		$('.thread-quick-reply').css('display', 'block');
+		if ($.trim($('.thread-quick-reply-text').val()).length == 0) {
+			$('.thread-quick-reply-text').val($('.thread-quick-reply-text').val()+'#'+$(this).closest('.thread-reply').attr('id')+'\n').focus();			
+		} else {
+			$('.thread-quick-reply-text').val($('.thread-quick-reply-text').val()+'\n\n#'+$(this).closest('.thread-reply').attr('id')+'\n').focus();		
+		}
+	});
 	$('.thread-quick-reply-cancel').click(function(event) {
 		$(this).parent().parent('.thread-quick-reply').css('display', 'none');
 	});
@@ -93,7 +101,6 @@ $(document).ready(function() {
 			}, function(data, textStatus, xhr) {
 				notifyUser(data.success);
 		});
-		console.log($(this));
 		$(this).fadeOut('fast', function() {
 			$(this).fadeIn('fast');
 			$(this).attr('class', 'required-auth thread-community-joined');
@@ -116,5 +123,8 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '.thread-quick-reply-send', function(event) {
 		submitQuickReply($(this));
+	});
+	$('.report-thread, .report-reply').click(function(event) {
+		reportModal();
 	});
 });

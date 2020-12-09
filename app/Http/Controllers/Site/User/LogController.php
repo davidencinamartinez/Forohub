@@ -37,7 +37,7 @@ class LogController extends Controller
 
         if (auth()->attempt($credentials)) {
             Auth::user($user)->fresh();
-            return redirect()->route('index');
+            return Redirect::back();
 
         } else {
             session()->flash('err', 'Invalid credentials');
@@ -50,6 +50,6 @@ class LogController extends Controller
      protected function logout() {
         Auth::logout();
         Session::flush();
-        return Redirect::back();
+        return Redirect::route('index');
     }
 }

@@ -96,7 +96,7 @@ class RegisterController extends Controller {
                     'user_id' =>  Auth::user()->id,
                     'reward_id' => 1
                 ]);
-                Notification::createNotification("Logro desbloqueado: Iniciado");
+                Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Iniciado", "reward");
                 /**/
             } else {
                 $status = "Tu cuenta ya ha sido verificada";

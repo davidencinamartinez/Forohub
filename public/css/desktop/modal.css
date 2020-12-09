@@ -172,7 +172,7 @@
 		    border-radius: 6px;
 		    width: 64px;
 		    filter: grayscale(1);
-		    background-image: linear-gradient(to right top, #ffb600, #ffc918, #fddb2c, #fbed40, #f8ff55);
+		    background-image: linear-gradient(to top, #BF953F 10%, #ffef50 45%, #BF953F);
 		}
 
 		.reward:hover {
@@ -215,9 +215,7 @@
 		}
 
 		.notification-image img {
-			border-radius: 50%;
 		    vertical-align: middle;
-		    border: solid 1px black;
 		    width: 50px;
 		}
 

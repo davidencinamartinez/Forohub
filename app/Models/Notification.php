@@ -17,6 +17,7 @@ class Notification extends Model {
         'created_at',
         'updated_at',
         'user_id',
+        'type',
         'notification',
     ];
 
@@ -24,11 +25,12 @@ class Notification extends Model {
     	return $this->belongsTo('App\Models\User');
     }
 
-    public static function createNotification($notification) {
+    public static function createNotification($user_id, $notification, $type) {
     	Notification::create([
     	    'created_at' => Carbon::now(),
     	    'updated_at' => Carbon::now(),
-    	    'user_id' => Auth::user()->id,
+    	    'user_id' => $user_id,
+            'type' => $type,
     	    'notification' => $notification
     	]);
     }

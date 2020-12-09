@@ -3,27 +3,3 @@
     .index-panel {
         display: flex;
     }
-
-    /* THREADS PANEL */
-
-        .threads-panel {
-            width: 70%;
-            margin: 20px;
-        }
-
-        /* THREAD */
-
-            .thread {
-                width: 80%;
-                float: right; 
-                min-width: 600px;
-            }
-
-            /* THREAD DATA */
-
-                .thread-data {
-                    border: solid 1px black;
-                    display: flex;
-                    margin-bottom: 10px;
-                    border-radius: 10px;
-                }

@@ -1,0 +1,10 @@
+tags comunidades
+tags temas
+reportes con notificacion a moderador de comunidad y a super
+comando para ejecutar emojis en textarea
+moderadores de comunidad (rangos: 1->normal / 2->moderador / 3->creador / 4->yo)
+reportar respuestas
+redireccion a index con script modal login
+algoritmo karma usuario (pendiente de modificaciones)
+citar y reportar  respuesta
+borde especial por desbloquear logros

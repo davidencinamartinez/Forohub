@@ -51,6 +51,7 @@ class DataController extends Controller {
         function getNotifications() {
             if (Auth::user()) {
                 $notifications = Notification::where('user_id', Auth::user()->id)
+                ->orderBy('id', 'desc')
                 ->get();
                 return $notifications;
             } 

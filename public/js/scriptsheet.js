@@ -1,18 +1,27 @@
 $(document).ready(function() {
-	$('.thread-date, .reply-date').each(function(index, el) {
+	$('.thread-date, .thread-reply-date, .reply-date').each(function(index, el) {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
+	});
+
+	$('.thread-reply-user-register').each(function(index, el) {
+		$(this).text(moment($(this).text()).format('MMM YYYY'));
 	});
 
 	$('.thread-info').each(function(index, el) {
 		 $(this).children('span').first().click(function(event) {
 		 	var input = document.body.appendChild(document.createElement("input"));
-		 	var url = $(this).parent().parent().children('.thread-title').find('a').attr('href');
-		 	input.value = "https://www.forohub.com/"+url;
+		 	var url = $(this).prev('a').attr('href');
+		 	$(this).parent().parent().children('.thread-title').find('a').attr('href');
+		 	input.value = "https://www.forohub.com"+url;
 		 	input.select();
 		 	document.execCommand('copy');
 		 	input.parentNode.removeChild(input);
 		 	notifyUser("🔗 Enlace copiado 🔗");
 		 });	
+	});
+
+	$('.thread-reply-quoted').click(function(event) {
+		
 	});
 
 	$(document).on('mouseover', '.reward', function(event) {
@@ -136,8 +145,6 @@ function userVerifiedSuccess() {
 		createElement('h2', null, '.modal-body', 'Verificación de cuenta'); // Title
 		createElement('div', {class: 'modal-success'}, '.modal-body');
 		createElement('p', null, '.modal-success', 'Tu cuenta ha sido verificada con éxito');
-	// Modal Footer Elements
-		createElement('label', {style: 'font-size: 12px;'}, '.modal-footer', 'Copyright© 2020 Forohub®');
 }
 
 function nsfwModal() {
@@ -373,13 +380,17 @@ function getNotifications() {
 						createElement('div', {class: 'modal-notification'}, '.modal-notifications');
 					}
 					// Notification Image
-					createElement('div', {class: 'notification-image'}, '.modal-notification');
-					createElement('img', {src: 'https://w7.pngwing.com/pngs/832/109/png-transparent-gold-trophy-with-ribbon-trophy-gold-medal-golden-trophy-golden-frame-medal-gold.png'}, '.notification-image');
+					createElement('div', {class: 'notification-image'}, '.modal-notification:last');
+					if (val.type == "reward") {
+						createElement('img', {src: '/src/media/2HK2HLmhsvYs6ZwK34DJkyB80LIJdS8DTdJXICI3PJS3tj4kZgBujRaxQCgzSLi7.webp'}, '.notification-image:last');	
+					} else if (val.type == "mention") {
+						createElement('img', {src: '/src/media/pcxzXveYfflI0wyaZVGqjDQkW2NJkgE4m4r2itlqO1ZZnrtnZ88uFhy6L1qQ1KUi.webp'}, '.notification-image:last');	
+					}
 					// Notification Info
-					createElement('div', {class: 'notification-info'}, '.modal-notification');
-					createElement('b', null, '.notification-info', val.notification);
-					createElement('br', null, '.notification-info');
-					createElement('label', null, '.notification-info', "Hace "+(moment(val.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
+					createElement('div', {class: 'notification-info'}, '.modal-notification:last');
+					createElement('b', null, '.notification-info:last', val.notification);
+					createElement('br', null, '.notification-info:last');
+					createElement('label', null, '.notification-info:last', "Hace "+moment.utc(val.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow(true), 'Europe/Madrid');
 				});
 			}
 		}).fail(function(errorThrown) {
@@ -398,12 +409,13 @@ function submitQuickReply(element) {
 			thread_id: $(element).closest('.thread-data').attr('data-id'),
 			text: $(element).prev('.thread-quick-reply-text').val()
 		}, function(data, textStatus, xhr) {
-			console.log(data)
 			$.each(data, function(index, val) {
 				if (data.success) {
 					createElement('p', {class: 'thread-quick-reply-success'}, $(element).parent(), val);	
 				} else if (data.remaining_time) {
 					createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), 'Espera '+val+' segundo(s) para enviar el mensaje');	
+				} else if (data.empty) {
+					createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), val);	
 				} else {
 					$.each(data.error, function(index, val) {
 						createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), val);	
@@ -413,4 +425,32 @@ function submitQuickReply(element) {
 	}).fail(function(errorThrown) {
         createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), 'Ha ocurrido un problema con tu petición (Error 500)');	
 	});
+}
+
+function reportModal() {
+	createModal();
+	// Modal Body Elements
+		createElement('h1', null, '.modal-body', 'Reportar'); // Title
+		// User Profile Avatar
+		createElement('div', {class: 'modal-profile-avatar'}, '.modal-body');
+		createElement('img', {src: 'https://i1.sndcdn.com/avatars-ZsHFOLyvCDd8z3DL-xnBzSw-t500x500.jpg'}, '.modal-profile-avatar');
+		// User Profile Avatar
+		createElement('div', {class: 'modal-profile-data'}, '.modal-body');
+		// Email Input
+			createElement('div', null, '.modal-profile-data');
+			createElement('b', null, '.modal-profile-data div:last', 'Correo electrónico:');
+			createElement('br', null, '.modal-profile-data div:last');
+			createElement('input', {type: 'text', name: 'email', maxlength: 64}, '.modal-profile-data div:last');
+		// Title Input
+			createElement('div', null, '.modal-profile-data');
+			createElement('b', null, '.modal-profile-data div:last', 'Título:');
+			createElement('br', null, '.modal-profile-data div:last');
+			createElement('input', {type: 'text', name: 'title', maxlength: 20}, '.modal-profile-data div:last');
+		// Registration Date 
+			createElement('div', null, '.modal-profile-data');
+			createElement('b', null, '.modal-profile-data div:last', 'Fecha de registro:');
+			createElement('br', null, '.modal-profile-data div:last');
+			createElement('label', {id: 'profile-date', style: 'text-transform: capitalize'}, '.modal-profile-data div:last');
+			createElement('button', null, '.modal-body', 'Guardar cambios');	
+
 }

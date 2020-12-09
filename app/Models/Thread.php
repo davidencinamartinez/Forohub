@@ -30,10 +30,10 @@ class Thread extends Model
     }
 
     public function upvotes() {
-        return $this->hasMany(Vote::class)->where('vote_type', 1);
+        return $this->hasMany(Vote::class, 'thread_id')->where('vote_type', 1);
     }
 
     public function downvotes() {
-        return $this->hasMany(Vote::class)->where('vote_type', 0);
+        return $this->hasMany(Vote::class, 'thread_id')->where('vote_type', 0);
     }
 }

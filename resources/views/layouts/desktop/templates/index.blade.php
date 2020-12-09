@@ -66,7 +66,7 @@
 @if ($threads->hasPages())
       <div style="text-align: center;">
         <div class="pageSelector">
-          {{$threads->links()}}
+          {!!$threads->links()!!}
         </div>
       </div>
     @endif

@@ -21,6 +21,7 @@ class CreateCommunitiesTable extends Migration {
             $table->string('description', 500);
             $table->string('logo', 36)->default('kZcTagGngsVeGl2Hsiy3ulhXOb78B4P.webp');
             $table->string('banner', 36)->nullable();
+            $table->string('background', 36)->nullable();
         });
     }
 

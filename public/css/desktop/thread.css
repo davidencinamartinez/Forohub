@@ -280,3 +280,113 @@
                         font-weight: bold;
                         color: #e80000;
                     }
+
+        /* THREAD REPLIES */
+
+            .thread-replies {
+                width: 80%;
+                float: right;
+                min-width: 600px;
+                max-width: 1000px;
+            }
+
+            .thread-reply {
+                border: solid 1px black;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                transition: 0.25s;
+                font-size: 14px;
+                background-color: #6b6b6b;
+                display: block;
+                width: 100%;
+            }
+
+            .thread-reply:hover {
+                box-shadow: 1px 1px 5px 0px #2d2d2d;
+            }
+
+            .thread-reply-id {
+                border-radius: 8px 8px 0px 0px;
+                background-color: #6b6b6b;
+                border-bottom: solid 1px black;
+                padding: 2px 6px 0px 6px;
+                height: 20px;
+            }
+
+            .thread-reply-id a {
+                float: right;
+            }
+
+            .thread-reply-date {
+                float: left;
+                color: white;
+                text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            }
+
+            .thread-reply-content {
+                display: flex;
+                width: 100%;
+                min-height: 180px;
+            }
+
+            /* THREAD REPLY AUTHOR */
+
+                .thread-reply-author {
+                    width: 25%;
+                    text-align: center;
+                    border-right: solid 1px black;
+                    padding: 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    background-color: #2F2F2F;
+                    color: white;
+                }
+
+                .thread-reply-author b {
+                    font-size: 12px;
+                }
+
+                .thread-reply-author img {
+                    width: 64px;
+                    border-radius: 6px;
+                    margin: 6px 0px 6px 0px;
+                    border: solid 1px black;
+                }
+
+                .thread-reply-user-register {
+                    text-transform: capitalize;
+                }
+
+            .thread-reply-text {
+                padding: 8px;
+                background-color: ghostwhite;
+                float: right;
+                width: 75%;
+                overflow-wrap: break-word;
+                white-space: pre-wrap;
+            }
+
+            .thread-reply-quoted {
+                width: min-content;
+                border: solid 1px black;
+                border-radius: 4px;
+                background-color: #2F2F2F;
+                padding: 2px;
+                margin: 0px 6px 2px 0px;
+            }
+
+            .thread-reply-author-data {
+                margin: auto;
+                width: 75%;
+                text-align: left;
+                font-size: 12px;
+            }
+
+            .thread-reply-actions {
+                text-align: right;
+                border-top: solid 1px black;
+                padding: 6px;
+            }
+
+

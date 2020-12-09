@@ -50,6 +50,10 @@
 		margin: 0px 10px 0px 10px;
 	}
 
+	.remarkable-text label {
+		text-shadow: none;
+	}
+
 	.remarkable-text:hover {
 		color: #FFB600;
 		cursor: pointer;
