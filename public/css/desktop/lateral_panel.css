@@ -96,3 +96,82 @@
 			color: white;
 			font-weight: bold;
 		}
+
+	/* LATERAL COMMUNITY */
+
+		.lateral-community-data {
+		    text-align: center;
+		    display: grid;
+		}
+
+		.lateral-community-title {
+		    font-size: 16px;
+		}
+
+		.lateral-community-logo {
+			margin: 10px auto 10px auto;
+			width: 50px;
+			border: solid 1px black;
+			border-radius: 50%;
+			box-shadow: 1px 1px 5px 0px #2d2d2d;
+		}
+
+		.lateral-community-tag {
+		    font-style: italic;
+		}
+
+		.lateral-community-description {
+		    border: solid 1px black;
+		    text-align: justify;
+		    margin: 10px;
+		    padding: 10px;
+		    border-radius: 6px;
+		    background-color: ghostwhite;
+		}
+
+		.lateral-community-users {
+		    margin: 10px 0px 10px 0px;
+		    vertical-align: middle;
+		    width: 32px;
+		}
+
+		.lateral-community-info {
+			width: 33.3%;
+		}
+
+		.lateral-community-rule {
+			padding: 10px;
+			text-align: justify;
+		}
+
+		.lateral-community-moderators {
+			padding: 10px;
+			text-align: justify;
+		}
+
+		.lateral-community-moderators > img {
+			width: 24px;
+			margin-left: 4px;
+			vertical-align: top;
+		}
+
+		.lateral-community-rule:not(:last-child),
+		.lateral-community-moderators:not(:last-child) {
+			border-bottom: solid 1px black;
+		}
+
+		.lateral-community-tags {
+			display: table;
+		    margin: 10px 6px 10px 6px;
+		    text-align: justify;
+		}
+
+		.lateral-community-keyword {
+			border: solid 1px black;
+		    display: inline-table;
+		    margin: 6px;
+		    background-color: #2F2F2F;
+		    color: white;
+		    padding: 4px;
+		    border-radius: 6px;
+		}

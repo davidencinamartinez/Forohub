@@ -8,6 +8,7 @@ use App\Models\Reward;
 use App\Models\User;
 use App\Models\Community;
 use App\Models\UserCommunity;
+use App\Models\Thread;
 use Auth;
 use DB;
 use App\Models\Notification;
@@ -53,6 +54,16 @@ class DataController extends Controller {
                 $notifications = Notification::where('user_id', Auth::user()->id)
                 ->orderBy('id', 'desc')
                 ->get();
+                foreach ($notifications as $notification) {
+                    if ($notification->type == 'mention' || $notification->type == 'thread_report') {
+                        $community_id = Thread::where('id', $notification->notification)->value('community_id');
+                        $notification->thread = Thread::where('id', $notification->notification)->value('title');
+                        $notification->community = Community::where('id', $community_id)->value('tag');
+                        if ($notification->type == 'thread_report') {
+                            $notification->community_title = Community::where('id', $community_id)->value('title');
+                        }
+                    }
+                } 
                 return $notifications;
             } 
         }

@@ -46,12 +46,12 @@ class Reply extends Model {
 
     public static function mentionUser($reply, $thread_id) {
         $match = preg_match_all("/@[a-zA-Z0-9]{0,20}/", $reply, $matches);
-
-        foreach ($matches[0] as $key => $value) {
+        $values = array_unique($matches[0]);
+        foreach ($values as $key => $value) {
             $username = str_replace("@", "", $value);
             if (User::where('name', $username)->exists()) {
                 $user_id = User::where('name', $username)->value('id');
-                Notification::createNotification($user_id, "Te han mencionado en un tema (".$thread_id.")", "mention");
+                Notification::createNotification($user_id, $thread_id, "mention");
             }    
         }
     }

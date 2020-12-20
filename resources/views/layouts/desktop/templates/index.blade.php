@@ -24,7 +24,12 @@
   </div>
 @endif
 <div class="index-panel">
-    @include('layouts.desktop.templates.index_threads')
+    <div style="width: 10%"></div>
+    <div class="threads-panel">
+    @foreach ($threads as $thread)
+        @include('layouts.desktop.templates.thread.content')
+    @endforeach
+</div>
     <div class="lateral-panel">
         <div class="lateral-cube top-communities">
             <div class="lateral-title">TOP Comunidades</div>

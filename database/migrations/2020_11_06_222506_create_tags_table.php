@@ -16,6 +16,9 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('thread_id');
+            $table->foreign('thread_id')->references('id')->on('threads');
+            $table->string('tagname', 30);
         });
     }
 

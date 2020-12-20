@@ -57,6 +57,9 @@ Route::post('/m825i5Wul0hEBxjHBh8GVS9n5WmFU8ARuDqPSfOEDrXaoeo7HCQYJgMWmYt1LeXJ',
 
 Route::post('/g1VJH8HX7nsGvGuGPVZxASEW4rcSjyZ2oAuwrSWo8oor1f94OCk1WGxLKQIkA2cv', [App\Http\Controllers\Site\User\DataController::class, 'unjoinCommunity']);
 
+Route::post('/zKj113txZHvkB86ZPWnnJxIYB438y7SeBfkKMR84zvp5XgC5DIsEpP5F1vOtPsoT', [App\Http\Controllers\Site\Report\ReportController::class, 'sendThreadReport']);
+
+Route::post('/gAKFLXK4xRsW8kMCRAFi3GjzwBYa8oMrSV4pQ6O0m14xoZP6Mi8hAAH6LEqdwsOl', [App\Http\Controllers\Site\Report\ReportController::class, 'sendReplyReport']);
 
 /* TEST ROUTES */
 

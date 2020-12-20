@@ -17,9 +17,6 @@ class CommunitySeeder extends Seeder {
      */
     public function run() {
 
-        // DEFAULT LOGO
-        $array_logo = array('kZcTagGngsVeGl2Hsiy3ulhXOb78B4P.webp', 'eGnn3FMGoKcoX62J8zGhgR7aNixpcsJ.webp', '0cuELPS1EZmWE47HDp7ErnQ9MTJh8t3.webp', 'jXXOFbrp1va0mVf848keyYehdVLmMLj.webp', 'k3M5OsDTCldfSu8wYwfsoz3izXVSGua.webp', 'hyQnGEFrUkQUf38TzboyTq0I1UWhsAI.webp', 'JXieeAuxONvBi5BAHW0GerugoXxUlqL.webp', 'UQ5jb6P2u1Et5YkhF3mXFg8cXi79Agq.webp');
-
     	// COMMUNITIES
         DB::table('communities')->insert([
             'id' => 11071967,
@@ -86,14 +83,6 @@ class CommunitySeeder extends Seeder {
         	'community_id' => 11071967,
             'rule' => 'Respeta a los demás usuarios',
             'rule_description' => 'Se puede opinar, debatir y discutir sobre cualquier tema que tenga cabida, pero con el respeto a los demás usuarios como regla principal',
-        ]);
-
-        // COMMUNITY WIKI
-        DB::table('communities_wiki')->insert([
-            'created_at' => Carbon::now()->sub('1 day 21 hours 50 minutes'),
-            'updated_at' => Carbon::now()->sub('1 day 21 hours 50 minutes'),
-        	'community_id' => 11071967,
-            'body' => '<b>Esto es una Wiki de testeo</b>',
         ]);
 
         // COMMUNITY USERS
@@ -166,6 +155,22 @@ class CommunitySeeder extends Seeder {
             'community_id' => 11071972,
             'user_id' => 24111998,
             'subscription_type' => 5000
+        ]);
+
+        // COMMUNITY TAGS
+
+        DB::table('communities_tags')->insert([
+            [
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'community_id' => 11071967,
+                'tagname' => 'forohub'
+            ], [
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'community_id' => 11071967,
+                'tagname' => 'oficial'
+            ]
         ]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Reply;
 use App\Models\Notification;
 use App\Models\UserReward;
+use App\Models\UserCommunity;
 use App\Models\Thread;
 use App\Models\Community;
 use App\Models\User;
@@ -68,11 +69,16 @@ class ThreadController extends Controller {
 	                    $thread->user_joined_community = 'false';
 	                }
 	            }
-		        
+
+	            $community = Community::where('id', $community_id)->with('community_moderators')->with('community_rules')->withCount('threads')->first();
+	            $community->sub_count = UserCommunity::userCount($community_id);
+				$community->index = Community::getCommunityPlacing($community_id);
+
 				return view('layouts.desktop.templates.thread',
 		    		[	'unread_notifications' => $unread_notifications,
 		                'thread' => $thread,
-		                'thread_replies' => $thread_replies
+		                'thread_replies' => $thread_replies,
+		                'community' => $community
 		                
 		    		]);
         

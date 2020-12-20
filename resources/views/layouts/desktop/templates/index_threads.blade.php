@@ -60,6 +60,7 @@
                     <span class="required-auth remarkable-text report-thread"><label>❗</label> Reportar</span>
                     <span class="required-auth remarkable-text activate-reply"><label>↩️</label> Responder</span>
                 </div>
+                @if (Auth::check())
                 <div class="thread-quick-reply">
                     <div>
                         <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
@@ -67,6 +68,7 @@
                         <button class="thread-quick-reply-cancel">Cancelar</button>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

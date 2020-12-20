@@ -11,6 +11,7 @@ use App\Models\Reward;
 use App\Models\Vote;
 use App\Models\Reply;
 use App\Models\UserReward;
+use App\Models\UserCommunity;
 use App\Models\Notification;
 use Carbon\Carbon;
 use Auth;
@@ -35,13 +36,12 @@ class IndexController extends Controller {
         ->withCount('downvotes')
         ->paginate(4, ['*'], 'pagina');
 
-        $top_communities = Community::withCount('threads')
-        ->whereHas('threads', function($q){
-            $q->whereBetween('created_at', [Carbon::now()->startOfMonth()->subMonth(1),Carbon::now()->endOfMonth()]); // Add subMonth(1)
-        })
-        ->orderBy('threads_count', 'desc')
-        ->take(6)
-        ->get();
+        $top_communities = Community::get();
+        foreach ($top_communities as $community) {
+            $community->score = Community::getCommunityScore($community->id);
+        }
+        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
+        
 
         $fh_data = array(
             'count_communities' => Community::count(),
@@ -86,7 +86,7 @@ class IndexController extends Controller {
     		[	'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
                 'fh_data' => $fh_data,
-                'top_communities' => $top_communities,
+                'top_communities' => $sorted_top_communities,
                 'latest_replies' => $latest_replies
     		]);
     }
@@ -142,35 +142,42 @@ class IndexController extends Controller {
     /* TEST */	
     
     function test() {
-            
-           $string = "@dsad, 
+       /* $top_communities = Community::withCount('threads')
+        ->whereHas('threads', function($q){
+            $q->whereBetween('created_at', [Carbon::now()->startOfMonth()->subMonth(1),Carbon::now()->endOfMonth()]); // Add subMonth(1)
+        })
+        ->orderBy('threads_count', 'desc')
+        ->get();
 
-           @morfeo";
+        foreach ($top_communities as $key=>$value) {
+            $value->index = $key;
+        }
 
-           $arrrr = [];
-           $lele = preg_match_all("/@[a-zA-Z0-9]{0,20}/", $string, $matches);
+        $communities_scoring = Community::get();
+        foreach ($communities_scoring as $community) {
+            $community->score = Community::getCommunityScore($community->id);
+        }
 
-           foreach ($matches[0] as $key => $value) {
-            $username = str_replace("@", "", $value);
-            if (User::where('name', $username)->exists()) {
-                $user_id = User::where('name', $username)->value('id');
-                Notification::createNotification($user_id, "Te han mencionado crackLOKO");
+        $communities_scoring->sortByDesc('score');
+
+        foreach ($communities_scoring as $key => $value) {
+            $value->index = $key;
+        }
+
+        return $communities_scoring;
+        return $top_communities;*/
+
+      // return UserCommunity::where('community_id', 11071968)->whereIn('subscription_type', [5000,2000])->with('user')->get();
+
+        $community = Community::where('id', 11071967)->with('community_moderators')->first();
+
+                /* ARREGLAR FOREACH!!!!!!!!!!!!!!!!! */
+            foreach ($community->community_moderators as $admin) {
+                Notification::createNotification($admin->user_id, 29081996, "thread_report");   
             }
-                //
-                //Notification::createNotification(24111997, "Logro desbloqueado: Me gusta");
                 
-                
-            
-            
-           }
-
-
-          
-          
-          
-            
-        
-        //return $tete;
-    }
+        return $community->community_moderators[0]->user_id;
+                        
+         }
 }
 

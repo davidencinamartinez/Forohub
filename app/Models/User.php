@@ -57,8 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail {
         $karma = 1;
         $threads = Thread::where('user_id', $user_id)->withCount('upvotes')->withCount('downvotes')->get();
         foreach ($threads as $thread) {
-        $karma += 0.05+($thread->upvotes_count*0.025)+($thread->downvotes_count*(-0.035));
+        $karma += 0.05+($thread->upvotes_count*0.025)+($thread->downvotes_count*(-0.025));
         }
-        return $karma;
+        return number_format($karma, 2, ',', '.');
     }
 }

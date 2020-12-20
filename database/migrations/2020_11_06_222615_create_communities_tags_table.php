@@ -16,6 +16,9 @@ class CreateCommunitiesTagsTable extends Migration
         Schema::create('communities_tags', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('community_id');
+            $table->foreign('community_id')->references('id')->on('communities');
+            $table->string('tagname', 30);
         });
     }
 

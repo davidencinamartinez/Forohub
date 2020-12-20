@@ -25,13 +25,12 @@ class UserCommunity extends Model {
         return $this->belongsTo(Community::class, 'community_id');
     }
 
-    public function users() {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
-    public function user() {
-        return $this->belongsTo('App\Models\User');
+    public static function userCount($community_id) {
+        return UserCommunity::where('community_id', $community_id)->count();
     }
 
     public static function JoinCommunity($community_id) {

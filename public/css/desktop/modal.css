@@ -22,6 +22,8 @@
 		border-radius: 6px;
 		color: black;
 		width: -moz-max-content;
+		min-width: 300px;
+		max-width: 650px;
 	}
 
 /* MODAL HEADER + ELEMENTS */
@@ -124,6 +126,7 @@
 
 		.modal-error > ul > li {
 			margin-bottom: 10px;
+			margin-top: 10px;
 		}
 
 	/* MODAL SUCCESS */
@@ -190,6 +193,12 @@
 
 	/* MODAL NOTIFICATIONS */
 
+		.modal-notifications {
+			max-height: 400px;
+			overflow-y: scroll;
+			padding: 10px;
+		}
+
 		.modal-notification {
 			background-color: #6B6B6B;
 		    align-items: center;
@@ -202,7 +211,7 @@
 		}
 
 		.modal-notification:hover {
-			box-shadow: 0px 0px 2px 1px black;
+			box-shadow: 0px 0px 0px 1px black;
 		}
 
 		.modal-notification.unread {
@@ -221,9 +230,63 @@
 
 		.notification-info {
 			float: right;
-			width: 250px;
+			width: 300px;
 		}
 
+	/* MODAL MARQUEE */
+
+		.modal-marquee {
+			text-align: justify;
+		}
+
+	/* MODAL REPORT */
+
+		/* MODAL REPORT SELECT */
+
+			.modal-select {
+				padding: 4px;
+				outline: none;
+				border: solid 1px black;
+				border-radius: 4px;
+				width: 295px;
+			}
+
+			.modal-select:focus {
+				box-shadow: 1px 1px 1px 1px black;
+			}
+
+		/* MODAL REPORT TEXTAREA */
+
+			.modal-report-id {
+				margin-top: 20px;
+				text-align: left;
+			}
+
+			.modal-report-type {
+				text-align: left;
+			}
+
+			.modal-report-textarea {
+				resize: none;
+				width: 95%;
+				height: 70px;
+				margin-top: 4px;
+				border: solid 1px black;
+				outline: none;
+				padding: 10px;
+				text-align: justify;
+				border-radius: 6px;
+			}
+
+			.modal-report-textarea:focus {
+				box-shadow: 0px 0px 1px 1px black;
+			}
+
+			.modal-report-counter {
+				text-align: right;
+				font-size: 12px;
+				font-weight: bold;
+			}
 
 
 /* MODAL FOOTER + ELEMENTS */

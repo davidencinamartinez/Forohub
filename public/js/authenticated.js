@@ -17,11 +17,6 @@ $(document).ready(function() {
 	$(document).on('click', '.blurry', function(event) {
 		nsfwModal();
 	});
-	$(document).on('click', '.modal-close', function(event) {
-		$('.modal').fadeOut('fast', function() {
-			$('.modal').remove();
-		})
-	});
 	$(document).on('click', '.modal-nsfw-allow', function(event) {
 		document.cookie = "nsfw=allowed";
 		$('.blurry').removeClass('blurry');
@@ -84,6 +79,8 @@ $(document).ready(function() {
 			{_token: $('meta[name="csrf-token"]').attr('content')}, 
 			function(data, textStatus, xhr) {
 				$('.user-unread-notifications').remove();
+		}).fail(function(data) {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		});
 	});
 	window.onclick = function(event) {
@@ -100,6 +97,8 @@ $(document).ready(function() {
 				community: $(this).prev('.thread-community').find('.thread-community-name').text()
 			}, function(data, textStatus, xhr) {
 				notifyUser(data.success);
+		}).fail(function(data) {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		});
 		$(this).fadeOut('fast', function() {
 			$(this).fadeIn('fast');
@@ -119,12 +118,74 @@ $(document).ready(function() {
 			$(this).fadeIn('fast');
 			$(this).attr('class', 'required-auth thread-community-join');
 			$(this).text('Suscribirse');
+		}).fail(function(data) {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		});
 	});
 	$(document).on('click', '.thread-quick-reply-send', function(event) {
 		submitQuickReply($(this));
 	});
-	$('.report-thread, .report-reply').click(function(event) {
-		reportModal();
+	$(document).on('input', '.modal-report-textarea', function(event) {
+		$('.modal-report-counter label:first').text($('.modal-report-textarea').val().length);
+	});
+	$('.report-thread').click(function(event) {
+		reportThreadModal($(this).parent().closest('.thread').attr('data-id'));
+	});
+	$(document).on('click', '.modal-report-thread-send', function(event) {
+		$('.modal-error ul').empty();
+		$.post('/zKj113txZHvkB86ZPWnnJxIYB438y7SeBfkKMR84zvp5XgC5DIsEpP5F1vOtPsoT', 
+			{
+				_token: $('meta[name="csrf-token"]').attr('content'),
+				thread_id: $('.modal-body #thread-id').text(),
+				type: $('.modal-select').val(),
+				description: $('.modal-report-textarea').val()
+		}, function(data, textStatus, xhr) {
+			if (data.success) {
+				modalSuccess(data.success);
+				setTimeout(function() {
+					$('.modal').fadeOut('fast', function() {
+						$('.modal').remove();
+					})
+				}, 4000);
+			} else if (data.remaining_time){
+				$('.modal-error').css('display', 'block');
+				createElement('li', null, '.modal-error ul', 'Espera '+data.remaining_time+' segundo(s) para enviar otro reporte');
+			} else {
+				$('.modal-error').css('display', 'block');
+				createElement('li', null, '.modal-error ul', data.response);
+			}
+		}).fail(function(data) {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
+		})
+	});
+	$('.report-reply').click(function(event) {
+		reportReplyModal($(this).closest('.thread-reply').attr('data-id'));
+	});
+	$(document).on('click', '.modal-report-reply-send', function(event) {
+		$('.modal-error ul').empty();
+		$.post('/gAKFLXK4xRsW8kMCRAFi3GjzwBYa8oMrSV4pQ6O0m14xoZP6Mi8hAAH6LEqdwsOl', 
+			{
+				_token: $('meta[name="csrf-token"]').attr('content'),
+				reply_id: $('.modal-body #reply-id').text(),
+				type: $('.modal-select').val(),
+				description: $('.modal-report-textarea').val()
+		}, function(data, textStatus, xhr) {
+			if (data.success) {
+				modalSuccess(data.success);
+				setTimeout(function() {
+					$('.modal').fadeOut('fast', function() {
+						$('.modal').remove();
+					})
+				}, 4000);
+			} else if (data.remaining_time){
+				$('.modal-error').css('display', 'block');
+				createElement('li', null, '.modal-error ul', 'Espera '+data.remaining_time+' segundo(s) para enviar otro reporte');
+			} else {
+				$('.modal-error').css('display', 'block');
+				createElement('li', null, '.modal-error ul', data.response);
+			}
+		}).fail(function(data) {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
+		})
 	});
 });

@@ -18,6 +18,7 @@ class ReplySeeder extends Seeder {
 
         // REPLY
         DB::table('replies')->insert([
+            'id' => 26052016,
             'created_at' => Carbon::now()->sub('3 hours'),
             'updated_at' => Carbon::now()->sub('3 hours'),
         	'thread_id' => 29081996,
