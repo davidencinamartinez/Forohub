@@ -194,7 +194,7 @@
                         cursor: pointer;
                     }
 
-                     .blurry > img {
+                    .blurry > img {
                         filter: blur(50px);
                     }
 
@@ -353,6 +353,7 @@
 
                 .thread-reply-author img {
                     width: 64px;
+                    height: 64px;
                     border-radius: 6px;
                     margin: 6px 0px 6px 0px;
                     border: solid 1px black;
@@ -392,5 +393,3 @@
                 border-top: solid 1px black;
                 padding: 6px;
             }
-
-

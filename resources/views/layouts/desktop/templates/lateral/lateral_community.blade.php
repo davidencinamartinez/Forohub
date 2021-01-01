@@ -1,6 +1,6 @@
 <div class="lateral-cube lateral-community-data">
     <div class="lateral-title">Comunidad</div>
-    <img class="lateral-community-logo" src="/src/communities/logo/{{ $community->logo }}">
+    <img class="lateral-community-logo" src="{{ $community->logo }}">
     <b class="lateral-community-title">{{ $community->title }}</b>
     <label class="lateral-community-tag">c/{{ $community->tag }}</label>
     <p class="lateral-community-description">{{ $community->description }}</p>

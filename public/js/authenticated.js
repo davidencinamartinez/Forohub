@@ -125,8 +125,8 @@ $(document).ready(function() {
 	$(document).on('click', '.thread-quick-reply-send', function(event) {
 		submitQuickReply($(this));
 	});
-	$(document).on('input', '.modal-report-textarea', function(event) {
-		$('.modal-report-counter label:first').text($('.modal-report-textarea').val().length);
+	$(document).on('input', 'textarea', function(event) {
+		$(this).next('.character-counter').find('label:first').text($(this).val().length);
 	});
 	$('.report-thread').click(function(event) {
 		reportThreadModal($(this).parent().closest('.thread').attr('data-id'));
@@ -188,4 +188,51 @@ $(document).ready(function() {
 			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		})
 	});
+	$('.user-avatar').click(function(event) {
+		updateProfilePicture();
+	});
+	$(document).on('change', '.modal-avatar-form input', function(event) {
+		var file =  $("input[type=file]").get(0).files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                $(".modal-avatar-picture:first").attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+	});
+	$(document).on('submit', '.modal-avatar-form form', function(event) {
+		event.preventDefault();
+		avatarForm = new FormData();
+		avatarForm.append('avatar', $("input[type=file]").get(0).files[0]);
+		$('.modal-error').css('display', 'none');
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});  
+		$.ajax({
+			url: '/hT8IFRUl6hAVCSCmv7iBeGDKBSMgT0XQl3quQh4EJOzeMCQ1ZwTMzWE6VMWo3le7',
+			type: 'POST',
+			data: avatarForm,
+			processData: false,
+			contentType: false
+		}).done(function(data) {
+			console.log(data);
+			if ($.isEmptyObject(data.error)) {
+				location.reload();
+			} else {
+				$('.modal-error').css('display', 'block');
+				$('.modal-error ul').empty();
+				$.each(data.error, function(index, val) {
+					$.each(val, function(index, val) {
+						 createElement('li', null, '.modal-error ul', val);
+					});
+				});
+			}
+		}).fail(function() {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
+		});
+	});
+	
 });

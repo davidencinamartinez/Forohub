@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->string('about', 40)->default('Miembro de ForoHub');
-            $table->string('avatar', 36)->default('Rj0pKZkZjnBUSreolKVwqxyXtwrIkF9.webp');
+            $table->string('avatar', 100)->default('/src/avatars/Rj0pKZkZjnBUSreolKVwqxyXtwrIkF9.webp');
             $table->boolean('banned')->default(false);
         });
     }

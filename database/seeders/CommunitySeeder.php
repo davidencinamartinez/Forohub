@@ -25,7 +25,7 @@ class CommunitySeeder extends Seeder {
         	'tag' => 'forohub',
             'title' => 'ForoHub - Oficial',
             'description' => 'Comunicados oficiales de ForoHub',
-            'logo' => 's2HGcJxofEphgzMYmZvPnRlQi1Admxl.webp',
+            'logo' => '/src/communities/logo/s2HGcJxofEphgzMYmZvPnRlQi1Admxl.webp',
         ]);
         DB::table('communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 5 hours'),
@@ -33,7 +33,7 @@ class CommunitySeeder extends Seeder {
             'tag' => 'foodporn',
             'title' => 'Food Porn',
             'description' => 'Pongamos aquí nuestras delicias más dulces',
-            'logo' => 'Mn1uYQpJRjahK905oCuRAD7JPSDMRjh.webp'
+            'logo' => '/src/communities/logo/Mn1uYQpJRjahK905oCuRAD7JPSDMRjh.webp'
         ]);
         DB::table('communities')->insert([
             'created_at' => Carbon::now()->sub('1 day 4 hours 10 minutes'),
@@ -41,7 +41,7 @@ class CommunitySeeder extends Seeder {
             'tag' => 'supercoches',
             'title' => 'Supercoches',
             'description' => 'A 280 no tengo amigos',
-            'logo' => '4BcaiQYi50mSuizPM8LI1WYovP7Sty9.webp',
+            'logo' => '/src/communities/logo/4BcaiQYi50mSuizPM8LI1WYovP7Sty9.webp',
             'background' => 'ObmG5qIEcIZkMtWqEGVFXmkdlwlqSeQx.jpg'
         ]);
         DB::table('communities')->insert([
@@ -50,7 +50,7 @@ class CommunitySeeder extends Seeder {
             'tag' => 'gatitos',
             'title' => 'Gatos - Mewww',
             'description' => 'Nuestros mejores y peludos amigos',
-            'logo' => 'e3RI92gixW1kMgv3zE8xvRaOfteG6eF.webp'
+            'logo' => '/src/communities/logo/e3RI92gixW1kMgv3zE8xvRaOfteG6eF.webp'
         ]);
         DB::table('communities')->insert([
             'created_at' => Carbon::now()->sub('15 hours 40 minutes'),
@@ -58,7 +58,7 @@ class CommunitySeeder extends Seeder {
             'tag' => 'deepweb',
             'title' => 'Deep Web',
             'description' => 'Dark Web Content (NSFW, Gore, Etc...)',
-            'logo' => '2lEJIHUsECujkljokF2oyCA6KekxFfv.webp'
+            'logo' => '/src/communities/logo/2lEJIHUsECujkljokF2oyCA6KekxFfv.webp'
         ]);
         DB::table('communities')->insert([
             'created_at' => Carbon::now()->sub('15 hours 20 minutes'),
@@ -66,7 +66,7 @@ class CommunitySeeder extends Seeder {
             'tag' => 'jdmretro',
             'title' => 'JDM Retro',
             'description' => 'Running in the 90s',
-            'logo' => 'zhxYn3UKnOf9PYLyLfrubCU4vXgokUA.webp'
+            'logo' => '/src/communities/logo/zhxYn3UKnOf9PYLyLfrubCU4vXgokUA.webp'
         ]);
 
         // COMMUNITIY RULES

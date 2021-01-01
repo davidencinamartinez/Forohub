@@ -24,7 +24,7 @@
         <div class="thread-content">
             <span>
                 <div class="thread-community">
-                    <img class="thread-community-logo" src="/src/communities/logo/{{ $thread->communities->logo }}" alt="{{ $thread->communities->name }}">
+                    <img class="thread-community-logo" src="{{ $thread->communities->logo }}" alt="{{ $thread->communities->name }}">
                     <b><a class="thread-community-name" href="/c/{{ $thread->communities->tag }}">{{ $thread->communities->tag }}</a></b>
                 </div>
                 @if ($thread->user_joined_community == 'true')

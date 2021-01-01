@@ -85,7 +85,7 @@ function validateRegister() {
 	})
 	.done(function(data) {
 		if ($.isEmptyObject(data.error)) {
-			$('.modal-form, .modal-body p').remove();
+			$('.modal-register-form, .modal-body p').remove();
 			createElement('div', {class: 'modal-success'}, '.modal-body');
 			createElement('p', null, '.modal-success', 'Bienvenido a Forohub!');
 			createElement('p', null, '.modal-success', 'Te hemos enviado un correo para que verifiques tu cuenta');
@@ -177,27 +177,27 @@ function registerModal() {
 		createElement('img', {class: 'modal-logo', src: '/src/media/logo_black.webp'}, '.modal-body');
 		createElement('h2', null, '.modal-body', 'Formulario de registro'); // Title
 		createElement('p', null, '.modal-body', 'Todos los campos son obligatorios (*)'); // Message
-		createElement('form', {class: 'modal-form', method: 'POST', action: 'http://192.168.1.5:8000/register', onsubmit: 'return validateRegister()'}, '.modal-body'); // Form
+		createElement('form', {class: 'modal-register-form', method: 'POST', action: 'http://192.168.1.5:8000/register', onsubmit: 'return validateRegister()'}, '.modal-body'); // Form
 		// Modal Error
-			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-form');
+			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-register-form');
 			createElement('ul', null, '.modal-error');		
 		// Token Input
-			createElement('input', {type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content')}, '.modal-form');
+			createElement('input', {type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content')}, '.modal-register-form');
 		// Email Input
-			createElement('div', {class: 'modal-input'}, '.modal-form');
+			createElement('div', {class: 'modal-input'}, '.modal-register-form');
 			createElement('input', {type: 'text', name: 'email', maxlength: 64, placeholder: 'Correo electrónico', autofocus: "on", autocomplete: "off"}, '.modal-input:last');
 		// Username Input
-			createElement('div', {class: 'modal-input'}, '.modal-form');
+			createElement('div', {class: 'modal-input'}, '.modal-register-form');
 			createElement('input', {type: 'text', name: 'name', maxlength: 20, placeholder: 'Nombre de usuario', spellcheck: 'false', autocomplete: "off"}, '.modal-input:last');
 		// Password Input
-			createElement('div', {class: 'modal-input'}, '.modal-form');
+			createElement('div', {class: 'modal-input'}, '.modal-register-form');
 			createElement('input', {type: 'password', name: 'password', maxlength: 64, placeholder: 'Contraseña', autocomplete: "off"}, '.modal-input:last');
 		// Terms Checkbox
-			createElement('div', {class: 'modal-input', style: 'text-align: left;'}, '.modal-form');
+			createElement('div', {class: 'modal-input', style: 'text-align: left;'}, '.modal-register-form');
 			createElement('input', {type: 'checkbox', name: 'checkbox', style: 'vertical-align: middle;'}, '.modal-input:last');
 			createElement('label', {style: 'font-size: 12px;'}, '.modal-input:last', 'Acepto los <a href="" target="_blank">términos y condiciones</a>');
 		// Submit Button
-			createElement('button', {type: 'submit', style: 'margin-top: 10px;'}, '.modal-form', 'Registrarse');
+			createElement('button', {type: 'submit', style: 'margin-top: 10px;'}, '.modal-register-form', 'Registrarse');
 }
 
 function displayProfile(id) {
@@ -299,9 +299,9 @@ function reportThreadModal(thread_id) {
 			createElement('b', {style: 'float: left'}, '.modal-report-description', 'Descripción:');
 			createElement('textarea', {class: 'modal-report-textarea', maxlength: 140, placeholder: 'Descripción del reporte (Máx. 140 carácteres)'}, '.modal-report-description');
 		// Character Counter
-			createElement('div', {class: 'modal-report-counter'}, '.modal-body');
-			createElement('label', null, '.modal-body div:last', '0');
-			createElement('label', null, '.modal-body div:last', '/140');
+			createElement('div', {class: 'character-counter'}, '.modal-report-description');
+			createElement('label', null, '.modal-report-description .character-counter', '0');
+			createElement('label', null, '.modal-report-description .character-counter', '/140');
 		// Modal Error
 			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-body');
 			createElement('ul', null, '.modal-error');
@@ -334,9 +334,9 @@ function reportReplyModal(reply_id) {
 			createElement('b', {style: 'float: left'}, '.modal-report-description', 'Descripción:');
 			createElement('textarea', {class: 'modal-report-textarea', maxlength: 140, placeholder: 'Descripción del reporte (Máx. 140 carácteres)'}, '.modal-report-description');
 		// Character Counter
-			createElement('div', {class: 'modal-report-counter'}, '.modal-body');
-			createElement('label', null, '.modal-body div:last', '0');
-			createElement('label', null, '.modal-body div:last', '/140');
+			createElement('div', {class: 'character-counter'}, '.modal-report-description');
+			createElement('label', null, '.modal-report-description .character-counter', '0');
+			createElement('label', null, '.modal-report-description .character-counter', '/140');
 		// Modal Error
 			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-body');
 			createElement('ul', null, '.modal-error');
@@ -513,4 +513,106 @@ function submitQuickReply(element) {
 	}).fail(function(errorThrown) {
         createElement('p', {class: 'thread-quick-reply-failed'}, $(element).parent(), 'Ha ocurrido un problema con tu petición (Error 500)');	
 	});
+}
+
+function updateProfilePicture() {
+	createModal();
+	// Modal Body Elements
+		createElement('img', {class: 'modal-logo', src: '/src/media/logo_black.webp'}, '.modal-body');
+		createElement('h1', null, '.modal-body', 'Actualizar avatar'); // Title
+		// User Current Avatar
+			createElement('img', {class: 'modal-avatar-picture', src: $('.user-avatar:first').attr('src')}, '.modal-body');
+		// Form
+			createElement('div', {class: 'modal-avatar-form'}, '.modal-body');
+			createElement('form', {method: 'POST', action: '/hT8IFRUl6hAVCSCmv7iBeGDKBSMgT0XQl3quQh4EJOzeMCQ1ZwTMzWE6VMWo3le7', enctype: "multipart/form-data"}, '.modal-avatar-form');
+			createElement('input', {type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content')}, '.modal-avatar-form form');
+			createElement('input', {type: 'file', name: 'avatar', accept: 'image/*, .jpeg, .jpg, .gif, .webp, .png'}, '.modal-avatar-form form');
+		// Report Buttons
+			createElement('div', {class: 'modal-avatar-buttons', style: 'margin-top: 10px'}, '.modal-avatar-form form');
+			createElement('button', {class: 'modal-exit', style: 'margin-right: 2px'}, '.modal-avatar-buttons', 'Cancelar');
+			createElement('button', {class: 'modal-avatar-update'}, '.modal-avatar-buttons', 'Enviar');
+		// Modal Error
+			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-body');
+			createElement('ul', null, '.modal-error');		
+}
+
+function NT_getCommunity(element) {
+	var input = $(element).val();
+	$(element).parent().children('label').remove();
+	$('.thread-community-option-container').empty();
+	if ($.trim($(element).val()) != '') {
+		$.get('/9bKSmij7MRoNx6ZU9MWFzRe8zPre4klv7L3YxXYZ7Knl8qW5PYn1l3ESgejrV1cE/'+input, function(data) {
+			$('.community-div').remove();
+			$('.thread-community-container').empty();
+			$('.thread-community-container').remove();
+			createElement('div', {class: 'thread-community-container'}, '.thread-community');
+			if ($.isEmptyObject(data)) {
+				createElement('label', {class: 'community-div'}, '.thread-community-container', 'No se han encontrado resultados');
+			} else {
+				$.each(data, function(index, val) {
+					// Community Div
+						createElement('div', {class: 'community-div', 'data-tag': val.tag}, '.thread-community-container');
+						// Community Div Image
+							createElement('div', {class: 'community-img'}, '.community-div:last');
+							createElement('img', {src: val.logo}, '.community-img:last');
+						// Community Div Data
+							createElement('div', {class: 'community-data'}, '.community-div:last');
+							createElement('b', null, '.community-data:last', val.title);
+							if (val.user_count == 1) {
+								createElement('label', null, '.community-data:last', 'c/'+val.tag+' · '+val.user_count+' Miembro');
+							} else {
+								createElement('label', null, '.community-data:last', 'c/'+val.tag+' · '+val.user_count+' Miembros');
+							}
+				});
+			}
+		})
+	} else {
+		$('.thread-community-container').remove();
+		$('.community-div').remove();
+	}
+}
+
+function NT_pickType(type) {
+	if (type == "post") {
+		createElement('b', {class: 'input-title'}, '.thread-content', 'Descripción:');
+		createElement('textarea', {class: 'content', placeholder: 'Descripción ...', rows: '10'}, '.thread-content');
+	} else if (type == "multimedia") {
+		createElement('b', {class: 'input-title'}, '.thread-content', 'Archivos:');
+		createElement('input', {type: 'file', class: 'multimedia-input'}, '.thread-content');
+		createElement('br', null, '.thread-content');
+		createElement('b', {class: 'input-title'}, '.thread-content', 'Leyenda:');
+		createElement('textarea', {class: 'content', placeholder: 'Leyenda ...', rows: '10'}, '.thread-content');
+	} else if (type == "link") {
+		createElement('b', {class: 'input-title'}, '.thread-content', 'URL:');
+		createElement('input', {type: 'text', placeholder: 'Introduce un enlace ...'}, '.thread-content');
+	} else if (type = "poll") {
+		createElement('b', {class: 'input-title'}, '.thread-content', 'Encuesta:');
+		createElement('div', {class: 'poll-container'}, '.thread-content');
+		createElement('div', {class: 'poll-option'}, '.poll-container');
+		createElement('input', {type: 'text', placeholder: 'Opción 1'}, '.poll-option:first');
+		createElement('div', {class: 'poll-option'}, '.poll-container');
+		createElement('input', {type: 'text', placeholder: 'Opción 2'}, '.poll-option:last');
+		createElement('button', {class: 'append-option'}, '.thread-content', 'Añadir');
+	}
+}
+
+function NT_appendPollOption() {
+	
+		createElement('div', {class: 'poll-option'}, '.poll-container');
+		createElement('input', {type: 'text', placeholder: 'Opción '+$('.poll-option').length}, '.poll-option:last');
+		createElement('button', null, '.poll-option:last', '❌');
+	if ($('.poll-option').length >= 10) {
+		$('.append-option').css('display', 'none');
+	}
+	
+}
+
+function NT_removePollOption(element) {
+	$(element).parent().remove();
+	$.each($('.poll-option input'), function(index, val) {
+		$(this).attr('placeholder', 'Opción '+(index+1));
+	});
+	if ($('.poll-option').length <= 10) {
+		$('.append-option').css('display', 'block');
+	}
 }

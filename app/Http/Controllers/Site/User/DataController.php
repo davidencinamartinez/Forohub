@@ -9,12 +9,49 @@ use App\Models\User;
 use App\Models\Community;
 use App\Models\UserCommunity;
 use App\Models\Thread;
+use App\Models\File;
 use Auth;
 use DB;
 use App\Models\Notification;
 use Carbon\Carbon;
+use Validator;
 
 class DataController extends Controller {
+
+    /* AVATAR */
+
+    function updateAvatar(Request $request) {
+        if (Auth::user()) {
+            $messages = [
+
+                'avatar.required' => 'Debes seleccionar un archivo',
+                'avatar.image' => 'Sólo se permiten ficheros de tipo imagen',
+                'avatar.mimes' => 'Extensiones válidas: jpg, png, gif, webp',
+                'avatar.dimensions' => 'El fichero no cumple con las dimensiones permitidas (Min: 64x64 / Máx: 3840x2160) ',
+                'avatar.max' => 'El tamaño máximo del fichero no puede superar los 4Mb (4096Kb)',
+            ];
+
+            $validator = Validator::make($request->all(), [
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|dimensions:min_width=64,min_height=64,max_width=3840,max_height=2160|max:4096'
+            ], $messages);
+
+            // IF VALIDATION OK
+            if ($validator->passes()) {
+                $upload = cloudinary()->upload($request->file('avatar')->getRealPath())->getSecurePath();
+                $user = User::where('id', Auth::user()->id)->update(
+                    [
+                        'avatar' => $upload,
+                        'updated_at' => Carbon::now()
+                    ]
+                );
+                return response()->json(['success' => 'Tu avatar ha sido actualizado con éxito']);
+            } else {
+                return response()->json(['error' => $validator->getMessageBag()->toArray()]);
+            }
+        } else {
+            return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
+        }
+    }
     
 	/* REWARDS */
 

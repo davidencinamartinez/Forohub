@@ -141,43 +141,18 @@ class IndexController extends Controller {
     
     /* TEST */	
     
-    function test() {
-       /* $top_communities = Community::withCount('threads')
-        ->whereHas('threads', function($q){
-            $q->whereBetween('created_at', [Carbon::now()->startOfMonth()->subMonth(1),Carbon::now()->endOfMonth()]); // Add subMonth(1)
-        })
-        ->orderBy('threads_count', 'desc')
-        ->get();
+    public function fileUpload(Request $req){
+        $response = cloudinary()->upload($req->file('file')->getRealPath())->getSecurePath();
 
-        foreach ($top_communities as $key=>$value) {
-            $value->index = $key;
-        }
+                dd($response);
 
-        $communities_scoring = Community::get();
-        foreach ($communities_scoring as $community) {
-            $community->score = Community::getCommunityScore($community->id);
-        }
+                return back()
+                    ->with('success', 'File uploaded successfully');
 
-        $communities_scoring->sortByDesc('score');
 
-        foreach ($communities_scoring as $key => $value) {
-            $value->index = $key;
-        }
-
-        return $communities_scoring;
-        return $top_communities;*/
-
-      // return UserCommunity::where('community_id', 11071968)->whereIn('subscription_type', [5000,2000])->with('user')->get();
-
-        $community = Community::where('id', 11071967)->with('community_moderators')->first();
-
-                /* ARREGLAR FOREACH!!!!!!!!!!!!!!!!! */
-            foreach ($community->community_moderators as $admin) {
-                Notification::createNotification($admin->user_id, 29081996, "thread_report");   
-            }
-                
-        return $community->community_moderators[0]->user_id;
-                        
+        
+      }
+         function createForm() {
+            return view('layouts.test');
          }
 }
-

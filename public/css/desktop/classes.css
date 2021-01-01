@@ -58,3 +58,11 @@
 		color: #FFB600;
 		cursor: pointer;
 	}
+
+/* CHARACTER COUNTER */
+
+	.character-counter {
+		text-align: right;
+		font-size: 12px;
+		font-weight: bold;
+	}

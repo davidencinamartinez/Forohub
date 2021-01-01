@@ -9,7 +9,7 @@
             <br>
             <b>{{ $reply->user->about }}</b>
             <br>
-            <img src="/src/avatars/{{ $reply->user->avatar }}">
+            <img src="{{ $reply->user->avatar }}">
             <br>
             <b class="thread-reply-user-register">{{ $reply->user->created_at }}</b> | <b>{{ $reply->user->user_reply_count }} Mens.</b>
             <br>

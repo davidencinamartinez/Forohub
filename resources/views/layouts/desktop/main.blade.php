@@ -4,13 +4,12 @@
 	<meta charset='utf-8'>
 	<title>@yield('title')</title>
 	<link rel='shortcut icon' type='image/png' href='/src/media/favicon.png'>
-	@stack('styles')
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/min.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/header.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/footer.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/modal.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/classes.css") }}'>
-	@stack('scripts')
+	@stack('styles')
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es.js"></script>
@@ -21,6 +20,7 @@
 		@endif
 		<script src='{{ asset("/js/scriptsheet.js") }}'></script>
 		<meta content="{{ csrf_token() }}" name="csrf-token" />
+	@stack('scripts')
 </head>
 <body>
 	<div class='header'>
@@ -30,7 +30,7 @@
 		<div class='user-login'>
 			@if (Auth::check())
 				<div class='user-header-panel'>
-					<img class='user-avatar' src='/src/avatars/{{ Auth::user()->avatar }}'>
+					<img class='user-avatar' src='{{ Auth::user()->avatar }}'>
 					@if ($unread_notifications)
 					<div class="user-unread-notifications">{{ $unread_notifications }}</div>
 					@endif

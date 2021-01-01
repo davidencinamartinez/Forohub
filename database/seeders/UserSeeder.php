@@ -24,7 +24,7 @@ class UserSeeder extends Seeder {
             'email' => 'davidencina1996@gmail.com',
             'password' => Hash::make('Supermarche666!'),
             'about' => 'Amo y Señor del Foro',
-            'avatar' => 'rAB7gUyCPXzlEe9MM4zdUrKFzpn8WKm.webp'
+            'avatar' => '/src/avatars/rAB7gUyCPXzlEe9MM4zdUrKFzpn8WKm.webp'
         ]);
         DB::table('users')->insert([
             'created_at' => Carbon::now()->sub('1 day 6 hours'),
