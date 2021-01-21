@@ -45,7 +45,7 @@
 <div class="lateral-cube">
     <div class="lateral-title">Tags</div>
     <div class="lateral-community-tags">
-        @foreach ($community->tags as $tag) 
+        @foreach ($tags as $tag) 
             <b class="lateral-community-keyword">{{ $tag->tagname }}</b>
         @endforeach
     </div>

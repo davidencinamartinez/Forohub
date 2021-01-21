@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/c/{community_tag}/t/{thread_id}', [App\Http\Controllers\Site\Thread\ThreadController::class, 'getThreadData'])->where('thread_id', '[0-9]+');
 
+	Route::post('/aLzEAm3NB3BelFXWhNnPm7lt4enHzGFu0f64eX6Yt7ExAqkRWmnUQspibxZN5UkX', [App\Http\Controllers\Site\Thread\ThreadController::class, 'makeThread']);
+
 /* REPLY ROUTES */
 
 	Route::post('bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'makeReply']);
@@ -69,7 +71,15 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/9bKSmij7MRoNx6ZU9MWFzRe8zPre4klv7L3YxXYZ7Knl8qW5PYn1l3ESgejrV1cE/{tag}', [App\Http\Controllers\Site\Thread\ThreadController::class, 'getCommunityTag']);
 
+	Route::post('/S4Tv3XILDMnGXYwp8bqof0Of5A4kEAzehcoJKnGj6KyOf8fKCQrklvGuWZ7ATU43', [App\Http\Controllers\Site\Thread\ThreadController::class, 'votePoll']);
+
+	Route::post('/bEOqw0g8isVWDPjOKCbHjfxUNsgMCLtOlIux2pSbp7PLI6uMVSGkvmlFkyIfde6c', [App\Http\Controllers\Site\Thread\ThreadController::class, 'checkMultimedia']);
+
 /* TEST ROUTES */
 Route::get('/image-upload', [App\Http\Controllers\Site\IndexController::class, 'createForm']);
 
 Route::post('/image-upload', [App\Http\Controllers\Site\IndexController::class, 'fileUpload'])->name('imageUpload');
+
+Route::get('/test', [App\Http\Controllers\Site\IndexController::class, 'test']);
+
+Route::post('/yolo', [App\Http\Controllers\Site\Thread\ThreadController::class, 'yolo']);

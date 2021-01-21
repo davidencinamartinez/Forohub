@@ -40,12 +40,22 @@
 
 	marquee {
 		background-color: ghostwhite;
-	    margin: 10px 0px 10px 0px;
+	    margin: 10px 0px 0px 0px;
 	    padding: 12px;
 	    font-size: 14px;
 	    border-radius: 4px;
 	    cursor: pointer;
 	}
+
+	/* ERROR */
+
+		.error {
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		    display: block;
+		    font-weight: bold;
+		    color: #e80000;
+		    font-size: 14px;
+		}
 
 	/* PAGINATOR */
 

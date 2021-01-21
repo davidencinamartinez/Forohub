@@ -13,6 +13,8 @@ use App\Models\Reply;
 use App\Models\UserReward;
 use App\Models\UserCommunity;
 use App\Models\Notification;
+use App\Models\PollOption;
+use App\Models\PollVote;
 use Carbon\Carbon;
 use Auth;
 use Validator;
@@ -41,7 +43,6 @@ class IndexController extends Controller {
             $community->score = Community::getCommunityScore($community->id);
         }
         $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
-        
 
         $fh_data = array(
             'count_communities' => Community::count(),
@@ -74,6 +75,28 @@ class IndexController extends Controller {
                         $thread->user_joined_community = 'true';
                 } else {
                     $thread->user_joined_community = 'false';
+                }
+            }
+        }
+
+        foreach ($threads as $thread) {
+            if ($thread->body == "IS_POLL") {
+                $poll_total_votes = PollVote::getCountVotes($thread->id);
+                $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
+                foreach ($poll_options as $option) {
+                    if ($poll_total_votes != 0) {
+                        $thread->total_votes = $poll_total_votes;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
+                        }
+                    } else {
+                        $thread->total_votes = 0;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = 0;
+                        }
+                    }
                 }
             }
         }
@@ -141,8 +164,8 @@ class IndexController extends Controller {
     
     /* TEST */	
     
-    public function fileUpload(Request $req){
-        $response = cloudinary()->upload($req->file('file')->getRealPath())->getSecurePath();
+    public function fileUpload(Request $request){
+        $response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
                 dd($response);
 
@@ -154,5 +177,51 @@ class IndexController extends Controller {
       }
          function createForm() {
             return view('layouts.test');
+         }
+
+         function test() {
+
+                $poll_options = PollOption::where('thread_id', 29082008)->withCount('votes')->get();
+                $poll_total_votes = PollVote::getCountVotes(29082008);
+                foreach ($poll_options as $option) {
+                    if ($poll_total_votes != 0) {
+                       
+                            $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
+                        
+                    } else {
+                        
+                            $option->percentage = 0;
+                        
+                    }
+                }
+                return $poll_options;
+
+                $threads = Thread::orderBy('created_at', 'desc')
+                ->with('communities')
+                ->with('author')
+                ->with('first_reply')
+                ->withCount('replies')
+                ->withCount('upvotes')
+                ->withCount('downvotes')
+                ->paginate(4, ['*'], 'pagina');
+
+                foreach ($threads as $thread) {
+                    if ($thread->body == "IS_POLL") {
+                        $poll_total_votes = PollVote::getCountVotes($thread->id);
+                        $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
+                        foreach ($poll_options as $option) {
+                            if ($poll_total_votes != 0) {
+                            $thread->total_votes = $poll_total_votes;
+                            $thread->poll_options = $poll_options;
+                            foreach ($thread->poll_options as $option) {
+                                $option->percentage = round($option->votes_count*100/$poll_total_votes, 1);
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+
+                return $threads;            
          }
 }

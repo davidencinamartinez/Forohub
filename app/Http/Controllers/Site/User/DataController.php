@@ -23,7 +23,6 @@ class DataController extends Controller {
     function updateAvatar(Request $request) {
         if (Auth::user()) {
             $messages = [
-
                 'avatar.required' => 'Debes seleccionar un archivo',
                 'avatar.image' => 'Sólo se permiten ficheros de tipo imagen',
                 'avatar.mimes' => 'Extensiones válidas: jpg, png, gif, webp',

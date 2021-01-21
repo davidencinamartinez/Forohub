@@ -1,7 +1,7 @@
-tags temas
+
 reportes con notificacion a moderador de comunidad y a super
 moderadores de comunidad (rangos: 1->normal / 2->moderador / 3->creador / 4->yo)
-reportar respuestas
+
 redireccion a index con script modal login
 algoritmo karma usuario (pendiente de modificaciones)
 citar y reportar  respuesta
@@ -10,5 +10,4 @@ posicion en el ranking (usuario)
 ultimos logros conseguidos por usuario en panel lateral
 delegar liderazgo en comunidad (controlador y script)
 
-
-Spam/Ventas no autorizadas/Contenido vejatorio o de incitación al odio/Acoso o Bullying/Suicidio o autolesiones/Información falsa o fraude/Contenido violento o repulsivo/Maltrato infantil o pedofilia/Contenido de carácter terrorista/Contiene información confidencial y/o personal
+preload="meta"

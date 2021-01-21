@@ -174,4 +174,11 @@
 		    color: white;
 		    padding: 4px;
 		    border-radius: 6px;
+		    transition: 0.25s;
+		}
+
+		.lateral-community-keyword:hover {
+			background-color: #4A4A4A;
+			transition: 0.25s;
+			cursor: pointer;
 		}

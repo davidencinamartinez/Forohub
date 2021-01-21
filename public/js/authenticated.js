@@ -125,7 +125,7 @@ $(document).ready(function() {
 	$(document).on('click', '.thread-quick-reply-send', function(event) {
 		submitQuickReply($(this));
 	});
-	$(document).on('input', 'textarea', function(event) {
+	$(document).on('input', 'textarea, input', function(event) {
 		$(this).next('.character-counter').find('label:first').text($(this).val().length);
 	});
 	$('.report-thread').click(function(event) {
@@ -218,7 +218,6 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false
 		}).done(function(data) {
-			console.log(data);
 			if ($.isEmptyObject(data.error)) {
 				location.reload();
 			} else {
@@ -233,6 +232,10 @@ $(document).ready(function() {
 		}).fail(function() {
 			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		});
+	});
+	$(document).on('click', '.poll-vote-button', function(event) {
+		event.preventDefault();
+		votePollOption(this);
 	});
 	
 });

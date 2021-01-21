@@ -51,8 +51,25 @@
             <h2 class="thread-title">
                 <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}">{{ $thread->title }}</a>
             </h2>
-            <div class="thread-body">
-                {!! $thread->body !!}
+            <div class="thread-body">@if ($thread->body != 'IS_POLL'){!! $thread->body !!}@else
+                @if ($thread->poll_options)
+                <div class="poll-content">
+                    @foreach ($thread->poll_options as $option)
+                    <div class="poll-option" data-id="{{ $option->id }}">
+                        <div class="option-bar">
+                            <div class="option-data" style="width: {{ $option->percentage }}%">
+                                <b title="{{ $option->name }}">{{ $option->name }}</b>
+                                <label>{{ $option->percentage }}% ({{ $option->votes_count }} votos)</label>
+                            </div>
+                        </div>
+                        <div class="poll-option-vote">
+                            <button class="required-auth poll-vote-button">Votar</button>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>    
+                @endif
+            @endif
             </div>
             <div class="thread-info">
                 <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none">💬</label> {{ $thread->replies_count }} Respuestas</a>
@@ -72,3 +89,4 @@
         </div>
     </div>
 </div>
+
