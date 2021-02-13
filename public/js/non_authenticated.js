@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	if (getCookie('nsfw') == 'allowed') {
 		$('.blurry').removeClass('blurry');
+		$('.blurry-logo').remove();
 	}
 	$(document).on('click', '.blurry', function(event) {
 		nsfwModal();
@@ -23,6 +24,7 @@ $(document).ready(function() {
 		})
 	});
 	$('.required-auth').click(function(event) {	
+		event.preventDefault();
 		notifyUser("😁 Debes estar logeado para acceder a este contenido 😁");
 	});
 	window.onclick = function(event) {

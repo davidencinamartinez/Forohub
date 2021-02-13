@@ -33,6 +33,16 @@ class UserCommunity extends Model {
         return UserCommunity::where('community_id', $community_id)->count();
     }
 
+    public static function leaderJoinCommunity($community_id) {
+        UserCommunity::create([
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'community_id' => $community_id,
+            'user_id' => Auth::user()->id,
+            'subscription_type' => 5000
+        ]);
+    }
+
     public static function JoinCommunity($community_id) {
         UserCommunity::create([
             'created_at' => Carbon::now(),
@@ -43,7 +53,14 @@ class UserCommunity extends Model {
         ]);
     }
 
-    public static function UnjoinCommunity($community_id, $user_id) {
-        UserCommunity::where('community_id', $community_id)->where('user_id', $user_id)->delete();
+    public static function UnjoinCommunity($request) {
+        $community_id = Community::where('tag', $request->community)->value('id');
+        if (UserCommunity::where('community_id', '=', $community_id)->where('user_id', '=', Auth::user()->id)->where('subscription_type', 5000)->exists()) {
+            return response()->json(['error' => '❗ Antes de abandonar esta comunidad, debes delegar tu liderazgo ❗']);
+        } else {
+            UserCommunity::where('community_id', $community_id)->where('user_id', Auth::user()->id)->delete();
+            return response()->json(['success' => '😟 Has salido de la comunidad 😟']);
+        }
+
     }
 }

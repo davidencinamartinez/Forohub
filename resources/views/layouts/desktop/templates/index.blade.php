@@ -42,8 +42,8 @@
         </div>
         <div class="lateral-cube user-actions">
             <div class="lateral-title">Acciones</div>
-            <a href="/crear/tema">Crear Tema</a>
-            <a href="">Crear Comunidad</a>
+            <a class="required-auth" href="/crear/tema">Crear Tema</a>
+            <a class="required-auth" href="/crear/comunidad">Crear Comunidad</a>
         </div>
         <div class="lateral-cube last-replies">
             <div class="lateral-title">Últimos mensajes</div>
@@ -66,13 +66,14 @@
                 <li><b>Mensajes:</b> {{ $fh_data['count_replies'] }}</li>
             </ul>
         </div>
+        @include('layouts.desktop.templates.lateral.lateral_help_center')
     </div>
 </div>
 @if ($threads->hasPages())
-      <div style="text-align: center;">
+    <div style="text-align: center;">
         <div class="pageSelector">
-          {!!$threads->links()!!}
+            {!!$threads->links()!!}
         </div>
-      </div>
-    @endif
+    </div>
+@endif
 @endsection

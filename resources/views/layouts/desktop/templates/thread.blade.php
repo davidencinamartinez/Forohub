@@ -1,5 +1,6 @@
 @extends('layouts.desktop.main')
 
+@section('description', $meta_description)
 @section('title', $thread->title.' - Forohub')
 
 @push('styles')
@@ -12,9 +13,15 @@
 @endpush
 @section('body')
 @if ($thread->communities->background)
+    <script type="text/javascript">
+        if (getCookie('DARK_THEME_CHECK') == 'TRUE') {
+            $('html').css('backgroundImage', 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url({!! $thread->communities->background !!})');
+        } else {
+            $('html').css('backgroundImage', 'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url({!! $thread->communities->background !!}');
+        }
+    </script>
     <style type="text/css">
-        body {
-            background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(/src/communities/background/{!! $thread->communities->background !!});
+        html {
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;

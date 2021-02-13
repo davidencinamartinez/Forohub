@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	if (getCookie('nsfw') == 'allowed') {
+	if (getCookie('NSFW_CHECK') == 'TRUE') {
+		$('.blurry-logo').remove();
 		$('.blurry').removeClass('blurry');
 	}
 	$('.navbar button').mouseover(function(event) {
@@ -18,7 +19,8 @@ $(document).ready(function() {
 		nsfwModal();
 	});
 	$(document).on('click', '.modal-nsfw-allow', function(event) {
-		document.cookie = "nsfw=allowed";
+		document.cookie = "NSFW_CHECK=TRUE;";
+		$('.blurry-logo').remove();
 		$('.blurry').removeClass('blurry');
 		$('.modal').fadeOut('fast', function() {
 			$('.modal').remove();
@@ -28,6 +30,15 @@ $(document).ready(function() {
 		$('.modal').fadeOut('fast', function() {
 			$('.modal').remove();
 		})
+	});
+	$(document).on('click', '.profile-dark-theme', function(event) {
+		document.cookie = "DARK_THEME_CHECK=TRUE;max-age=5184000;path=/";
+		location.reload();
+	});
+	$(document).on('click', '.profile-light-theme', function(event) {
+		event.preventDefault();
+		document.cookie = "DARK_THEME_CHECK=TRUE;expires=Thu, 18 Dec 2013 12:00:00 UTC;path=/"
+		location.reload();
 	});
 	$('.activate-reply').click(function(event) {
 		if ($(this).parent().next('.thread-quick-reply').css('display') == 'block') {
@@ -91,34 +102,60 @@ $(document).ready(function() {
 	  	}
 	}
 	$(document).on('click', '.thread-community-join', function(event) {
-		$.post('/m825i5Wul0hEBxjHBh8GVS9n5WmFU8ARuDqPSfOEDrXaoeo7HCQYJgMWmYt1LeXJ', 
-			{
+		var element = $(this);
+		$.ajax({
+			url: '/m825i5Wul0hEBxjHBh8GVS9n5WmFU8ARuDqPSfOEDrXaoeo7HCQYJgMWmYt1LeXJ',
+			type: 'POST',
+			data: {
 				_token: $('meta[name="csrf-token"]').attr('content'),
 				community: $(this).prev('.thread-community').find('.thread-community-name').text()
-			}, function(data, textStatus, xhr) {
+			},
+		}).done(function(data) {
+			if (data.success) {
+				var parentCommunity = $(element).parent().find('.thread-community-name').text();
+				var elements = $('.thread-community-join');
+				$.each(elements, function(index, element) {
+					if ($(element).parent().find('.thread-community-name').text() == parentCommunity) {
+						$(element).fadeIn('fast');
+						$(element).attr('class', 'required-auth thread-community-joined');
+						$(element).text('Cancelar suscripción');
+					}
+				});
 				notifyUser(data.success);
-		}).fail(function(data) {
+			} else {
+				notifyUser(data.error);
+			}
+		}).fail(function() {
 			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
-		});
-		$(this).fadeOut('fast', function() {
-			$(this).fadeIn('fast');
-			$(this).attr('class', 'required-auth thread-community-joined');
-			$(this).text('Cancelar suscripción');
 		});
 	});
 	$(document).on('click', '.thread-community-joined', function(event) {
-		$.post('/g1VJH8HX7nsGvGuGPVZxASEW4rcSjyZ2oAuwrSWo8oor1f94OCk1WGxLKQIkA2cv', 
-			{
+		var element = $(this);
+		$.ajax({
+			url: '/g1VJH8HX7nsGvGuGPVZxASEW4rcSjyZ2oAuwrSWo8oor1f94OCk1WGxLKQIkA2cv',
+			type: 'POST',
+			context: $(this),
+			data: {
 				_token: $('meta[name="csrf-token"]').attr('content'),
 				community: $(this).prev('.thread-community').find('.thread-community-name').text()
-			}, function(data, textStatus, xhr) {
+			},
+		}).done(function(data) {
+			if (data.success) {
+				var parentCommunity = $(this).parent().find('.thread-community-name').text();
+				var elements = $('.thread-community-joined');
+				$.each(elements, function(index, element) {
+					if ($(element).parent().find('.thread-community-name').text() == parentCommunity) {
+						$(element).fadeIn('fast');
+						$(element).attr('class', 'required-auth thread-community-join');
+						$(element).text('Suscribirse');
+					}
+				});
 				notifyUser(data.success);
-		});
-		$(this).fadeOut('fast', function() {
-			$(this).fadeIn('fast');
-			$(this).attr('class', 'required-auth thread-community-join');
-			$(this).text('Suscribirse');
-		}).fail(function(data) {
+			} else {
+				notifyUser(data.error);
+			}
+		})
+		.fail(function() {
 			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 		});
 	});
@@ -237,5 +274,16 @@ $(document).ready(function() {
 		event.preventDefault();
 		votePollOption(this);
 	});
-	
+	$(document).on('click', '.profile-configuration-trigger', function(event) {
+		event.preventDefault();
+		if ($('.profile-configuration').css('display') == 'none') {
+			$('.threads-panel').children().css('display', 'none');
+            $('.profile-configuration').css('display', 'block');
+            return false;
+		} else {
+			$('.threads-panel').children().css('display', 'block');
+            $('.profile-configuration').css('display', 'none');
+            return false;
+		}
+	});	
 });

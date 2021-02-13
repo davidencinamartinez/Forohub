@@ -53,6 +53,26 @@ class User extends Authenticatable implements MustVerifyEmail {
         return $this->belongsTo('App\Models\Community');
     }
 
+    public function subscriptions() {
+        return $this->hasMany('App\Models\UserCommunity', 'user_id');
+    }
+
+    public function messages() {
+        return $this->hasMany('App\Models\Reply', 'user_id');
+    }
+
+    public function threads() {
+        return $this->hasMany('App\Models\Thread', 'user_id');
+    }
+
+    public function upvotes() {
+        return $this->hasMany('App\Models\Vote', 'thread_id')->where('vote_type', 1);
+    }
+
+    public function downvotes() {
+        return $this->hasMany('App\Models\Vote', 'thread_id')->where('vote_type', 0);
+    }
+
     public static function getKarma($user_id) {
         $karma = 1;
         $threads = Thread::where('user_id', $user_id)->withCount('upvotes')->withCount('downvotes')->get();
@@ -60,5 +80,32 @@ class User extends Authenticatable implements MustVerifyEmail {
         $karma += 0.05+($thread->upvotes_count*0.025)+($thread->downvotes_count*(-0.025));
         }
         return number_format($karma, 2, ',', '.');
+    }
+
+    public static function getUserPlacing($user_id) {
+        $users = User::get('id');
+        foreach ($users as $user) {
+            $user->placing = User::getKarma($user->id);
+        }
+        $sorted = $users->sortByDesc('placing');
+        return array_search($user_id, array_column($sorted->toArray(), 'id'))+1;
+    }
+
+    public static function getUserUpvotes($user_id) {
+        $upvotes = Thread::where('user_id', $user_id)->withCount('upvotes')->pluck('upvotes_count');
+        $total_upvotes = 0;
+        foreach ($upvotes as $upvote) {
+            $total_upvotes += $upvote;
+        }
+        return $total_upvotes;
+    }
+
+    public static function getUserDownvotes($user_id) {
+        $downvotes = Thread::where('user_id', $user_id)->withCount('downvotes')->pluck('downvotes_count');
+        $total_downvotes = 0;
+        foreach ($downvotes as $downvote) {
+            $total_downvotes += $downvote;
+        }
+        return $total_downvotes;
     }
 }

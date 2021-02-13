@@ -2,7 +2,12 @@
 <html lang='es'>
 <head>
 	<meta charset='utf-8'>
-	<title>@yield('title')</title>
+	<meta name="description" content="@yield('description')">
+	@if ($unread_notifications)
+		<title>({{ $unread_notifications }}) @yield('title')</title>
+	@else
+		<title>@yield('title')</title>
+	@endif
 	<link rel='shortcut icon' type='image/png' href='/src/media/favicon.png'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/min.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/header.css") }}'>
@@ -42,7 +47,9 @@
 					<br>
 					<br>
 					<div class='user-buttons' style='text-align: center; display: inline-block;'>
-					  	<button id="user-profile" onclick="profileModal()">Mi Perfil</button>
+						<a class="user-profile" href="/u/{{ strtolower(Auth::user()->name) }}">
+					  		<button>Mi Perfil</button>
+					  	</a>
 					  	<button id="user-rewards">Logros</button>
 					  	<button id="user-notifications">Notificaciones</button>
 						<form id="logout-form" action="<?php echo e(route('logout')); ?>" style="float: right;" method="POST">
@@ -78,10 +85,10 @@
 		</div>
 		<div class='navigation-bar'>
 			<div style="float: left;">
-				<a href='/' id='startingPoint' title='Inicio'>Inicio</a>
-				<a href='/foro' id='forumEntry' title='Destacados'>Destacados</a>
-				<a href='/foro' id='forumEntry' title='Destacados'>Tops</a>
-				<a href='/foro' id='forumEntry' title='Destacados'>Comunidades</a>
+				<a href='/' title='Inicio'>Inicio</a>
+				<a href='/destacados' id='forumEntry' title='Destacados'>Destacados</a>
+				<a href='/foro' title='Tops'>Tops</a>
+				<a href='/comunidades/all' title='Comunidades'>Comunidades</a>
 			</div>
 			<div style="float: right;">
 				<div class="search-bar">

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Redirect;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\ThreadTags;
@@ -34,7 +35,7 @@ class Thread extends Model {
     }
 
     public function author() {
-    	return $this->belongsTo(User::class, 'user_id');
+    	return $this->belongsTo(User::class, 'user_id')->select('id', 'name');
     }
 
     public function replies() {
@@ -63,7 +64,7 @@ class Thread extends Model {
             'title' => 'required|max:300',
             'type' => 'required|in:post,multimedia,youtube,poll',
             'tags' => 'required|array|min:2|max:20',
-            'tags.*' => 'min:3|max:20|regex:/^[a-zA-Z0-9]+$/'
+            'tags.*' => 'min:2|max:20|regex:/^[a-zA-Z0-9]+$/'
         ]);
         if ($validator->passes()) {
             if ($request->type == "post") {
@@ -82,17 +83,16 @@ class Thread extends Model {
             } elseif ($request->type == "poll") {
                 $validateBody = Validator::make($request->all('options'), [
                     'options' => 'required|array|min:2|max:10',
-                    'options.*' => 'required|max:50|alpha_dash',
+                    'options.*' => 'max:50',
                 ]);
             }
             if (!$validateBody->passes()) {
-                abort(404);
+                return $validateBody->getMessageBag();
             }
         } else {
             abort(404);
         }
-        Thread::createPostThread($request);
-        return $request->all();
+        return Thread::createPostThread($request);
     }
 
     public static function createPostThread($request) {
@@ -110,14 +110,14 @@ class Thread extends Model {
                 if (in_array($filetype, $mimeImages)) {
                     $upload = cloudinary()->upload($request->file('files.0')->getRealPath())->getSecurePath();
                     if ($request->exists('check_nsfw')) {
-                        $body = '<div class="picture blurry"><img src="'.$upload.'"></div>';
+                        $body = '<div class="picture blurry"><label class="blurry-logo">🔞</label><img src="'.$upload.'"></div>';
                     } else {
                         $body = '<div class="picture"><img src="'.$upload.'"></div>';
                     }
                 } elseif (in_array($filetype, $mimeVideos)) {
                     $upload = cloudinary()->uploadVideo($request->file('files.0')->getRealPath())->getSecurePath();
                     if ($request->exists('check_nsfw')) {
-                        $body = '<div class="media-frame blurry"><video preload="meta" controls src="'.$upload.'"></div>';
+                        $body = '<div class="media-frame blurry"><label class="blurry-logo">🔞</label><video preload="meta" controls src="'.$upload.'"></div>';
                     } else {
                         $body = '<div class="media-frame"><video preload="meta" controls src="'.$upload.'"></div>';
                     }
@@ -129,8 +129,13 @@ class Thread extends Model {
                     array_push($urlArray, $upload);
                 }
                 $body = '<div class="slideshow-content" data-source="';
-                $body .= implode(",", $urlArray);
-                $body .= '"><div class="slideshow-media"><img src="'.$urlArray[0].'" data-id="0"></div><a class="slide-previous">❮</a><a class="slide-next">❯</a><label class="slideshow-page">1/'.count($_FILES).'</label></div>';
+                $body .= implode(",", $urlArray).'">';
+                if ($request->exists('check_nsfw')) {
+                    $body .= '<div class="slideshow-media blurry"><label class="blurry-logo">🔞</label>';
+                } else {
+                    $body .= '<div class="slideshow-media">';
+                }
+                $body .= '<img src="'.$urlArray[0].'" data-id="0"></div><a class="slide-previous">❮</a><a class="slide-next">❯</a><label class="slideshow-page">1/'.count($_FILES).'</label></div>';
             }
             if (trim($request->input('caption')) != '' || trim($request->input('caption')) != null) {
                 $body .= '<marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="stop()" onmouseleave="start()">'.strip_tags($request->caption).'</marquee>';
@@ -160,5 +165,9 @@ class Thread extends Model {
                 PollOption::createPollOption($thread_id, strip_tags($poll_option));
             }
         }
+        if (!UserCommunity::where('user_id', Auth::user()->id)->where('community_id', $community_id)->exists()) {
+            UserCommunity::JoinCommunity($community_id);
+        }
+        return Redirect::to('/c/'.$request->community.'/t/'.$thread_id);
     }
 }

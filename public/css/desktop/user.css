@@ -1,0 +1,53 @@
+.user-data {
+	width: 800px;
+	border: solid 1px black;
+	background-color: #6b6b6b;
+	margin: 40px auto;
+	display: flex;
+}
+
+.user-data-avatar {
+	padding: 10px 10px 10px 0px;
+	width: 400px;
+	text-align: center;
+}
+
+.user-data-avatar > img {
+	width: 90%;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+.user-data-general {
+	height: fit-content;
+}
+
+.user-data-general > h1 {
+	margin: none;
+}
+
+.user-data-stats img {
+	width: 32px;
+	height: 32px;
+	vertical-align: bottom;
+}
+
+.profile-configuration {
+	width: 80%;
+    float: right;
+    min-width: 600px;
+    max-width: 1000px;
+    display: none;
+}
+
+.profile-configuration-form {
+    border: solid 1px black;
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: 0.25s;
+    font-size: 14px;
+    width: 100%;
+    background-color: #6b6b6b;
+    text-align: justify;
+}

@@ -1,7 +1,7 @@
 <div class="lateral-cube lateral-community-data">
     <div class="lateral-title">Comunidad</div>
     <img class="lateral-community-logo" src="{{ $community->logo }}">
-    <b class="lateral-community-title">{{ $community->title }}</b>
+    <a class="lateral-community-title" href="/c/{{ $community->tag }}">{{ $community->title }}</a>
     <label class="lateral-community-tag">c/{{ $community->tag }}</label>
     <p class="lateral-community-description">{{ $community->description }}</p>
     <div style="display: inline-flex;">
@@ -37,7 +37,7 @@
         <div class="lateral-community-moderators">
             <a href="/u/{{ strtolower($moderator->user->name) }}">{{ $moderator->user->name }}</a>
             @if ($moderator->subscription_type == 5000)
-                <img src="/src/media/mQgfVUkYMgWC6zVz3z06aejvIJqGW7ORdQOmLrvdlmlJ0ovzPImfCFxVtLie5Haj.png" title="Creador">
+                <img src="/src/media/mQgfVUkYMgWC6zVz3z06aejvIJqGW7ORdQOmLrvdlmlJ0ovzPImfCFxVtLie5Haj.png" title="Líder">
             @endif
         </div>
     @endforeach
@@ -50,3 +50,4 @@
         @endforeach
     </div>
 </div>
+@include('layouts.desktop.templates.lateral.lateral_help_center')

@@ -47,46 +47,99 @@
 	    cursor: pointer;
 	}
 
-	/* ERROR */
+/* ERROR */
 
-		.error {
-			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-		    display: block;
-		    font-weight: bold;
-		    color: #e80000;
-		    font-size: 14px;
-		}
+	.error {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    display: block;
+	    font-weight: bold;
+	    color: #e80000;
+	    font-size: 14px;
+	}
 
-	/* PAGINATOR */
+/* PAGINATOR */
 
-		.pageSelector li {	
-			display: inline-table;
-		}
+	.pageSelector li {	
+		display: inline-table;
+	}
 
-		.page-link {	
-			color: white;
-			background-color: #2F2F2F;
-			padding: 6px 10px;
-			text-decoration: none;
-			border: 1px solid black;
-			font-size: 22px;  
-			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-		}
+	.page-link {	
+		color: white;
+		background-color: #2F2F2F;
+		padding: 6px 10px;
+		text-decoration: none;
+		border: 1px solid black;
+		font-size: 22px;  
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
 
-		.page-link:hover {	
-			background-color: #6b6b6b;
-			color: white;
-		}
+	.page-link:hover {	
+		background-color: #6b6b6b;
+		color: white;
+	}
 
-		.pagination > li.active > span {
-			background-color: #FFB600;
-		}
+	.pagination > li.active > span {
+		background-color: #FFB600;
+	}
 
-		.pagination > li > * {
-			border-radius: 4px;
-		}
+	.pagination > li > * {
+		border-radius: 4px;
+	}
 
-		.pagination > li > *:hover {
-			transition: 0.2s;
-			box-shadow: 1px 1px 5px 0px #2d2d2d;
-		}
+	.pagination > li > *:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+	}
+
+/* HELP CENTER */
+
+	.help-center {
+		padding: 10px;
+		display: flex;
+		text-align: left;
+	}
+
+	.help-center-left, .help-center-right {
+		width: 50%;
+		display: grid;
+	}
+
+	.help-center a {
+		text-decoration: none;
+		color: black;
+		text-shadow: none;
+		font-weight: normal;
+		font-size: 12px;
+	}
+
+	.help-center a:hover {
+		color: #ffb600;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+/* GUIDE SELECTION */
+
+	.guide-selection {
+		margin: auto;
+		text-align: center;
+		border: solid 1px black;
+		width: fit-content;
+		display: flex;
+		border-radius: 6px;
+		background-color: #2F2F2F;
+	}
+
+	.guide-selection a {
+		padding: 6px;
+	}
+
+	.guide-selection a:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+		background-color: #6b6b6b;
+		color: white;
+	}
+
+	.guide-selection a:not(:last-child) {
+		border-right: solid 1px black;
+	}

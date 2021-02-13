@@ -16,8 +16,7 @@ use Auth;
 class ReportController extends Controller {
 
     function sendThreadReport(Request $request) {
-
-    	if (Auth::user()) {
+    	if (Auth::user() && $request->ajax()) {
     		$reportList = array('Spam o Flood','Contenido violento o repulsivo','Información falsa o fraude','Acoso o Bullying','Contenido vejatorio o de incitación al odio','Contiene información confidencial y/o personal','Ventas no autorizadas','Suicidio o autolesiones','Maltrato infantil o pedofilia','Contenido de carácter terrorista');
 
     		$validator = Validator::make($request->all(), [
@@ -44,13 +43,13 @@ class ReportController extends Controller {
     			return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
     		}	
     	} else {
-    		return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
+    		abort(404);
     	}
     }
 
     function sendReplyReport(Request $request) {
 
-    	if (Auth::user()) {
+    	if (Auth::user() && $request->ajax()) {
     		$reportList = array('Spam o Flood','Troll','Información falsa','Acoso o Bullying','Información confidencial y/o personal','Racismo o Sexismo');
 
     		$validator = Validator::make($request->all(), [
@@ -71,7 +70,7 @@ class ReportController extends Controller {
     			return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
     		}	
     	} else {
-    		return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
+    		abort(404);
     	}    	
     }
 }

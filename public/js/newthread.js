@@ -1,10 +1,9 @@
 $(document).ready(function() {
-	$(document).on('input click', '.thread-community input:first', function(event) {
+	$(document).on('input', '.thread-community input:first', function(event) {
 		NT_getCommunity(this);
 	});
 	$(document).on('click', '.community-div', function(event) {
-		$('.thread-community input:first').val($(this).attr('data-tag'));
-		$('.thread-community-container').remove();
+		NT_communityData(this);
 	});
 	$(document).on('click', 'body:not(.community-div)', function(event) {
 		$('.thread-community-container').remove();
@@ -127,11 +126,35 @@ $(document).ready(function() {
 	$(document).on('submit', '#new-thread-form', function(event) {
 		return NT_validateThreadForm();
 	});
+
+	$('.new-thread-rule').click(function(event) {
+		event.preventDefault();
+		var description = $(this).children('.rule-description:first');
+		if (description.is(':visible')) {
+			$(this).children('label:first').text('▼')
+			description.hide('400');
+		} else {
+			$(this).children('label:first').text('▲')
+			description.show('400');
+		}
+	});
 });
+
+function NT_communityData(element) {
+	$('.thread-community input:first').val($(element).attr('data-tag'));
+	$('.lateral-panel').prepend('<div class="lateral-cube lateral-community-data">');
+	createElement('div', {class: 'lateral-title'}, '.lateral-community-data', 'Comunidad');
+	createElement('img', {class: 'lateral-community-logo', src: $(element).find('.community-img img').attr('src')}, '.lateral-community-data');
+	createElement('b', {class: 'lateral-community-title'}, '.lateral-community-data', $(element).find('.community-data b').text());
+	createElement('label', {class: 'lateral-community-tag'}, '.lateral-community-data', $(element).find('.community-data label').text());
+	createElement('p', {class: 'lateral-community-description'}, '.lateral-community-data', $(element).attr('data-description'));
+	$('.thread-community-container').remove();
+}
 
 function NT_getCommunity(element) {
 	var input = $(element).val();
 	$(element).parent().children('label').remove();
+	$('.lateral-community-data').remove();
 	$('.thread-community-option-container').empty();
 	if ($.trim($(element).val()) != '') {
 		$.get('/9bKSmij7MRoNx6ZU9MWFzRe8zPre4klv7L3YxXYZ7Knl8qW5PYn1l3ESgejrV1cE/'+input, function(data) {
@@ -147,7 +170,7 @@ function NT_getCommunity(element) {
 					var prevDataCommunities = $("input[name='community']").attr('data-communities');
 					$("input[name='community']").attr('data-communities', prevDataCommunities+','+val.tag);
 					// Community Div
-						createElement('div', {class: 'community-div', 'data-tag': val.tag}, '.thread-community-container');
+						createElement('div', {class: 'community-div', 'data-tag': val.tag, 'data-description': val.description}, '.thread-community-container');
 						// Community Div Image
 							createElement('div', {class: 'community-img'}, '.community-div:last');
 							createElement('img', {src: val.logo}, '.community-img:last');
@@ -171,6 +194,7 @@ function NT_getCommunity(element) {
 function NT_pickType(type) {
 	if (type == "post") {
 		createElement('b', {class: 'input-title'}, '.thread-content', 'Descripción:');
+		createElement('b', null, '.thread-content', '* La descripción debe tener un mínimo de 10 carácteres *');
 		createElement('div', {class: 'body-error'}, '.thread-content');
 		createElement('textarea', {name: 'post', class: 'post-input', placeholder: 'Descripción ...', rows: '10', maxlength: 20000}, '.thread-content');
 		createElement('div', {class: 'character-counter'}, '.thread-content');
@@ -178,21 +202,24 @@ function NT_pickType(type) {
 		createElement('label', null, '.thread-content > .character-counter', '/20000');
 	} else if (type == "multimedia") {
 		createElement('b', {class: 'input-title'}, '.thread-content', 'Archivos:');
-		createElement('div', {class: 'body-error'}, '.thread-content');
 		createElement('b', null, '.thread-content', '* Formatos válidos: *');
 		createElement('b', null, '.thread-content', '- Imagen: jpg, png, gif, webp');
 		createElement('b', null, '.thread-content', '- Vídeo: mp4, webm, ogg');
+		createElement('div', {class: 'body-error'}, '.thread-content');
 		createElement('input', {type: 'file', name: 'files[]', class: 'multimedia-input', accept: 'image/*, .jpeg, .jpg, .gif, .webp, .png, video/*, video/mp4', multiple: 'true'}, '.thread-content');
 		createElement('br', null, '.thread-content');
 		createElement('b', {class: 'input-title'}, '.thread-content', 'Leyenda (Opcional):');
 		createElement('textarea', {name: 'caption', class: 'post-input', placeholder: 'Leyenda ...', rows: '6'}, '.thread-content');
 	} else if (type == "youtube") {
 		createElement('b', {class: 'input-title'}, '.thread-content', 'URL:');
+		createElement('b', null, '.thread-content', '* Introduce el link completo del vídeo *');
+		createElement('b', null, '.thread-content', '* Ejemplo: https://www.youtube.com/watch?v=99pHK7fOEQk&ab_channel=JuanPonce *');
 		createElement('div', {class: 'youtube-error'}, '.thread-content');
 		createElement('div', {class: 'body-error'}, '.thread-content');
 		createElement('input', {type: 'text', class: 'youtube-input', placeholder: 'Introduce un enlace ...'}, '.thread-content');
 	} else if (type = "poll") {
 		createElement('b', {class: 'input-title'}, '.thread-content', 'Encuesta:');
+		createElement('b', null, '.thread-content', '* No pueden haber opciones vacías *');
 		createElement('div', {class: 'body-error'}, '.thread-content');
 		createElement('div', {class: 'poll-container'}, '.thread-content');
 		createElement('div', {class: 'poll-option'}, '.poll-container');
@@ -224,7 +251,7 @@ function NT_removePollOption(element) {
 }
 
 function NT_appendTag(element) {
-	if ($(element).val().length >= 3) {
+	if ($(element).val().length >= 2) {
 		createElement('div', {class: 'thread-tag', 'data-tag':  $(element).val().split(",")}, '.tags-container', $(element).val().split(","));
 		createElement('label', {class: 'thread-tag-remove'}, '.thread-tag:last', '❌');
 		$(element).val(null);	
@@ -389,7 +416,7 @@ function NT_validateThreadForm() {
 		} else {
 			$.each(tags, function(index, val) {
 				var tag = $(this).attr('data-tag');
-				if (tag.length < 3) {
+				if (tag.length < 2) {
 					ISSUE_COUNT++;
 					createElement('label', {class: 'error'}, '.tags-error', 'La longitud del tag nº'+(parseInt(index)+1)+' es inferior a 3 carácteres');
 				} else if (tag.length > 20) {

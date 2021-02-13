@@ -114,6 +114,98 @@ class IndexController extends Controller {
     		]);
     }
 
+    /* FEATURED INDEX */
+
+    public function featuredIndex() {
+
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+
+        $threads = Thread::with('communities')
+        ->with('author')
+        ->with('first_reply')
+        ->withCount('replies')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->orderBy('upvotes_count', 'desc')
+        ->whereBetween('created_at', [Carbon::now()->subDays(7), Carbon::now()])
+        ->paginate(4, ['*'], 'pagina');
+
+        $top_communities = Community::get();
+        foreach ($top_communities as $community) {
+            $community->score = Community::getCommunityScore($community->id);
+        }
+        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
+
+        $fh_data = array(
+            'count_communities' => Community::count(),
+            'count_users' => User::count(),
+            'count_threads' => Thread::count(),
+            'count_replies' => Reply::count(),
+        );
+                
+        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->take(5)->get();
+        
+        foreach ($threads as $thread) {
+            if (Auth::user() and $thread->votes->isNotEmpty()) {
+                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
+                    $thread->user_has_voted = 'true';
+                    $thread->user_vote_type = 1;
+                } 
+                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
+                    $thread->user_has_voted = 'true';
+                    $thread->user_vote_type = 0;
+                }
+            } 
+            else {
+                $thread->user_has_voted = 'false';              
+            }
+        }
+        
+        foreach ($threads as $thread) {
+            if (Auth::user()) {
+                if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+                        $thread->user_joined_community = 'true';
+                } else {
+                    $thread->user_joined_community = 'false';
+                }
+            }
+        }
+
+        foreach ($threads as $thread) {
+            if ($thread->body == "IS_POLL") {
+                $poll_total_votes = PollVote::getCountVotes($thread->id);
+                $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
+                foreach ($poll_options as $option) {
+                    if ($poll_total_votes != 0) {
+                        $thread->total_votes = $poll_total_votes;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
+                        }
+                    } else {
+                        $thread->total_votes = 0;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($threads->isEmpty()) {
+            return redirect()->route('index');
+        }
+
+        return view('layouts.desktop.templates.index',
+            [   'unread_notifications' => $unread_notifications,
+                'threads' => $threads,
+                'fh_data' => $fh_data,
+                'top_communities' => $sorted_top_communities,
+                'latest_replies' => $latest_replies
+            ]);
+    }
+
     /* VOTE THREAD */
 
     public function voteThread(Request $request) {
@@ -161,6 +253,73 @@ class IndexController extends Controller {
             return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);
         
     }
+
+    /* USER THREADS */
+
+        function userThreads($user_id) {
+
+            $threads = Thread::orderBy('created_at', 'desc')
+            ->where('user_id', $user_id)
+            ->with('communities')
+            ->with('author')
+            ->withCount('replies')
+            ->withCount('upvotes')
+            ->withCount('downvotes')
+            ->paginate(4, ['*'], 'pagina');
+
+            if ($threads) {
+                foreach ($threads as $thread) {
+                    if (Auth::user() and $thread->votes->isNotEmpty()) {
+                        if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
+                            $thread->user_has_voted = 'true';
+                            $thread->user_vote_type = 1;
+                        } 
+                        if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
+                            $thread->user_has_voted = 'true';
+                            $thread->user_vote_type = 0;
+                        }
+                    } 
+                    else {
+                        $thread->user_has_voted = 'false';              
+                    }
+                }
+                
+                foreach ($threads as $thread) {
+                    if (Auth::user()) {
+                        if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+                                $thread->user_joined_community = 'true';
+                        } else {
+                            $thread->user_joined_community = 'false';
+                        }
+                    }
+                }
+
+                foreach ($threads as $thread) {
+                    if ($thread->body == "IS_POLL") {
+                        $poll_total_votes = PollVote::getCountVotes($thread->id);
+                        $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
+                        foreach ($poll_options as $option) {
+                            if ($poll_total_votes != 0) {
+                                $thread->total_votes = $poll_total_votes;
+                                $thread->poll_options = $poll_options;
+                                foreach ($thread->poll_options as $option) {
+                                    $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
+                                }
+                            } else {
+                                $thread->total_votes = 0;
+                                $thread->poll_options = $poll_options;
+                                foreach ($thread->poll_options as $option) {
+                                    $option->percentage = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        return response()->json([
+            'threads' => $threads
+        ]);
+    }
     
     /* TEST */	
     
@@ -181,47 +340,15 @@ class IndexController extends Controller {
 
          function test() {
 
-                $poll_options = PollOption::where('thread_id', 29082008)->withCount('votes')->get();
-                $poll_total_votes = PollVote::getCountVotes(29082008);
-                foreach ($poll_options as $option) {
-                    if ($poll_total_votes != 0) {
-                       
-                            $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
-                        
-                    } else {
-                        
-                            $option->percentage = 0;
-                        
-                    }
-                }
-                return $poll_options;
-
-                $threads = Thread::orderBy('created_at', 'desc')
-                ->with('communities')
-                ->with('author')
-                ->with('first_reply')
-                ->withCount('replies')
-                ->withCount('upvotes')
-                ->withCount('downvotes')
-                ->paginate(4, ['*'], 'pagina');
-
-                foreach ($threads as $thread) {
-                    if ($thread->body == "IS_POLL") {
-                        $poll_total_votes = PollVote::getCountVotes($thread->id);
-                        $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
-                        foreach ($poll_options as $option) {
-                            if ($poll_total_votes != 0) {
-                            $thread->total_votes = $poll_total_votes;
-                            $thread->poll_options = $poll_options;
-                            foreach ($thread->poll_options as $option) {
-                                $option->percentage = round($option->votes_count*100/$poll_total_votes, 1);
-                                }
-                            }
-                        }
-                        
-                    }
-                }
-
-                return $threads;            
+           $threads = Thread::orderBy('created_at', 'desc')
+        ->with('communities')
+        ->with('author')
+        ->with('first_reply')
+        ->withCount('replies')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->orderBy('upvotes_count', 'desc')
+        ->paginate(4, ['*'], 'pagina');
+        return $threads;
          }
 }

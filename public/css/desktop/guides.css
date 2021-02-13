@@ -1,0 +1,75 @@
+.communities {
+	width: 800px;
+    border: solid 1px black;
+    background-color: #6b6b6b;
+    margin: 40px auto;
+}
+
+.community {
+	background-color: #6b6b6b;
+    display: flex;
+    cursor: pointer;
+    border-bottom: solid 1px black !important;
+    color: black;
+    text-shadow: none;
+}
+
+.community:last-child {
+	border-bottom: none;	
+}
+
+.community:hover {
+	transition: 0.25s;
+	background-color: #4F4F4F;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.community-logo {
+	text-align: center;
+	margin-left: 20px;
+	padding: 10px;
+}
+
+.community-logo > img {
+	width: 70px;
+	border-radius: 50%;
+	border: solid 1px black;
+}
+
+.community-data {
+	display: grid;
+	padding: 10px;
+	width: 50%;
+}
+
+.community-data > b {
+	font-size: 20px;
+}
+
+.community-data > i {
+	font-weight: normal;
+	font-size: 16px;
+}
+
+.community-data > label {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.community-stats {
+	display: flex;
+    width: 40%;
+    position: relative;
+}
+
+.community-stats div {
+	width: 33.3%;
+	margin: auto;
+}
+
+.community-stats img {
+	width: 32px;
+	height: 32px;
+	vertical-align: bottom;
+}

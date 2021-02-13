@@ -63,6 +63,10 @@
 				display: inline-block;
 			}
 
+			.user-profile {
+				margin: 0px !important;
+			}
+
 			.user-avatar {	
 				margin-bottom: 10px;
 				width: 40px;

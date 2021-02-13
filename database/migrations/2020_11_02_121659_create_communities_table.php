@@ -17,11 +17,11 @@ class CreateCommunitiesTable extends Migration {
             $table->id();
             $table->timestamps();
             $table->string('tag', 30);
-            $table->string('title', 100);
+            $table->string('title', 50);
             $table->string('description', 500);
-            $table->string('logo', 100)->default('kZcTagGngsVeGl2Hsiy3ulhXOb78B4P.webp');
-            $table->string('banner', 100)->nullable();
-            $table->string('background', 100)->nullable();
+            $table->string('logo', 200)->default('https://res.cloudinary.com/dt4uoou5x/image/upload/v1612615521/kZcTagGngsVeGl2Hsiy3ulhXOb78B4P_onapy0.webp');
+            $table->string('banner', 200)->nullable();
+            $table->string('background', 200)->nullable();
         });
     }
 

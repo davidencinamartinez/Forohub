@@ -19,22 +19,29 @@ use DB;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use Redirect;
 
 class ThreadController extends Controller {
 
-	function getCommunityTag($tag) {
-		$communities = Community::where('tag', 'like', '%'.$tag.'%')->take(5)->select('id', 'title', 'tag', 'logo')->get();
-		foreach ($communities as $community) {
-			$community->user_count = UserCommunity::userCount($community->id);
-    	}
-		return $communities;
+	function getCommunityTag(Request $request, $tag) {
+		if (Auth::user() && $request->ajax()) {
+			$communities = Community::where('tag', 'like', '%'.$tag.'%')->take(5)->select('id', 'title', 'tag', 'logo', 'description')->get();
+			foreach ($communities as $community) {
+				$community->user_count = UserCommunity::userCount($community->id);
+	    	}
+			return $communities;
+		} else {
+			abort(404);
+		}
 	}
 
 	function newThread() {
-
-		$unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-
-		return view('layouts.desktop.templates.thread.create')->with('unread_notifications', $unread_notifications);
+		if (Auth::user()) {
+			$unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+			return view('layouts.desktop.templates.thread.create')->with('unread_notifications', $unread_notifications);
+		} else {
+			return Redirect::to('/');
+		}
 	}
 
 	public function getThreadData($community_tag, $thread_id) {
@@ -112,14 +119,18 @@ class ThreadController extends Controller {
             $community->sub_count = UserCommunity::userCount($community_id);
 			$community->index = Community::getCommunityPlacing($community_id);
 
-			$tags = ThreadTags::where('thread_id', $thread_id)->get();
-
+			$tags = ThreadTags::where('thread_id', $thread_id)->select('tagname')->get();
+			/* META DESCRIPCION PENDIENTE 
+			$meta_description = strip_tags($thread->body);
+			$meta_description .= implode(',', $tags->pluck('tagname')->toArray());
+			/**/
 			return view('layouts.desktop.templates.thread',
 	    		[	'unread_notifications' => $unread_notifications,
 	                'thread' => $thread,
 	                'thread_replies' => $thread_replies,
 	                'community' => $community,
-	                'tags' => $tags
+	                'tags' => $tags,
+	                'meta_description' => 'LALALA'
 	    		]);
         
 			}
@@ -131,10 +142,6 @@ class ThreadController extends Controller {
 			} else {
 			    return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
 			}
-		}
-
-		function yolo(Request $request) {
-			return print_r($request->all());
 		}
 
 		function checkMultimedia(Request $request) {
@@ -181,13 +188,15 @@ class ThreadController extends Controller {
 		}
 
 		public function votePoll(Request $request) {
-			if (Auth::user()) {
+			if (Auth::user() && $request->ajax()) {
 				if (PollOption::where('id', $request->option_id)->where('thread_id', $request->thread_id)->exists()) {
 					PollVote::updateOrCreate([
 						'user_id' => Auth::user()->id,
+						'thread_id' => $request->thread_id
 					],[
 						'updated_at' => Carbon::now(),
 					    'user_id' => Auth::user()->id,
+					    'thread_id' => $request->thread_id,
 						'option_id' => $request->option_id
 					]);
 					$poll_options = PollOption::where('thread_id', $request->thread_id)->withCount('votes')->get();
@@ -204,7 +213,7 @@ class ThreadController extends Controller {
 					return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);		
 				}
 			} else {
-				return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);	
+				abort(404);
 			}
 		}
 

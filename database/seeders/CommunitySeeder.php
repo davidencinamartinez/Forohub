@@ -75,7 +75,7 @@ class CommunitySeeder extends Seeder {
             'updated_at' => Carbon::now()->sub('1 day 22 hours 10 minutes'),
         	'community_id' => 11071967,
             'rule' => 'Sé bueno',
-            'rule_description' => 'El usuario acepta usar los servicios de ForoHub de forma consciente y libre, con intenciones lícitas y de buena fe. Siendo el único responsable de tus actos, exonerando de toda responsabilidad por los mismos a los gestores o colaboradores de ForoHub',
+            'rule_description' => 'El usuario acepta usar los servicios de ForoHub de forma consciente y libre, con intenciones lícitas y de buena fe. Siendo el único responsable de sus actos, exonerando de toda responsabilidad por los mismos a los gestores o colaboradores de ForoHub',
         ]);
         DB::table('communities_rules')->insert([
             'created_at' => Carbon::now()->sub('1 day 22 hours 5 minutes'),

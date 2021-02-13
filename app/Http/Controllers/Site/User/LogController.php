@@ -41,7 +41,7 @@ class LogController extends Controller
 
         } else {
             session()->flash('err', 'Invalid credentials');
-            return redirect()->back()->with('err', $request->getClientIp());
+            return redirect()->back()->with('err', 'Nombre de usuario y/o contraseña incorrectos');
         }
         
         

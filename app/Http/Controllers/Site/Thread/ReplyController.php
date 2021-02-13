@@ -38,7 +38,7 @@ class ReplyController extends Controller {
 
             if ($validator->passes()) {
     			if (Reply::where('user_id', Auth::user()->id)->exists()) {
-    				$remaining_time = Carbon::now()->diffInSeconds(Carbon::parse(Reply::where('user_id', Auth::user()->id)->latest()->value('created_at'))->addMinutes(1), false);
+    				$remaining_time = Carbon::now()->diffInSeconds(Carbon::parse(Reply::where('user_id', Auth::user()->id)->latest()->value('created_at'))->addSeconds(30), false);
     				if ($remaining_time > 0) {
     					return response()->json(['remaining_time' => $remaining_time]);
     				}

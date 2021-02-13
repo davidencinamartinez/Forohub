@@ -1,4 +1,21 @@
 $(document).ready(function() {
+	if ($(document.body)[0].scrollHeight < $(window).height()) {
+	    $('.footer').css('position', 'absolute');
+	} else {
+		$('.footer').css('position', 'relative');
+	}
+	if (getCookie('DARK_THEME_CHECK') == 'TRUE') {
+		$('html').css('background-color', '#1b1b1b');
+		$('.profile-dark-theme').attr('class', 'profile-light-theme');
+		$('.profile-light-theme').text('Tema Claro');
+	}
+	$(window).scroll(function(){
+		if ($(document.body)[0].scrollHeight < $(window).height()) {
+		 	$('.footer').css('position', 'absolute');
+		} else {
+			$('.footer').css('position', 'relative');
+		}
+	}); 
 	$('.thread-date, .thread-reply-date, .reply-date').each(function(index, el) {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
 	});
@@ -37,6 +54,18 @@ $(document).ready(function() {
 		$('.reward-description').text('Desliza el cursor por encima para obtener más información');
 	});
 
+	$(document).on('mouseover', '.profile-rewards-cube img', function(event) {
+		event.preventDefault();
+		$(this).parent().parent().find('.profile-rewards-text > b').text($(this).attr('data-title'));	
+		$(this).parent().parent().find('.profile-rewards-text > label').text($(this).attr('data-description'));	
+	});
+
+	$(document).on('mouseleave', '.profile-rewards-cube img', function(event) {
+		event.preventDefault();
+		$(this).parent().parent().find('.profile-rewards-text > b').text('Aquí podrás ver los últimos logros del usuario');		
+		$(this).parent().parent().find('.profile-rewards-text > label').text('Desliza el cursor sobre el logro para obtener más información');	
+	});
+
 	$(document).on('keydown', '#user-rewards', function(event) {
     	if (event.keyCode == 32) {
     		return false;	
@@ -50,7 +79,7 @@ $(document).ready(function() {
 	});
 	
 	$('.option-data').each(function(index, val) {
-		$(this).css("background-color", pickRandomColour());
+		$(this).css("background", "linear-gradient(to left, "+pickRandomColour()+" 0%, black 100%)");
 	});
 
 	$.each($('.slideshow-page'), function(index, val) {
@@ -205,7 +234,7 @@ function userVerifiedSuccess() {
 function nsfwModal() {
 	createModal(); // Call function
 	// Modal Body Elements
-		createElement('h1', null, '.modal-body', '🔞'); // Title
+		createElement('label', {style: 'font-size: 50px;'}, '.modal-body', '🔞'); // Title
 		createElement('p', null, '.modal-body', 'Estás a punto de acceder a contenido NSFW (+18)'); // Message
 		createElement('p', null, '.modal-body', 'Deseas visualizarlo?'); // Message
 		// Allow Button
@@ -390,18 +419,18 @@ function reportReplyModal(reply_id) {
 }
 
 function getCookie(cname) {
-   var name = cname + "=";
-   var ca = document.cookie.split(';');
-   for(var i = 0; i < ca.length; i++) {
-     var c = ca[i];
-     while (c.charAt(0) == ' ') {
-       c = c.substring(1);
-     }
-     if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-     }
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+   	for (var i = 0; i < ca.length; i++) {
+    	var c = ca[i];
+     	while (c.charAt(0) == ' ') {
+       		c = c.substring(1);
+     	}
+    	if (c.indexOf(name) == 0) {
+      		return c.substring(name.length, c.length);
+     	}
     }
-  return "";
+  	return "";
 }
 
 function submitVote(element) {
@@ -483,6 +512,7 @@ function getRewards() {
 }
 
 function getNotifications() {
+	$("title:first").text($("title:first").text().replace(/ *\([^)]*\) */g, ""));
 	createModal(); // Call function
 	// Modal Body Elements
 		createElement('h1', null, '.modal-body', 'Notificaciones');

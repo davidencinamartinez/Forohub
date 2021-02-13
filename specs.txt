@@ -4,10 +4,12 @@ moderadores de comunidad (rangos: 1->normal / 2->moderador / 3->creador / 4->yo)
 
 redireccion a index con script modal login
 algoritmo karma usuario (pendiente de modificaciones)
-citar y reportar  respuesta
+
 borde especial en el marco de usuario al desbloquear logros
-posicion en el ranking (usuario)
+
 ultimos logros conseguidos por usuario en panel lateral
 delegar liderazgo en comunidad (controlador y script)
 
 preload="meta"
+
+meta descripciones personalizadas por cada pagina

@@ -15,6 +15,7 @@ class PollVote extends Model {
         'created_at',
         'updated_at',
         'user_id',
+        'thread_id',
         'option_id'
     ];
 
@@ -29,11 +30,12 @@ class PollVote extends Model {
     	return $total;
     }
 
-    public static function votePollOption($option_id) {
+    public static function votePollOption($thread_id, $option_id) {
     	PollVote::create([
     		'created_at' => Carbon::now(),
     		'updated_at' => Carbon::now(),
     		'user_id' => Auth::user()->id,
+            'thread_id' => $thread_id,
     		'option_id' => $option_id
     	]);
     }
