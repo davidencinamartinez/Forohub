@@ -16,8 +16,12 @@
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/classes.css") }}'>
 	@stack('styles')
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es.js"></script>
+		<script type="text/javascript" src="/js/moment_js/moment.js"></script>
+		<script type="text/javascript" src="/js/moment_js/es.js"></script>
+		<!--
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
+		-->
 		@if (Auth::check())
 		<script src='{{ asset("/js/authenticated.js") }}'></script>
 		@else
@@ -37,7 +41,11 @@
 				<div class='user-header-panel'>
 					<img class='user-avatar' src='{{ Auth::user()->avatar }}'>
 					@if ($unread_notifications)
-					<div class="user-unread-notifications">{{ $unread_notifications }}</div>
+						@if ($unread_notifications > 9)
+							<div class="user-unread-notifications">9+</div>
+						@else
+							<div class="user-unread-notifications">{{ $unread_notifications }}</div>
+						@endif
 					@endif
 					<span class='user-welcome'>
 						<b>{{ Auth::user()->name }}</b>
@@ -87,23 +95,17 @@
 			<div style="float: left;">
 				<a href='/' title='Inicio'>Inicio</a>
 				<a href='/destacados' id='forumEntry' title='Destacados'>Destacados</a>
-				<a href='/foro' title='Tops'>Tops</a>
-				<a href='/comunidades/all' title='Comunidades'>Comunidades</a>
+				<a href='/tops/semana' title='Tops'>Tops</a>
+				<a href='/comunidades/' title='Comunidades'>Comunidades</a>
 			</div>
 			<div style="float: right;">
 				<div class="search-bar">
-					<form action='/search'>
-						<input class='search-input' type='search' name='search' placeholder='Buscar...' autocomplete='off'>
-						<button type='submit'>
-							<img class='search-button' src="/src/media/search.png">
-						</button>
-					</form>
+					<input class='search-input' type='search' name='search' placeholder='Buscar...' autocomplete='off'>
+					<button class="search-button">
+						<img src="/src/media/search.png">
+					</button>
+					
 				</div>
-				@if (Auth::check())
-					<a class='new-thread-button' href='/newthread' title='Crear Tema'>Crear Tema</a>
-				@else
-					<a class='new-thread-button' onclick="alert('Debes estar logeado para crear un nuevo tema.\nSerás redirigido a la página de inicio.')" href='/' title='Crear Tema'>Crear Tema</a>
-				@endif
 			</div>
 		</div>
 	</div>

@@ -70,9 +70,13 @@ use Illuminate\Support\Facades\Route;
 
 /* GUIDE ROUTES */
 
-	Route::get('/comunidades/{character}', [App\Http\Controllers\Site\Guide\GuideController::class, 'communitiesGuide']);
+	Route::get('/comunidades/{character?}', [App\Http\Controllers\Site\Guide\GuideController::class, 'communitiesGuide']);
 
-	Route::get('/usuarios/{character}', [App\Http\Controllers\Site\Guide\GuideController::class, 'usersGuide']);
+	Route::get('/usuarios/{character?}', [App\Http\Controllers\Site\Guide\GuideController::class, 'usersGuide']);
+
+	Route::get('/temas/{character?}', [App\Http\Controllers\Site\Guide\GuideController::class, 'threadsGuide']);
+
+	Route::get('/tops/{date}', [App\Http\Controllers\Site\Guide\GuideController::class, 'topsByDate']);
 
 /* AJAX CALLS */
 

@@ -13,3 +13,7 @@ delegar liderazgo en comunidad (controlador y script)
 preload="meta"
 
 meta descripciones personalizadas por cada pagina
+
+cada logro da un total de puntos, y desbloquea un marco
+ejemplo: logro 1 -> da 5 puntos -> marco desbloqueado (nivel 1)
+(posibles puntos por voto?)

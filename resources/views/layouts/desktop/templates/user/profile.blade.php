@@ -20,11 +20,35 @@
 	<div class="index-panel">
 	    <div style="width: 10%"></div>
 	    <div class="threads-panel">
+	    	@if (Auth::check() && Auth::user()->id == $data->id)
 	    	<div class="profile-configuration">
-	    	    <div class="profile-configuration-form">
-	    	        <h1>dsfdsfdsf</h1>
-	    	    </div>
+				<div class="profile-configuration-title">Configuración</div>
+	    	    <form>
+	    	    	<div class="community-title">
+		        		<b class="input-title">Título:</b>
+		        		<br>
+		        		<b class="input-title-small">* El título debe contener un mínimo de 3 carácteres *</b>
+		        		<div class="name-error"></div>
+		        		<input type="search" class="form-input" name="name" maxlength="40" placeholder="Nombre de la comunidad ..." value="{{ Auth::user()->about }}">
+		        		<div class="character-counter">
+		        			<label>0</label>
+		        			<label>/40</label>
+		        		</div>
+		        	</div>
+		        	<div class="community-title">
+		        		<b class="input-title">Título:</b>
+		        		<br>
+		        		<b class="input-title-small">* El título debe contener un mínimo de 3 carácteres *</b>
+		        		<div class="name-error"></div>
+		        		<input type="search" class="form-input" name="name" maxlength="40" placeholder="Nombre de la comunidad ..." value="{{ Auth::user()->about }}">
+		        		<div class="character-counter">
+		        			<label>0</label>
+		        			<label>/40</label>
+		        		</div>
+		        	</div>
+	    	    </form>
 	    	</div>
+	    	@endif
 	    	@if ($threads->isNotEmpty())
 			    @foreach ($threads as $thread)
 			        @include('layouts.desktop.templates.thread.content')

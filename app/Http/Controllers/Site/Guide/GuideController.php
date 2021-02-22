@@ -12,56 +12,49 @@ use App\Models\PollOption;
 use App\Models\UserCommunity;
 use App\Models\Vote;
 use App\Models\User;
-use App\Models;
+use App\Models\Guides;
 use Auth;
 use DB;
 use Redirect;
+use Paginator;
 
 class GuideController extends Controller {
 
-    function communitiesGuide($character) {
+    function communitiesGuide($character = null) {
     $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-    if ($character == "all") {
-        $data = Community::withCount('threads')->take(50)->get();
-    } else {
-        if (is_numeric($character)) {
-            $data = Community::where('tag', 'regexp', '^[0-9]+')->withCount('threads')->get();
-        } else {
-            $data = Community::where('tag', 'like', $character.'%')->withCount('threads')->get();
-        }
-    }
-    foreach ($data as $community) {
-        $community->sub_count = UserCommunity::userCount($community->id);
-        $community->index = Community::getCommunityPlacing($community->id);
-    }
-    foreach ($data as $community) {
-        if (Auth::check() && UserCommunity::where('community_id', $community->id)->where('user_id', Auth::user()->id)->whereIn('subscription_type', [2000,5000])->exists()) {
-            $community->is_mod = true;
-        }
-    }
+    $communities = Guides::getCommunities($character);
+    //$communities = new \Illuminate\Pagination\Paginator($communities, 3, 1);
     return view('layouts.desktop.templates.guides.communities',
         [   'unread_notifications' => $unread_notifications,
-            'data' => $data->sortBy('index')
+            'communities' => $communities->paginate(2)
         ]);
     }
 
-    function usersGuide($character) {
+    function usersGuide($character = null) {
     $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-    if ($character == "all") {
-        $data = User::select('id','name','avatar','created_at')->withCount('messages')->withCount('threads')->take(50)->get();
-    } else {
-        if (is_numeric($character)) {
-            $data = User::where('name', 'regexp', '^[0-9]+')->get();
-        } else {
-            $data = User::where('name', 'like', $character.'%')->get();
-        }
-    }
-    foreach ($data as $user) {
-        $user->karma = User::getKarma($user->id);
-    }
+    $users = Guides::getUsers($character);
     return view('layouts.desktop.templates.guides.users',
         [   'unread_notifications' => $unread_notifications,
-            'data' => $data->sortBy('name')
+            'users' => $users->sortBy('name')
         ]);
     }
+
+    function threadsGuide($character = null) {
+    $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+    $threads = Guides::getThreads($character);
+    return view('layouts.desktop.templates.guides.threads',
+        [   'unread_notifications' => $unread_notifications,
+            'threads' => $threads->sortByDesc('title')
+        ]);
+    }
+
+    function topsByDate($date = null) {
+    $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+    $communities = Guides::getTopCommunities($date);
+    return view('layouts.desktop.templates.guides.tops',
+        [   'unread_notifications' => $unread_notifications,
+            'communities' => $communities
+        ]);
+    }
+    
 }

@@ -63,7 +63,7 @@ class ThreadController extends Controller {
 		$thread_replies = Reply::orderBy('created_at', 'asc')
 		->where('thread_id', $thread_id)
 		->with('user')
-		->get();
+		->paginate(10, ['*'], 'pagina');
 
 		if ($thread->body == "IS_POLL") {
 		    $poll_total_votes = PollVote::getCountVotes($thread->id);

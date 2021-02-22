@@ -25,6 +25,7 @@ class Thread extends Model {
         'spoiler',
         'nsfw',
         'important',
+        'type',
         'body'
     ];
 
@@ -98,10 +99,13 @@ class Thread extends Model {
     public static function createPostThread($request) {
         $community_id = Community::where('tag', $request->community)->value('id');
         $body;
+        $type;
         if ($request->type == "post") {
+            $type = "THREAD_POST";
             $body = strip_tags($request->post);
         }
         if ($request->type == "multimedia") {
+            $type = "THREAD_MEDIA";
             $urlArray = [];
             if (count($request->file('files')) == 1) {
                 $mimeImages = array("image/jpg", "image/jpeg", "image/png", "image/gif", "image/webp", "image/svg");
@@ -142,9 +146,11 @@ class Thread extends Model {
             }
         }
         if ($request->type == "youtube") {
+            $type = "THREAD_YT";
             $body = '<div class="media-embed"><iframe width="560" height="315" src="https://www.youtube.com/embed/'.$request->link.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>';
         }
         if ($request->type == "poll") {
+            $type = "THREAD_POLL";
             $body = 'IS_POLL';
         }
         Thread::create([
@@ -156,6 +162,7 @@ class Thread extends Model {
             'spoiler' => intval(boolval($request->check_spoiler)),
             'nsfw' => intval(boolval($request->check_nsfw)),
             'important' => intval(boolval($request->check_important)),
+            'type' => $type,
             'body' => $body
         ]);
         $thread_id = Thread::latest()->value('id');

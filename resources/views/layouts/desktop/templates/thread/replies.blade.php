@@ -1,7 +1,7 @@
-<div id="{{ $loop->iteration }}" data-id="{{ $reply->id }}" class="thread-reply">
+<div id="{{ $reply->id }}" data-id="{{ $reply->id }}" class="thread-reply">
     <div class="thread-reply-id">
         <b class="thread-reply-date">{{ $reply->created_at }}</b>
-        <a href="#{{ $loop->iteration }}">#{{ $loop->iteration }}</a>
+        <a href="#{{ $reply->id }}">#{{ $reply->id }}</a>
     </div>
     <div class="thread-reply-content">
         <div class="thread-reply-author">

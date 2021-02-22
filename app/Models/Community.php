@@ -65,6 +65,20 @@ class Community extends Model {
         return $community_score;
     }
 
+    public static function getTopCommunityScore($community_id, $time) {
+        $community_score = 0;
+        $threads = Thread::where('community_id', $community_id)->get();
+        foreach ($threads as $thread) {
+            $upvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 1)->count();
+            $downvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 0)->count();
+            $community_score += 0.05+($upvotes*0.025)+($downvotes*(-0.025));
+        }
+
+        $community_score += UserCommunity::where('community_id', $community_id)->count()*0.035;
+
+        return $community_score;
+    }
+
     public static function getCommunityPlacing($community_id) {
         $communities = Community::get();
         foreach ($communities as $community) {

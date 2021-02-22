@@ -1,6 +1,6 @@
 @extends('layouts.desktop.main')
 
-@section('title', 'Guía de comunidades - Forohub')
+@section('title', 'Guía de temas - Forohub')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/classes.css">
@@ -11,12 +11,5 @@
 @endpush
 @section('body')
 	@include('layouts.desktop.templates.guides.guide_selection')
-	@include('layouts.desktop.templates.guides.communities_guide')
-	@if ($communities->hasPages())
-	    <div style="text-align: center;">
-	        <div class="pageSelector">
-	            {!!$communities->links()!!}
-	        </div>
-	    </div>
-	@endif
+	@include('layouts.desktop.templates.guides.threads_guide')
 @endsection

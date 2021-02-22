@@ -339,16 +339,21 @@ class IndexController extends Controller {
          }
 
          function test() {
+            /*
+          $thread_replies = Reply::where('thread_id', 29082006)->get('id');
+          $nano = 26052042;
+          $page = 0;
+          foreach ($thread_replies as $reply) {
+            if ($reply->id == $nano) {
+                break;
+            } else {
+                $page = $page+0.1;
+            }
+              
+          }
+          return ceil($page);*/
+          $thread_replies = Reply::where('thread_id', 29082006)->with('user:id,name')->get(['id', 'user_id', 'text']);
 
-           $threads = Thread::orderBy('created_at', 'desc')
-        ->with('communities')
-        ->with('author')
-        ->with('first_reply')
-        ->withCount('replies')
-        ->withCount('upvotes')
-        ->withCount('downvotes')
-        ->orderBy('upvotes_count', 'desc')
-        ->paginate(4, ['*'], 'pagina');
-        return $threads;
+          return $thread_replies;
          }
 }

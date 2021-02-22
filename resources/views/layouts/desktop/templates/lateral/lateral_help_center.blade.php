@@ -2,9 +2,9 @@
 	<div class="lateral-title">Centro de ayuda</div>
 	<div class="help-center">
 		<div class=" help-center-left">
-			<a href="/comunidades/all">Guía de comunidades</a>
-			<a href="">Guía de temas</a>
-			<a href="/usuarios/all">Guía de usuarios</a>
+			<a href="/comunidades/">Guía de comunidades</a>
+			<a href="/temas/">Guía de temas</a>
+			<a href="/usuarios/">Guía de usuarios</a>
 			<a href="">Guía de tags</a>
 		</div>
 		<div class=" help-center-right">

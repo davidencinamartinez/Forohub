@@ -1,4 +1,5 @@
 <div class="guide-selection">
+	<a href="/{{ Request::segment(1) }}/" title="Todos">Todos</a>
 	<a href="a" title="A">A</a>
 	<a href="b" title="B">B</a>
 	<a href="c" title="C">C</a>
@@ -25,5 +26,5 @@
 	<a href="x" title="X">X</a>
 	<a href="y" title="Y">Y</a>
 	<a href="z" title="Z">Z</a>
-	<a href="0" title="0-9">#</a>
+	<a href="1" title="0-9">#</a>
 </div>

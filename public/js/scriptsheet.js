@@ -8,6 +8,7 @@ $(document).ready(function() {
 		$('html').css('background-color', '#1b1b1b');
 		$('.profile-dark-theme').attr('class', 'profile-light-theme');
 		$('.profile-light-theme').text('Tema Claro');
+		$('.empty-data').css('color', 'ghostwhite');
 	}
 	$(window).scroll(function(){
 		if ($(document.body)[0].scrollHeight < $(window).height()) {
@@ -15,7 +16,16 @@ $(document).ready(function() {
 		} else {
 			$('.footer').css('position', 'relative');
 		}
-	}); 
+	});
+	$('.search-button').click(function(event) {
+		var input = $('.search-input').val();
+		if (input) {
+			var values = input.replace(/[ ,.]/g, "+");
+			window.open('https://www.google.com/search?q='+values+'%20site%3Aforohub.com', '_blank');
+		} else {
+			window.open('https://www.google.com/search?q=forohub', '_blank');
+		}
+	});
 	$('.thread-date, .thread-reply-date, .reply-date').each(function(index, el) {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
 	});

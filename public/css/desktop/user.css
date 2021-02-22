@@ -33,21 +33,32 @@
 }
 
 .profile-configuration {
+	float: right;
 	width: 80%;
-    float: right;
-    min-width: 600px;
-    max-width: 1000px;
-    display: none;
+	border-radius: 10px;
+	border: solid 1px black;
+	min-width: 600px;
+	display: none;
+	background-color: #6B6B6B;
 }
 
-.profile-configuration-form {
-    border: solid 1px black;
-    display: flex;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    transition: 0.25s;
-    font-size: 14px;
-    width: 100%;
-    background-color: #6b6b6b;
-    text-align: justify;
+.profile-configuration-title {
+	float: right;
+	min-width: 600px;
+	transition: 0.25s;
+	border-top: none;
+	width: 100%;
+	border-bottom: solid 1px black;
+	background-color: #FFB600;
+	border-radius: 8px 8px 0px 0px;
+	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.profile-configuration > form {
+	margin-top: 40px;
+	padding: 20px;
 }

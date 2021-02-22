@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	if (getCookie('nsfw') == 'allowed') {
+	if (getCookie('NSFW_CHECK') == 'TRUE') {
 		$('.blurry').removeClass('blurry');
 		$('.blurry-logo').remove();
 	}
@@ -12,7 +12,8 @@ $(document).ready(function() {
 		})
 	});
 	$(document).on('click', '.modal-nsfw-allow', function(event) {
-		document.cookie = "nsfw=allowed";
+		document.cookie = "NSFW_CHECK=TRUE";
+		$('.blurry-logo').remove();
 		$('.blurry').removeClass('blurry');
 		$('.modal').fadeOut('fast', function() {
 			$('.modal').remove();

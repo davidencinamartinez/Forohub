@@ -56,4 +56,8 @@ class Reply extends Model {
         }
     }
 
+    public static function quoteReply($reply) {
+        
+    }
+
 }
