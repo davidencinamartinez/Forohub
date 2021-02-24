@@ -30,6 +30,10 @@ class Reply extends Model {
     	return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function reports() {
+        return $this->hasMany(ReportReply::class, 'reply_id');
+    }
+
     public function replyCount($user_id) {
         return Reply::where('user_id', $user_id)->count();
     }
@@ -54,10 +58,6 @@ class Reply extends Model {
                 Notification::createNotification($user_id, $thread_id, "mention");
             }    
         }
-    }
-
-    public static function quoteReply($reply) {
-        
     }
 
 }

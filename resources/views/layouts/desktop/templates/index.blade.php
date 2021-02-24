@@ -69,4 +69,11 @@
         @include('layouts.desktop.templates.lateral.lateral_help_center')
     </div>
 </div>
+@if ($threads->hasPages())
+  <div style="text-align: center;">
+    <div class="pageSelector">
+      {!!$threads->links()!!}
+    </div>
+  </div>
+@endif
 @endsection

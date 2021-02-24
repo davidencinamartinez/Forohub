@@ -533,13 +533,25 @@
                 white-space: pre-wrap;
             }
 
-            .thread-reply-quoted {
-                width: min-content;
+            /* QUOTES */
+
+            .thread-quote {
                 border: solid 1px black;
-                border-radius: 4px;
-                background-color: #2F2F2F;
+                border-radius: 8px;
+                display: grid;
+            }
+
+            .thread-quote-info {
+                border-bottom: solid 1px black;
+                border-radius: 6px 6px 0px 0px;
+                background-color: #b50000;
                 padding: 2px;
-                margin: 0px 6px 2px 0px;
+            }
+
+            .thread-quote-data {
+                background-color: #c5c5c5;
+                padding: 6px;   
+                border-radius: 0px 0px 6px 6px;
             }
 
             .thread-reply-author-data {

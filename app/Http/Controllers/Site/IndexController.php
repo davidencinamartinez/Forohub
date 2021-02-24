@@ -14,6 +14,8 @@ use App\Models\UserReward;
 use App\Models\UserCommunity;
 use App\Models\Notification;
 use App\Models\PollOption;
+use App\Models\ReportReply;
+use App\Models\ReportThread;
 use App\Models\PollVote;
 use Carbon\Carbon;
 use Auth;
@@ -339,21 +341,9 @@ class IndexController extends Controller {
          }
 
          function test() {
-            /*
-          $thread_replies = Reply::where('thread_id', 29082006)->get('id');
-          $nano = 26052042;
-          $page = 0;
-          foreach ($thread_replies as $reply) {
-            if ($reply->id == $nano) {
-                break;
-            } else {
-                $page = $page+0.1;
-            }
-              
-          }
-          return ceil($page);*/
-          $thread_replies = Reply::where('thread_id', 29082006)->with('user:id,name')->get(['id', 'user_id', 'text']);
-
-          return $thread_replies;
+            $thread_reports = Community::where('id', 11071967)->with('thread_reports')->with('thread_reports.author')->get()->pluck('thread_reports');
+            $reply_reports = Thread::where('community_id', 11071967)->with('reply_reports')->get()->pluck('reply_reports');
+            return $thread_reports;
+          //  return Thread::where('id', 29081996)->with('reports')->get();
          }
 }

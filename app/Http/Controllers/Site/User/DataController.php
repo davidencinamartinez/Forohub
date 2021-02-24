@@ -26,6 +26,9 @@ class DataController extends Controller {
 
     function getUser($user) {
         $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        if (User::where('name', strtolower($user))->doesntExist()) {
+            abort(404);
+        }
         $data = User::where('name', strtolower($user))->select('id','name','created_at','about','avatar')->withCount('messages')->withCount('threads')->first();
         $user_rewards = UserReward::where('user_id', $data->id)->select('reward_id')->with('reward:id,name,text,filename')->take(5)->get();
         $data->karma = User::getKarma($data->id);

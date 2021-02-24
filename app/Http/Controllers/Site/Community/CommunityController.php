@@ -11,6 +11,7 @@ use App\Models\PollVote;
 use App\Models\PollOption;
 use App\Models\UserCommunity;
 use App\Models\Vote;
+use App\Models\ReportThread;
 use Auth;
 use DB;
 use Redirect;
@@ -125,5 +126,27 @@ class CommunityController extends Controller {
         } else {
             abort(404);
         }
+    }
+
+    function getCommunityReports($community_tag) {
+        if (!Auth::user()) {
+            abort(404);
+        }
+        $community = Community::where('tag', $community_tag)->first();
+        if (UserCommunity::where('user_id', Auth::user()->id)
+            ->where('community_id', $community->id)
+            ->whereIn('subscription_type', [5000,2000])
+            ->doesntExist()) {
+            abort(404);
+        }
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        $thread_reports = Community::where('id', $community->id)->with('thread_reports')->with('thread_reports.author')->get()->pluck('thread_reports');
+        $reply_reports = Thread::where('community_id', 11071967)->with('reply_reports')->get()->pluck('reply_reports');
+        return view('layouts.desktop.templates.community.reports',
+            [   'unread_notifications' => $unread_notifications,
+                'community' => $community,
+                'thread_reports' => $thread_reports->first()->sortByDesc('created_at'),
+                'reply_reports' => $reply_reports
+        ]);
     }
 }

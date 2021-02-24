@@ -130,6 +130,17 @@ $(document).ready(function() {
 		$(this).siblings('.slideshow-page').text(parseInt(currentIndex)+1+"/"+sourceArray.length);
 		$(this).siblings('.slideshow-media').find('img').attr('src', sourceArray[currentIndex]);
 	});
+	$('.lateral-community-rule').click(function(event) {
+		event.preventDefault();
+		var description = $(this).children('.rule-description:first');
+		if (description.is(':visible')) {
+			$(this).children('label:first').text('▼')
+			description.hide('400');
+		} else {
+			$(this).children('label:first').text('▲')
+			description.show('400');
+		}
+	});
 });
 
 function createElement(element, attributes, position, text) {

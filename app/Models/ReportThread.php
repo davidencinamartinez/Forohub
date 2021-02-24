@@ -22,6 +22,14 @@ class ReportThread extends Model {
         'description'
     ];
 
+    public function threads() {
+        return $this->belongsTo(Thread::class, 'thread_id');
+    }
+
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public static function createThreadReport($thread_id, $report_type, $description) {
     	ReportThread::create([
     	    'created_at' => Carbon::now(),

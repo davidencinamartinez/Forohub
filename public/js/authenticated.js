@@ -19,7 +19,7 @@ $(document).ready(function() {
 		nsfwModal();
 	});
 	$(document).on('click', '.modal-nsfw-allow', function(event) {
-		document.cookie = "NSFW_CHECK=TRUE;";
+		document.cookie = "NSFW_CHECK=TRUE;path=/";
 		$('.blurry-logo').remove();
 		$('.blurry').removeClass('blurry');
 		$('.modal').fadeOut('fast', function() {

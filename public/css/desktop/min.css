@@ -152,24 +152,3 @@
 	.guide-selection a:last-child {
 		border-radius: 0px 4px 4px 0px;
 	}
-
-	.quoted-div {
-		border: solid 1px black;
-		    border-radius: 8px;
-		    display: grid;
-		
-	}
-
-	.thread-reply-quoted {
-		border-bottom: solid 1px black;
-		    border-radius: 6px 6px 0px 0px;
-		    background-color: #b50000;
-		    padding: 2px;
-	}
-
-	.quote-text {
-		background-color: darkgray;
-		    padding: 6px;
-		    /* margin-top: 6px; */
-		    border-radius: 0px 0px 6px 6px;
-	}

@@ -23,10 +23,8 @@
     <div class="lateral-cube lateral-community-data">
         <div class="lateral-title">Reglamento</div>
         @foreach ($community->community_rules as $rule)
-            <div class="lateral-community-rule">
-                <b>{{ $rule->rule }}</b>
-                <br>
-                <label class="accordian">{{ $rule->rule_description }}</label>
+            <div class="lateral-community-rule">{{ $rule->rule }}<label>▼</label>
+                <div class="rule-description">{{ $rule->rule_description }}</div>
             </div>
         @endforeach
     </div>

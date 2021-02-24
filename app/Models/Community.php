@@ -31,6 +31,10 @@ class Community extends Model {
     	return $this->hasMany(UserCommunity::class);
     }
 
+    public function thread_reports() {
+        return $this->hasManyThrough(ReportThread::class, Thread::class);
+    }
+
     public function threads() {
     	return $this->hasMany(Thread::class);
     }

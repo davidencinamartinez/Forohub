@@ -48,35 +48,13 @@ class ReplyController extends Controller {
                 if (empty($request->text)) {
                     return response()->json(['empty' => 'El mensaje no puede estar vacío']);
                 }
-                /*
                 // THREAD REFERENCE
-                    $thread_replies = Reply::where('thread_id', $request->thread_id)->get('id');
-                    preg_match_all('/#([0-9]+)/', $request->text, $matches);
-                    foreach ($matches[1] as $match) {
-                        
-                    }
-                    $thread_replies = Reply::where('thread_id', 29082006)->get('id');
-                    $nano = 26052042;
-                    $page = 0;
-                    foreach ($thread_replies as $reply) {
-                      if ($reply->id == $nano) {
-                          break;
-                      } else {
-                          $page = $page+0.1;
-                      }
-                        
-                    }
-                    return ceil($page);
-                    $reply_id = str_replace($request->, replace, subject)
-                    $reply_page = Reply::where('thread_id', $request->thread_id)->count();
-                    $reference_page;
-                    if (!is_int($reply_page/10)) {
-                        $reference_page = ceil($reply_page/10);
-                    } else {
-                        $reference_page = $reply_page / 10;
-                Reply::createReply($request->thread_id, preg_replace('/#([0-9]+)/', '<div class="thread-reply-quoted"><a href="/c/'.$community_tag.'/t/'.$request->thread_id.'?pagina='.$reference_page.'$0">$0</a></div>', $request->text));
-                    }*/
-                    $community_id = Thread::where('id', $request->thread_id)->value('community_id');
+                $request->text = preg_replace_callback('/@[a-zA-Z0-9]{0,20}/', function ($matches) {
+                    $user = str_replace('@', '', $matches[0]);
+                    $string = '<a href="/u/'.strtolower($user).'">'.$matches[0].'</a>';
+                    return $string;
+                }, $request->text);
+                $community_id = Thread::where('id', $request->thread_id)->value('community_id');
                 $community_tag = Community::where('id', $community_id)->value('tag');
                 $thread_replies = Reply::where('thread_id', $request->thread_id)->with('user:id,name')->get(['id', 'user_id', 'text']);
                 Reply::createReply($request->thread_id, preg_replace_callback('/#([0-9]+)/', 
@@ -93,9 +71,7 @@ class ReplyController extends Controller {
                                 $quote_page = $quote_page+0.1;
                             }
                         }
-                        $string = '<div class="quoted-div"><div class="thread-reply-quoted"><b>Escrito por <a href="/u/'.strtolower($quote_user).'">'.$quote_user.'&nbsp;<a href="/c/'.$community_tag.'/t/'.$request->thread_id.'?pagina='.ceil($quote_page).$matches[0].'">➤</a></b></div><div class="quote-text">'.$quote_text.'</div></div>';
-
-                       // $string = '<div class="thread-reply-quoted"><a href="/c/'.$community_tag.'/t/'.$request->thread_id.'?pagina='.ceil($quote_page).$matches[0].'">'.$matches[0].'</a></div>';
+                        $string = '<div class="thread-quote"><div class="thread-quote-info"><b>Escrito por <a href="/u/'.strtolower($quote_user).'">'.$quote_user.'</a>&nbsp;<a href="/c/'.$community_tag.'/t/'.$request->thread_id.'?pagina='.ceil($quote_page).$matches[0].'">➤</a></b></div><div class="thread-quote-data">'.$quote_text.'</div></div>';
                         return $string;
                 }, $request->text));
                 Reply::mentionUser($request->text, $request->thread_id);

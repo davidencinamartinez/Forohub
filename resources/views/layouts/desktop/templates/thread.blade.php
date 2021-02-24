@@ -37,17 +37,17 @@
             @foreach ($thread_replies as $reply)
                 @include('layouts.desktop.templates.thread.replies')
             @endforeach
-            @if ($thread_replies->hasPages())
-                <div style="text-align: center;">
-                    <div class="pageSelector">
-                        {!!$thread_replies->links()!!}
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
     <div class="lateral-panel">
         @include('layouts.desktop.templates.lateral.lateral_community')
     </div>
 </div>
+@if ($thread_replies->hasPages())
+    <div style="text-align: center;">
+        <div class="pageSelector">
+            {!!$thread_replies->links()!!}
+        </div>
+    </div>
+@endif
 @endsection

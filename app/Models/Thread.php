@@ -35,6 +35,14 @@ class Thread extends Model {
     	return $this->belongsTo(Community::class, 'community_id');
     }
 
+    public function thread_reports() {
+        return $this->hasMany(ReportThread::class, 'thread_id');
+    }
+
+    public function reply_reports() {
+        return $this->hasManyThrough(ReportReply::class, Reply::class);
+    }
+
     public function author() {
     	return $this->belongsTo(User::class, 'user_id')->select('id', 'name');
     }

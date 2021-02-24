@@ -56,8 +56,10 @@
         @if ($community->is_mod) 
         <div class="lateral-cube">
             <div class="lateral-title">Panel de moderación</div>
-            <div class="lateral-community-rule">
-                <button>Mensajes</button>
+            <div class="lateral-community-procedures">
+                <a href="/c/{{ $community->tag }}/reportes">
+                    <button>Reportes</button>
+                </a>
                 <button>Permisos</button>
             </div>
         </div>
@@ -66,10 +68,10 @@
     </div>
 </div>
 @if ($threads->hasPages())
-      <div style="text-align: center;">
+    <div style="text-align: center;">
         <div class="pageSelector">
           {!!$threads->links()!!}
         </div>
-      </div>
-    @endif
+    </div>
+@endif
 @endsection

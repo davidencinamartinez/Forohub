@@ -54,6 +54,8 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/crear/comunidad', [App\Http\Controllers\Site\Community\CommunityController::class, 'newCommunity']);
 
+	Route::get('/c/{community_tag}/reportes', [App\Http\Controllers\Site\Community\CommunityController::class, 'getCommunityReports']);
+
 	/* New Community */
 
 /* THREAD ROUTES */
