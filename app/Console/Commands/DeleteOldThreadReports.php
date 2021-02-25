@@ -39,7 +39,7 @@ class DeleteOldThreadReports extends Command
      */
     public function handle()
     {
-        ReportThread::where('created_at', '<=', Carbon::now()->subSeconds(30))->delete();
+        ReportThread::where('created_at', '<=', Carbon::now()->subDays(30))->delete();
         echo "Se ha ejecutado el comando 'deleteThreadReports' con éxito";
     }
 }
