@@ -18,6 +18,9 @@ class ReplyController extends Controller {
 	/* CREATE REPLY */
 
     function makeReply(Request $request) {
+        if (Thread::where('id', $request->thread_id)->first()->closed == 1) {
+            abort(404);
+        }
         $request->text = strip_tags($request->text);
     	if (Auth::user()) {
       		$messages = [
@@ -78,8 +81,10 @@ class ReplyController extends Controller {
             	// REWARDS
     			$user_reply_count = Reply::where('user_id', Auth::user()->id)->count();
     			if ($user_reply_count == 1) {
-    				UserReward::createUserReward(Auth::user()->id, '2');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: ¡Buen viaje!", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '2')->doesntExist()) {
+        				UserReward::createUserReward(Auth::user()->id, '2');
+        				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: ¡Buen viaje!", "reward");
+                    }
     			} elseif ($user_reply_count == 100) {
     				UserReward::createUserReward(Auth::user()->id, '3');
     				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Paso a paso", "reward");

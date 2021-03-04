@@ -72,19 +72,25 @@
             @endif
             </div>
             <div class="thread-info">
-                <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none">💬</label> {{ $thread->replies_count }} Respuestas</a>
+                <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none">💬</label> {{ $thread->replies_count }} Mensajes</a>
                 <span class="remarkable-text"><label>🔗</label> Compartir</span>
                 <span class="required-auth remarkable-text report-thread"><label>❗</label> Reportar</span>
+                @if ($thread->closed == 0)
                 <span class="required-auth remarkable-text activate-reply"><label>↩️</label> Responder</span>
+                @else
+                <span class="remarkable-text"><label>🔒</label> Tema Cerrado</span>
+                @endif
             </div>
-            @if (Auth::check())
-                <div class="thread-quick-reply">
-                    <div>
-                        <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
-                        <button class="thread-quick-reply-send" type="submit">Responder</button>
-                        <button class="thread-quick-reply-cancel">Cancelar</button>
+            @if ($thread->closed == 0)
+                @if (Auth::check())
+                    <div class="thread-quick-reply">
+                        <div>
+                            <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
+                            <button class="thread-quick-reply-send" type="submit">Responder</button>
+                            <button class="thread-quick-reply-cancel">Cancelar</button>
+                        </div>
                     </div>
-                </div>
+                @endif
             @endif
         </div>
     </div>

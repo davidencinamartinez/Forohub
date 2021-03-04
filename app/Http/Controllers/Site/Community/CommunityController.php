@@ -141,12 +141,24 @@ class CommunityController extends Controller {
         }
         $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
         $thread_reports = Community::where('id', $community->id)->with('thread_reports')->with('thread_reports.author')->get()->pluck('thread_reports');
-        $reply_reports = Thread::where('community_id', 11071967)->with('reply_reports')->get()->pluck('reply_reports');
+        $reply_reports = Thread::where('community_id', $community->id)->with('reply_reports')->with('reply_reports.author')->get();
+        // REPLY REFERENCE
+       $threads = Thread::where('community_id', $community->id)->with('replies')->with('replies.reports.author')->get();
+        foreach ($threads as $thread) {
+            $counter = 1;
+            foreach ($thread->replies as $reply) {
+                foreach($reply->reports as $report) {
+                    $report->page = ceil($counter/10);
+                    $report->thread_id = $thread->id;
+                }
+                $counter+=1;
+            }
+        }
         return view('layouts.desktop.templates.community.reports',
             [   'unread_notifications' => $unread_notifications,
                 'community' => $community,
-                'thread_reports' => $thread_reports->first()->sortByDesc('created_at'),
-                'reply_reports' => $reply_reports
+                'thread_reports' => $thread_reports->first()->sortByDesc('created_at')->sortBy('solved'),
+                'reply_reports' => $threads->pluck('replies.*.reports', 'thread_id')->collapse()->collapse()->sortByDesc('created_at')->sortBy('solved')
         ]);
     }
 }

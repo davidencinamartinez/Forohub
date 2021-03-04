@@ -14,13 +14,15 @@ class CreateRepliesReportsTable extends Migration
     public function up() {
         
         Schema::create('replies_reports', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('reply_id');
-            $table->foreign('reply_id')->references('id')->on('replies');
+            $table->foreign('reply_id')->references('id')->on('replies')->onDelete('cascade');
             $table->string('report_type', 50);
+            $table->boolean('solved')->default(0);
             $table->string('description', 140)->nullable();
         });
     }

@@ -19,6 +19,17 @@
         </div>
     </div>
 </div>
+@isset ($thread)
+@if ($thread->user_is_admin)
+    <div class="lateral-cube">
+        <div class="lateral-title">Acciones</div>
+        <div class="lateral-thread-options">
+            <button class="thread-options thread-close">Cerrar Tema 🔒</button>
+            <button class="thread-options thread-delete">Eliminar Tema ⛔</button>
+        </div>
+    </div> 
+@endif
+@endisset
 @if ($community->community_rules->isNotEmpty())
     <div class="lateral-cube lateral-community-data">
         <div class="lateral-title">Reglamento</div>

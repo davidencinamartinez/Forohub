@@ -32,9 +32,9 @@ class DataController extends Controller {
         $data = User::where('name', strtolower($user))->select('id','name','created_at','about','avatar')->withCount('messages')->withCount('threads')->first();
         $user_rewards = UserReward::where('user_id', $data->id)->select('reward_id')->with('reward:id,name,text,filename')->take(5)->get();
         $data->karma = User::getKarma($data->id);
-        $data->placing = User::getUserPlacing($data->id);
         $data->upvotes = User::getUserUpvotes($data->id);
         $data->downvotes = User::getUserDownvotes($data->id);
+        $data->placing = User::getUserPlacing($data->id);
         $data->communities = UserCommunity::where('user_id', $data->id)->whereIn('subscription_type', [2000,5000])->get('community_id');
         $threads = Thread::orderBy('created_at', 'desc')
         ->where('user_id', $data->id)

@@ -63,4 +63,15 @@ class UserCommunity extends Model {
         }
 
     }
+
+    public static function isUserAdmin($user_id, $community_id) {
+        if (UserCommunity::where('user_id', $user_id)
+            ->where('community_id', $community_id)
+            ->whereIn('subscription_type', [5000,2000])
+            ->exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

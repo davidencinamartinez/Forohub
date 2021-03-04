@@ -141,6 +141,12 @@ $(document).ready(function() {
 			description.show('400');
 		}
 	});
+	if (window.location.hash) {
+		var hash = window.location.hash.substring(1);
+		$('#'+hash).css({
+			animation: 'hashAnimation 1s infinite alternate',
+		});
+	}
 });
 
 function createElement(element, attributes, position, text) {
@@ -567,7 +573,7 @@ function getNotifications() {
 						createElement('b', null, '.notification-info:last', 'Han reportado ');
 						createElement('a', { href: /c/+val.community+'/t/'+val.notification, title: val.thread}, '.notification-info b:last', 'un tema ');
 						createElement('b', null, '.notification-info:last', 'de ');
-						createElement('a', { href: /c/+val.community, title: val.community_title}, '.notification-info b:last', ' tu comunidad');
+						createElement('a', { href: /c/+val.community+'/reportes', title: val.community_title}, '.notification-info b:last', ' tu comunidad');
 					} else {
 						createElement('b', null, '.notification-info:last', val.notification);
 					}

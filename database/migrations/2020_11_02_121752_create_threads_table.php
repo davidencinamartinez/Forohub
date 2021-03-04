@@ -26,6 +26,8 @@ class CreateThreadsTable extends Migration
             $table->boolean('important')->default(0);
             $table->string('type', 12)->default('THREAD_POST');
             $table->longText('body', 30000);
+            $table->boolean('closed')->default(0);
+            $table->boolean('hidden')->default(0);
         });
     }
 

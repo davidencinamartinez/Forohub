@@ -12,11 +12,4 @@
 @section('body')
 	@include('layouts.desktop.templates.guides.guide_selection')
 	@include('layouts.desktop.templates.guides.communities_guide')
-	@if ($communities->hasPages())
-	    <div style="text-align: center;">
-	        <div class="pageSelector">
-	            {!!$communities->links()!!}
-	        </div>
-	    </div>
-	@endif
 @endsection

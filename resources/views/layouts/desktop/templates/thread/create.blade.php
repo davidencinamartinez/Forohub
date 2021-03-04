@@ -70,7 +70,7 @@
 		        		<div>
 		        			<input type="checkbox" name="check_important">
 		        			<b for="check_important">📑 Tema Serio</b>
-		        			<label title="Tema Serio:&#13;&#10;Tema para tratar de forma seria y donde las respuestas sean coherentes y relacionadas con el sujeto especificado">?</label>
+		        			<label title="Tema Serio:&#13;&#10;Tema para tratar de forma seria y donde los mensajes recibidos deban ser coherentes y relacionadas con el sujeto especificado">?</label>
 		        		</div>
 		        		<div>
 		        			<input type="checkbox" name="check_nsfw">

@@ -19,7 +19,8 @@ class ReportThread extends Model {
         'user_id',
         'thread_id',
         'report_type',
-        'description'
+        'description',
+        'solved'
     ];
 
     public function threads() {
@@ -37,7 +38,8 @@ class ReportThread extends Model {
     	    'user_id' => Auth::user()->id,
     	    'thread_id' => $thread_id,
     	    'report_type' => $report_type,
-    	    'description' => $description
+    	    'description' => $description,
+            'solved' => 0
     	]);
     }
 }

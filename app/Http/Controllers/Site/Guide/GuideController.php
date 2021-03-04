@@ -26,7 +26,7 @@ class GuideController extends Controller {
     //$communities = new \Illuminate\Pagination\Paginator($communities, 3, 1);
     return view('layouts.desktop.templates.guides.communities',
         [   'unread_notifications' => $unread_notifications,
-            'communities' => $communities->paginate(2)
+            'communities' => $communities
         ]);
     }
 

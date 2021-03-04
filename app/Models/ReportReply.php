@@ -13,13 +13,22 @@ class ReportReply extends Model {
 
     protected $table = 'replies_reports';
 
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function replies() {
+        return $this->belongsTo(Reply::class, 'reply_id');
+    }
+
     protected $fillable = [
         'created_at',
         'updated_at',
         'user_id',
         'reply_id',
         'report_type',
-        'description'
+        'description',
+        'solved'
     ];
 
     public static function createReplyReport($reply_id, $report_type, $description) {
@@ -29,7 +38,8 @@ class ReportReply extends Model {
     	    'user_id' => Auth::user()->id,
     	    'reply_id' => $reply_id,
     	    'report_type' => $report_type,
-    	    'description' => $description
+    	    'description' => $description,
+            'solved' => 0
     	]);
     }
 }

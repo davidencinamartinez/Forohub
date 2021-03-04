@@ -34,7 +34,7 @@
         <div class="lateral-cube top-communities">
             <div class="lateral-title">TOP Comunidades</div>
             @foreach ($top_communities as $top_community)
-                <a class="top-community" href="c/{{ $top_community->tag }}" target="_blank">
+                <a class="top-community" href="c/{{ $top_community->tag }}">
                     <img class="top-community-logo" src="{{ $top_community->logo }}">
                     <b>c/{{ $top_community->tag }}</b>
                 </a>

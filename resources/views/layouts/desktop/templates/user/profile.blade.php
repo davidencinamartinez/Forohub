@@ -91,7 +91,7 @@
 			        </div>
 			        <div title="Temas">
 			            <img src="/src/media/DVZoxBZv3qFwJqcTkAa2jrvJ49TcIPsMIzA2dJn0ytRWRwJt6daINZLImpsOAsAP.png">
-			            <b>2</b>
+			            <b>{{ $data->threads_count }}</b>
 			        </div>
 			        <div title="Votos Positivos">
 			            <img src="/src/media/nAiEBnmyVoFYNBhtaIw8mIXoMmNaxQLOiayJ9FM0PhVQiGJ6adiTUFj4IqidT560.png">

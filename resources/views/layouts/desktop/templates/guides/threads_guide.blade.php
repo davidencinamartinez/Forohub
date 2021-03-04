@@ -32,7 +32,7 @@
 					<label class="element-date-threads">{{ $thread->created_at }}</label>
 				</div>
 				<div class="element-stats">
-			        <div title="Respuestas">
+			        <div title="Mensajes">
 			            <img src="/src/media/bGAP31dQIA6Y3fxrmZ9IMV4Mc4h2nokrgeZB2lqPvmJcKXXCENPWUpwMzDu4ZfB7.png">
 			            <b>{{ $thread->replies_count }}</b>
 			        </div>

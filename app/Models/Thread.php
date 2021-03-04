@@ -26,7 +26,9 @@ class Thread extends Model {
         'nsfw',
         'important',
         'type',
-        'body'
+        'body',
+        'closed',
+        'hidden'
     ];
 
     protected $table = 'threads';

@@ -35,6 +35,10 @@ class Community extends Model {
         return $this->hasManyThrough(ReportThread::class, Thread::class);
     }
 
+    public function reply_reports() {
+        return $this->hasManyThrough(Reply::class, Thread::class)->join('replies_reports', 'replies_reports.reply_id', '=', 'replies.id')->where('threads.community_id', $this->id)->where('replies.thread_id', 'threads.id');
+    }
+
     public function threads() {
     	return $this->hasMany(Thread::class);
     }

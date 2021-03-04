@@ -50,6 +50,10 @@ class ThreadController extends Controller {
 
 		$community_id = Community::where('tag', $community_tag)->value('id');
 
+		if (Thread::where('id', $thread_id)->where('community_id', $community_id)->doesntExist()) {
+			abort(404);
+		}
+
 		$thread = Thread::orderBy('created_at', 'desc')
 		->where('community_id', $community_id)
 		->where('id', $thread_id)
@@ -113,6 +117,11 @@ class ThreadController extends Controller {
                 } else {
                     $thread->user_joined_community = 'false';
                 }
+            }
+            if (Auth::user()) {
+            	if (UserCommunity::isUserAdmin(Auth::user()->id, $thread->communities->id) || $thread->author->id == Auth::user()->id) {
+            		$thread->user_is_admin = 'true';
+            	}
             }
 
             $community = Community::where('id', $community_id)->with('community_moderators')->with('community_rules')->withCount('threads')->first();
@@ -216,6 +225,26 @@ class ThreadController extends Controller {
 				abort(404);
 			}
 		}
+
+	function deleteThread(Request $request) {
+	    $community_id = Thread::where('id', $request->thread_id)->value('community_id');
+	    $thread = Thread::where('id', $request->thread_id)->with('author')->first();
+	    if (Thread::where('id', $request->thread_id)->where('community_id', $community_id)->doesntExist()) {
+	        return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	        abort(404);
+	    }
+	    if (Auth::user()) {
+	        if (UserCommunity::isUserAdmin(Auth::user()->id, $community_id) || $thread->author->id == Auth::user()->id) {
+	            Thread::where('id', $request->thread_id)->delete();
+	        } else {
+	            return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	            abort(404);
+	        }
+	    } else {
+	        return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	        abort(404);
+	    }
+	}
 
 }
  

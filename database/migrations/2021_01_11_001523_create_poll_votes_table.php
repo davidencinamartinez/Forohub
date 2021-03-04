@@ -19,7 +19,7 @@ class CreatePollVotesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('thread_id');
-            $table->foreign('thread_id')->references('id')->on('threads');
+            $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
             $table->unsignedBigInteger('option_id');
             $table->foreign('option_id')->references('id')->on('poll_options');
         });

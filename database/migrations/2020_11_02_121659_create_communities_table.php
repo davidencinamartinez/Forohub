@@ -22,6 +22,7 @@ class CreateCommunitiesTable extends Migration {
             $table->string('logo', 200)->default('https://res.cloudinary.com/dt4uoou5x/image/upload/v1612615521/kZcTagGngsVeGl2Hsiy3ulhXOb78B4P_onapy0.webp');
             $table->string('banner', 200)->nullable();
             $table->string('background', 200)->nullable();
+            $table->boolean('closed')->default(0);
         });
     }
 

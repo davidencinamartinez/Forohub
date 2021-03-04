@@ -341,9 +341,14 @@ class IndexController extends Controller {
          }
 
          function test() {
-            $thread_reports = Community::where('id', 11071967)->with('thread_reports')->with('thread_reports.author')->get()->pluck('thread_reports');
-            $reply_reports = Thread::where('community_id', 11071967)->with('reply_reports')->get()->pluck('reply_reports');
-            return $thread_reports;
-          //  return Thread::where('id', 29081996)->with('reports')->get();
+            
+             if (Thread::where('id', 29082002)->first()->closed == 1) {
+                return 'is closed ';
+            } else {
+                return  'is open ';
+            }
+            
+        
+            
          }
 }

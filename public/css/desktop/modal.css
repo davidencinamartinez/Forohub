@@ -303,6 +303,22 @@
 		    background-color: ghostwhite;
 		}
 
+	/* MODAL THREAD ADMIN ACTIONS */
+
+		.modal-delete-thread, .modal-delete-reply {
+			margin: 4px 0px 0px 4px;
+		    border-radius: 2px;
+		    border: solid 1px black;
+		    padding: 5px;
+		    outline: none;
+		    transition: 0.5s;
+		    background-color: #c30000;
+		}
+
+		.modal-delete-thread:hover, .modal-delete-reply:hover {
+			background-color: #e80000;
+		}
+
 
 /* MODAL FOOTER + ELEMENTS */
 
@@ -317,5 +333,5 @@
 	}
 
 	.modal-button {
-		margin: 5px;
+		margin: 2px;
 	}

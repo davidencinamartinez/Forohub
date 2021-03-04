@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
 @endpush
 @push('scripts')
+@if ($thread->user_is_admin)
+    <script type="text/javascript" src="/js/thread_actions.js"></script>
+@endif
 @endpush
 @section('body')
 @if ($thread->communities->background)

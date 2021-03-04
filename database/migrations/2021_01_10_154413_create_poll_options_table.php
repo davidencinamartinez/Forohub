@@ -17,7 +17,7 @@ class CreatePollOptionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('thread_id');
-            $table->foreign('thread_id')->references('id')->on('threads');
+            $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
             $table->string('name');
         });
     }

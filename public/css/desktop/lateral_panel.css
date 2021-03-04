@@ -300,3 +300,10 @@
 		.profile-rewards-cube img:hover {
 			box-shadow: 0px 0px 4px 2px green;
 		}
+
+	/* LATERAL THREAD USER ACTIONS */
+
+		.lateral-thread-options {
+			padding: 10px;
+			text-align: center;
+		}

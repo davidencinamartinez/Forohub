@@ -18,7 +18,7 @@
 		            <img src="/src/media/wVgT7mQbXswj1sh0fK9zmMdMAz0JM8zQh2kgd8lS5tFi7WEqgg2HSDAI9IO7EUAv.png">
 		            <b>{{ $user->karma }}</b>
 		        </div>
-		        <div title="Respuestas">
+		        <div title="Mensajes">
 		            <img src="/src/media/bGAP31dQIA6Y3fxrmZ9IMV4Mc4h2nokrgeZB2lqPvmJcKXXCENPWUpwMzDu4ZfB7.png">
 		            <b>{{ $user->messages_count }}</b>
 		        </div>

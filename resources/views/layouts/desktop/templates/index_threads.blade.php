@@ -55,7 +55,7 @@
                     {!! $thread->body !!}
                 </div>
                 <div class="thread-info">
-                    <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none;">💬</label> {{ $thread->replies_count }} Respuestas</a>
+                    <a href="/c/{{ $thread->communities->tag }}/t/{{ $thread->id }}"><label style="text-shadow: none;">💬</label> {{ $thread->replies_count }} Mensajes</a>
                     <span class="remarkable-text"><label>🔗</label> Compartir</span>
                     <span class="required-auth remarkable-text report-thread"><label>❗</label> Reportar</span>
                     <span class="required-auth remarkable-text activate-reply"><label>↩️</label> Responder</span>

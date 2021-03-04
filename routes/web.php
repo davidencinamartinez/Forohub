@@ -49,14 +49,33 @@ use Illuminate\Support\Facades\Route;
 
 
 /* COMMUNITY ROUTES */
-
+	
+	/* Get Community */
 	Route::get('/c/{community_tag}', [App\Http\Controllers\Site\Community\CommunityController::class, 'getCommunity']);
 
+	/* New Community */
 	Route::get('/crear/comunidad', [App\Http\Controllers\Site\Community\CommunityController::class, 'newCommunity']);
 
-	Route::get('/c/{community_tag}/reportes', [App\Http\Controllers\Site\Community\CommunityController::class, 'getCommunityReports']);
+	/* Delete Thread From Community */
+	Route::post('/MnwBIllIldnKdXEQIPjzD5Lw9afwhWnlwhPbNR74rqJwnY4GOpVho1k86BtzlmAe', [App\Http\Controllers\Site\Thread\ThreadController::class, 'deleteThread']);
 
-	/* New Community */
+	/* COMMUNITY REPORTS */
+	
+		/* Get Community Reports */
+		Route::get('/c/{community_tag}/reportes', [App\Http\Controllers\Site\Community\CommunityController::class, 'getCommunityReports']);
+
+
+		/* Close Thread From Community */
+		Route::post('/yj6fXnl79TqYcl0qzQcSgDf5nmffpks17WHwwl0XSa4Awv4QQF7oG1BamLMPRX2o', [App\Http\Controllers\Site\Community\ReportController::class, 'closeThread']);
+
+		/* Solve Thread Report */
+		Route::post('/O6pbHM8Jj18jTPAAwKAyLfL0TCbduWNcGxykzWm7qwb876B2y3pJAdeD9ZOgaZX3', [App\Http\Controllers\Site\Community\ReportController::class, 'solveThread']);
+
+		/* Wipe Reply */
+		Route::post('/T1QjrednUfNiJxYousLYfcBNGu8f5UzSgtb6JgL7ZicvswZgv8T0gkfh97PqVqFu', [App\Http\Controllers\Site\Community\ReportController::class, 'wipeReply']);
+
+		/* Solve Reply Report */
+		Route::post('/fs8wk39otA5BO5feaB7xWkvhMCBgXOHuWZIhYjNe72Zy9XBMpTYUAFQHyFtdI7iS', [App\Http\Controllers\Site\Community\ReportController::class, 'solveReply']);
 
 /* THREAD ROUTES */
 
@@ -68,7 +87,7 @@ use Illuminate\Support\Facades\Route;
 
 /* REPLY ROUTES */
 
-	Route::post('bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'makeReply']);
+	Route::post('/bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'makeReply']);
 
 /* GUIDE ROUTES */
 
