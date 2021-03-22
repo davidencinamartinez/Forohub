@@ -46,12 +46,13 @@
 	    font-size: 14px;
 	    border-radius: 4px;
 	    cursor: pointer;
+	    border: solid 1px black;
 	}
 
 /* HASH ANIMATION */
 
 	@keyframes hashAnimation {
-	  	100% {box-shadow: 0px 0px 10px 6px #b50000;}
+	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
 	}
 
 /* ERROR */

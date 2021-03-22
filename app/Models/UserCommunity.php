@@ -74,4 +74,15 @@ class UserCommunity extends Model {
             return false;
         }
     }
+
+    public static function isUserLeader($user_id, $community_id) {
+        if (UserCommunity::where('user_id', $user_id)
+            ->where('community_id', $community_id)
+            ->where('subscription_type', 5000)
+            ->exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

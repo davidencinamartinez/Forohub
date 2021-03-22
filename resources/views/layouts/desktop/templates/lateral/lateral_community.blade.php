@@ -24,7 +24,9 @@
     <div class="lateral-cube">
         <div class="lateral-title">Acciones</div>
         <div class="lateral-thread-options">
+            @if ($thread->closed == 0)
             <button class="thread-options thread-close">Cerrar Tema 🔒</button>
+            @endif
             <button class="thread-options thread-delete">Eliminar Tema ⛔</button>
         </div>
     </div> 
@@ -46,7 +48,9 @@
         <div class="lateral-community-moderators">
             <a href="/u/{{ strtolower($moderator->user->name) }}">{{ $moderator->user->name }}</a>
             @if ($moderator->subscription_type == 5000)
-                <img src="/src/media/mQgfVUkYMgWC6zVz3z06aejvIJqGW7ORdQOmLrvdlmlJ0ovzPImfCFxVtLie5Haj.png" title="Líder">
+                <label>👑</label>
+            @elseif ($moderator->subscription_type == 2000)
+                <label>⭐</label>
             @endif
         </div>
     @endforeach

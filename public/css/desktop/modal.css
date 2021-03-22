@@ -234,6 +234,11 @@
 			width: 60px;
 		}
 
+		.notification-image .community {
+			border-radius: 50%;
+			border: solid 1px black;
+		}
+
 		.notification-image img {
 		    vertical-align: middle;
 		    width: 50px;
@@ -242,6 +247,9 @@
 		.notification-info {
 			float: right;
 			width: 300px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 		}
 
 	/* MODAL MARQUEE */

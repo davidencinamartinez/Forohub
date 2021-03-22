@@ -80,7 +80,7 @@ class Thread extends Model {
         if ($validator->passes()) {
             if ($request->type == "post") {
                 $validateBody = Validator::make($request->all('post'), [
-                    'post' => 'required|min:10|max:20000'
+                    'post' => 'required|min:10|max:21000'
                 ]);
             } elseif ($request->type == "multimedia") {
                 $validateBody = Validator::make($request->all('files'), [
@@ -108,11 +108,14 @@ class Thread extends Model {
 
     public static function createPostThread($request) {
         $community_id = Community::where('tag', $request->community)->value('id');
-        $body;
+        $body = '';
         $type;
+        if ($request->exists('check_spoiler')) {
+            $body .= '<div class="spoiler-container"><button>Spoiler +</button><label> (Pulsa para visualizar)</label><div class="spoiler-data">';
+        }
         if ($request->type == "post") {
             $type = "THREAD_POST";
-            $body = strip_tags($request->post);
+            $body .= strip_tags($request->post);
         }
         if ($request->type == "multimedia") {
             $type = "THREAD_MEDIA";
@@ -124,16 +127,16 @@ class Thread extends Model {
                 if (in_array($filetype, $mimeImages)) {
                     $upload = cloudinary()->upload($request->file('files.0')->getRealPath())->getSecurePath();
                     if ($request->exists('check_nsfw')) {
-                        $body = '<div class="picture blurry"><label class="blurry-logo">🔞</label><img src="'.$upload.'"></div>';
+                        $body .= '<div class="picture blurry"><div class="blurry-container"><div class="nsfw-banner"><label>🔞</label><label>Contenido NSFW</label><label>Si deseas visualizarlo, haz click aquí</label></div></div><img src="'.$upload.'"></div>';
                     } else {
-                        $body = '<div class="picture"><img src="'.$upload.'"></div>';
+                        $body .= '<div class="picture"><img src="'.$upload.'"></div>';
                     }
                 } elseif (in_array($filetype, $mimeVideos)) {
                     $upload = cloudinary()->uploadVideo($request->file('files.0')->getRealPath())->getSecurePath();
                     if ($request->exists('check_nsfw')) {
-                        $body = '<div class="media-frame blurry"><label class="blurry-logo">🔞</label><video preload="meta" controls src="'.$upload.'"></div>';
+                        $body .= '<div class="media-frame blurry"><div class="blurry-container"><div class="nsfw-banner"><label>🔞</label><label>Contenido NSFW</label><label>Si deseas visualizarlo, haz click aquí</label></div></div><video preload="meta" controls src="'.$upload.'"></div>';
                     } else {
-                        $body = '<div class="media-frame"><video preload="meta" controls src="'.$upload.'"></div>';
+                        $body .= '<div class="media-frame"><video preload="meta" controls src="'.$upload.'"></div>';
                     }
 
                 }
@@ -142,10 +145,10 @@ class Thread extends Model {
                     $upload = cloudinary()->upload($request->file('files')[$i]->getRealPath())->getSecurePath();
                     array_push($urlArray, $upload);
                 }
-                $body = '<div class="slideshow-content" data-source="';
+                $body .= '<div class="slideshow-content" data-source="';
                 $body .= implode(",", $urlArray).'">';
                 if ($request->exists('check_nsfw')) {
-                    $body .= '<div class="slideshow-media blurry"><label class="blurry-logo">🔞</label>';
+                    $body .= '<div class="slideshow-media blurry"><div class="blurry-container"><div class="nsfw-banner"><label>🔞</label><label>Contenido NSFW</label><label>Si deseas visualizarlo, haz click aquí</label></div></div>';
                 } else {
                     $body .= '<div class="slideshow-media">';
                 }
@@ -157,11 +160,17 @@ class Thread extends Model {
         }
         if ($request->type == "youtube") {
             $type = "THREAD_YT";
-            $body = '<div class="media-embed"><iframe width="560" height="315" src="https://www.youtube.com/embed/'.$request->link.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>';
+            $body .= '<div class="media-embed"><iframe width="560" height="315" src="https://www.youtube.com/embed/'.$request->link.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>';
         }
         if ($request->type == "poll") {
             $type = "THREAD_POLL";
-            $body = 'IS_POLL';
+            $body .= 'IS_POLL';
+        }
+        if ($request->exists('check_important')) {
+            $body .= '<div class="important-reminder"><label><b>❗ IMPORTANTE ❗</b> Este es un <b>TEMA SERIO</b></label><label>Se ruega evitar escribir cualquier mensaje que lo desvirtúe (Troll, Spam, etc...)</label><label>Todos los usuarios, así como el OP, deben mostrar respeto hacia los demás.</label></div>';
+        }
+        if ($request->exists('check_spoiler')) {
+            $body .= '</div></div>';
         }
         Thread::create([
             'created_at' => Carbon::now(),

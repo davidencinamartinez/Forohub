@@ -1,4 +1,3 @@
-
 reportes con notificacion a moderador de comunidad y a super
 moderadores de comunidad (rangos: 1->normal / 2->moderador / 3->creador / 4->yo)
 

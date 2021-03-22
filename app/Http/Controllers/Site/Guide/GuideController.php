@@ -26,7 +26,8 @@ class GuideController extends Controller {
     //$communities = new \Illuminate\Pagination\Paginator($communities, 3, 1);
     return view('layouts.desktop.templates.guides.communities',
         [   'unread_notifications' => $unread_notifications,
-            'communities' => $communities
+            'communities' => $communities,
+            'character' => $character
         ]);
     }
 
@@ -35,7 +36,8 @@ class GuideController extends Controller {
     $users = Guides::getUsers($character);
     return view('layouts.desktop.templates.guides.users',
         [   'unread_notifications' => $unread_notifications,
-            'users' => $users->sortBy('name')
+            'users' => $users->sortBy('name'),
+            'character' => $character
         ]);
     }
 
@@ -44,7 +46,8 @@ class GuideController extends Controller {
     $threads = Guides::getThreads($character);
     return view('layouts.desktop.templates.guides.threads',
         [   'unread_notifications' => $unread_notifications,
-            'threads' => $threads->sortByDesc('title')
+            'threads' => $threads->sortByDesc('title'),
+            'character' => $character
         ]);
     }
 

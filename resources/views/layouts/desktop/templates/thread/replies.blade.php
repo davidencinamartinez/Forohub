@@ -20,5 +20,8 @@
     <div class="thread-reply-actions">
         <span class="required-auth remarkable-text report-reply"><label>❗</label> Reportar</span>
         <span class="required-auth remarkable-text quote"><label>📝</label>Citar</span>
+        @if ($thread->user_is_admin)
+        <span class="required-auth remarkable-text delete-reply"><label>🗑️</label> Eliminar</span>
+        @endif
     </div>
 </div>

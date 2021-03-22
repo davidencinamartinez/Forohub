@@ -83,3 +83,23 @@
 	    width: 100%;
 	    margin-bottom: 4px;
 	}
+
+/* CHECKBOX BUTTON */
+
+	.checkbox-button {
+		vertical-align: middle;
+		height: 14px;
+		width: 14px;
+		background-color: ghostwhite;
+		border: solid 1px black;
+		transition: 0.5s;
+		border-radius: 50%;
+	}
+
+	.checkbox-button.checked {
+		background-color: limegreen;
+	}
+
+	.checkbox-button:hover:not(.checked) {
+		background-color: #ffb600;
+	}

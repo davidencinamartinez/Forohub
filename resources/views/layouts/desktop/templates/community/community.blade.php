@@ -58,9 +58,20 @@
             <div class="lateral-title">Panel de moderación</div>
             <div class="lateral-community-procedures">
                 <a href="/c/{{ $community->tag }}/reportes">
-                    <button>Reportes</button>
+                    <button>Reportes 🚨</button>
                 </a>
-                <button>Permisos</button>
+            </div>
+        </div>
+        @elseif ($community->is_leader)
+        <div class="lateral-cube">
+            <div class="lateral-title">Panel de moderación</div>
+            <div class="lateral-community-procedures">
+                <a href="/c/{{ $community->tag }}/reportes">
+                    <button>Reportes 🚨</button>
+                </a>
+                <a href="/c/{{ $community->tag }}/afiliados/">
+                    <button>Afiliados 👥</button>
+                </a>
             </div>
         </div>
         @endif

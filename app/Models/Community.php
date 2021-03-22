@@ -149,7 +149,23 @@ class Community extends Model {
         } else {
             return response()->json(['error' => $validator->getMessageBag()->toArray()]);
         }  
+    }
 
+    public static function getAffiliates($community_id, $character) {
+        if (!empty($character)) {
+            if (is_numeric($character)) {
+                $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->whereHas('user', function($q) {
+                    $q->where('name', 'regexp', '^[0-9]+');
+                })->get();
+            } else {
+                $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->whereHas('user', function($q) use ($character) {
+                    $q->where('name', 'like', $character.'%');
+                })->get();
+            }
+        } else {
+            $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->take(50)->get();
+        }
+        return $users;
     }
 
 }

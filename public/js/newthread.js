@@ -163,7 +163,7 @@ function NT_getCommunity(element) {
 			$('.thread-community-container').remove();
 			createElement('div', {class: 'thread-community-container'}, '.thread-community');
 			if ($.isEmptyObject(data)) {
-				createElement('label', {class: 'community-div'}, '.thread-community-container', 'No se han encontrado resultados');
+				createElement('label', {class: 'community-div', style: 'pointer-events: none;'}, '.thread-community-container', 'No se han encontrado resultados');
 			} else {
 				$("input[name='community']").attr('data-communities', '');
 				$.each(data, function(index, val) {

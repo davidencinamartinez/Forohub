@@ -27,7 +27,7 @@ class RewardSeeder extends Seeder {
         	'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         	'name' => '¡Buen viaje!',
-            'text' => 'Has respondido a tu primer tema',
+            'text' => 'Has acumulado un total de  tu primer tema',
             'filename' => 'yI45Mob9fAgZqQLlwz7GWRUdWunDGyeR.webp'
         ]);
 
@@ -35,7 +35,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Paso a paso',
-            'text' => 'Has respondido a 100 temas',
+            'text' => 'Has acumulado un total de  100 mensajes',
             'filename' => '5DoD1bAlTu92R2rh0qMRDbYZePX1nzE.webp'
         ]);
 
@@ -43,7 +43,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Voy a tope!',
-            'text' => 'Has respondido a 500 temas',
+            'text' => 'Has acumulado un total de  500 mensajes',
             'filename' => 'UyEBv318rlgW5vGu3TCmgV0a7bkTYPb.webp'
         ]);
 
@@ -51,7 +51,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Gas Gas Gas',
-            'text' => 'Has respondido a 1.000 temas',
+            'text' => 'Has acumulado un total de  1.000 mensajes',
             'filename' => 'mZjRxZrLQeABFOnBmpir1o4okDR4wjX.webp'
         ]);
 
@@ -59,7 +59,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Sayonara, Baby',
-            'text' => 'Has respondido a 10.000 temas',
+            'text' => 'Has acumulado un total de  10.000 mensajes',
             'filename' => 'YkeTZgL3Cm7UPm3yW3DOIyKFExgvg4b.webp'
         ]);
 
@@ -67,7 +67,7 @@ class RewardSeeder extends Seeder {
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'name' => 'Interstellar',
-            'text' => 'Has respondido a 50.000 temas',
+            'text' => 'Has acumulado un total de  50.000 mensajes',
             'filename' => 'khGba7hqwuEo8QtzjGO05Oz7wU2UW1Y.webp'
         ]);
 

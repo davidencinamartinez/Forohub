@@ -66,7 +66,7 @@ class RegisterController extends Controller {
                 'password.max' => 'La contraseña debe contener máximo 64 carácteres',
 
                 // TERMS
-                'terms.accepted' => 'Debes aceptar las condiciones de ForoHub',
+                'terms.accepted' => 'Debes aceptar las condiciones de Forohub',
 
             ];
 

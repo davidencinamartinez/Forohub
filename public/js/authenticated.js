@@ -1,8 +1,4 @@
 $(document).ready(function() {
-	if (getCookie('NSFW_CHECK') == 'TRUE') {
-		$('.blurry-logo').remove();
-		$('.blurry').removeClass('blurry');
-	}
 	$('.navbar button').mouseover(function(event) {
 		$(this).children('label').addClass('animated flash infinite');
 	});
@@ -17,19 +13,6 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '.blurry', function(event) {
 		nsfwModal();
-	});
-	$(document).on('click', '.modal-nsfw-allow', function(event) {
-		document.cookie = "NSFW_CHECK=TRUE;path=/";
-		$('.blurry-logo').remove();
-		$('.blurry').removeClass('blurry');
-		$('.modal').fadeOut('fast', function() {
-			$('.modal').remove();
-		})
-	});
-	$(document).on('click', '.modal-nsfw-deny', function(event) {
-		$('.modal').fadeOut('fast', function() {
-			$('.modal').remove();
-		})
 	});
 	$(document).on('click', '.profile-dark-theme', function(event) {
 		document.cookie = "DARK_THEME_CHECK=TRUE;max-age=5184000;path=/";

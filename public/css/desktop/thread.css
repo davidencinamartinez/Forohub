@@ -171,11 +171,26 @@
 
                 /* THREAD BODY */
 
+                    /* SPOILER CONTAINER */
+
+                        .spoiler-container {
+                            padding: 10px;
+                            background-color: ghostwhite;
+                            border: solid 1px black;
+                            border-radius: 8px;
+                        }
+
+                        .spoiler-data {
+                            display: none;
+                            margin-top: 10px;
+                        }
+
                     .thread-body {
                         width: 95%;
                         padding: 10px;
                         margin: 0px;
                         white-space: pre-line;
+                        overflow: hidden;
                     }
 
                     .thread-body .picture {
@@ -207,19 +222,40 @@
                         filter: blur(50px);
                     }
 
-                    .blurry-logo {
-                        margin: auto;
+                    .blurry-container {
                         position: absolute;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        right: 0;
-                        display: flex;
-                        font-size: 100px;
+                        width: 100%;
+                        height: 100%;
                         z-index: 1;
-                        align-items: center;
-                        justify-content: center;
+                    }
+
+                    .important-reminder {
+                        margin-top: 10px;
+                        background-color: darkgrey;
+                        padding: 10px;
+                        border: solid 1px black;
+                        border-radius: 6px;
+                        display: grid;
+                    }
+
+                    .nsfw-banner {
                         text-align: center;
+                        display: grid;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        z-index: 1;
+                        transform: translate(-50%, -50%);
+                        color: white;
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        cursor: pointer;
+                    }
+
+                    .nsfw-banner > label:first-child {
+                        font-size: 60px;
+                    }
+
+                    .nsfw-banner * {
                         cursor: pointer;
                     }
 
@@ -245,6 +281,8 @@
                             border: solid 1px black;
                             outline: none;
                             border-radius: 6px;
+                            max-height: 400px;
+                            background-color: black;
                         }
 
                     /* SLIDESHOW */
@@ -387,6 +425,14 @@
 
                     .thread-info > * {
                         user-select: none;
+                    }
+
+                    .thread-read-more, .thread-read-less {
+                        bottom: 0;
+                        margin: 0px;
+                        width: 100%;
+                        text-align: center;
+                        margin-bottom: 10px;
                     }
 
                 /* THREAD QUICK REPLY */
@@ -536,22 +582,20 @@
             /* QUOTES */
 
             .thread-quote {
+                background-color: #b7b7b7;
                 border: solid 1px black;
-                border-radius: 8px;
+                border-left: solid 8px #2f2f2f;
+                border-radius: 6px 0px 0px 6px;
                 display: grid;
+                padding: 10px;
             }
 
             .thread-quote-info {
-                border-bottom: solid 1px black;
-                border-radius: 6px 6px 0px 0px;
-                background-color: #b50000;
-                padding: 2px;
+                padding-bottom: 4px;
             }
 
             .thread-quote-data {
-                background-color: #c5c5c5;
-                padding: 6px;   
-                border-radius: 0px 0px 6px 6px;
+                overflow: auto;
             }
 
             .thread-reply-author-data {

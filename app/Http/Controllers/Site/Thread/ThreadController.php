@@ -92,12 +92,10 @@ class ThreadController extends Controller {
 		if ($community_id == null || $thread == null) {
 			abort(404);
 		} else {
-
 			foreach ($thread_replies as $reply) {
 				$reply->user->user_reply_count = Reply::where('user_id', $reply->user->id)->count();
 				$reply->user->user_karma = User::getKarma($reply->user->id);
 			}
-        
     		if (Auth::user() and $thread->votes->isNotEmpty()) {
     			if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
     				$thread->user_has_voted = 'true';
@@ -119,7 +117,7 @@ class ThreadController extends Controller {
                 }
             }
             if (Auth::user()) {
-            	if (UserCommunity::isUserAdmin(Auth::user()->id, $thread->communities->id) || $thread->author->id == Auth::user()->id) {
+            	if (UserCommunity::isUserAdmin(Auth::user()->id, $thread->communities->id)) {
             		$thread->user_is_admin = 'true';
             	}
             }
@@ -128,18 +126,28 @@ class ThreadController extends Controller {
             $community->sub_count = UserCommunity::userCount($community_id);
 			$community->index = Community::getCommunityPlacing($community_id);
 
-			$tags = ThreadTags::where('thread_id', $thread_id)->select('tagname')->get();
-			/* META DESCRIPCION PENDIENTE 
-			$meta_description = strip_tags($thread->body);
-			$meta_description .= implode(',', $tags->pluck('tagname')->toArray());
-			/**/
+			// META DESCRIPCION
+			$tags = ThreadTags::where('thread_id', $thread_id)->get();
+			$meta_description = 'Tags: '.implode(', ', $tags->pluck('tagname')->toArray()).'. ';
+			if ($thread->type == "THREAD_POST") {
+				$meta_description .= trim(preg_replace(['/<[^>]*>/','/\s+/'],' ', $thread->body));
+			} elseif ($thread->type == "THREAD_YT") {
+				$src =  preg_match( '@src="([^"]+)"@', $thread->body, $match);
+				$meta_description .= 'YouTube · '.$match[1];
+			} elseif ($thread->type == "THREAD_POLL") {
+				foreach ($thread->poll_options as $poll_option) {
+					$meta_description .= $poll_option->name.' '.$poll_option->percentage.'% / ';
+				}
+			} elseif ($thread->type == "THREAD_MEDIA") {
+				$meta_description .= 'Galería de imágenes';
+			}
 			return view('layouts.desktop.templates.thread',
 	    		[	'unread_notifications' => $unread_notifications,
 	                'thread' => $thread,
 	                'thread_replies' => $thread_replies,
 	                'community' => $community,
 	                'tags' => $tags,
-	                'meta_description' => 'LALALA'
+	                'meta_description' => $meta_description
 	    		]);
         
 			}
@@ -245,6 +253,26 @@ class ThreadController extends Controller {
 	        abort(404);
 	    }
 	}
+
+	function closeThread(Request $request) {
+    	$community_id = Thread::where('id', $request->thread_id)->value('community_id');
+	    $thread = Thread::where('id', $request->thread_id)->with('author')->first();
+	    if (Thread::where('id', $request->thread_id)->where('community_id', $community_id)->doesntExist()) {
+	        return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	        abort(404);
+	    }
+	    if (Auth::user()) {
+	        if (UserCommunity::isUserAdmin(Auth::user()->id, $community_id) || $thread->author->id == Auth::user()->id) {
+	            Thread::where('id', $request->thread_id)->update(["closed" => 1]);
+	        } else {
+	            return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	            abort(404);
+	        }
+	    } else {
+	        return response()->json(['error' => '⚠️ Ha ocurrido un problema con tu petición (Error 500) ⚠️']);
+	        abort(404);
+	    }
+    }
 
 }
  

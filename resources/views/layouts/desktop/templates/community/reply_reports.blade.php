@@ -29,7 +29,6 @@
             <div class="report-actions">
                 <a href="/c/{{ $community->tag }}/t/{{ $reply_report->thread_id }}?pagina={{ $reply_report->page }}#{{ $reply_report->reply_id }}" target="_blank"><button>Ver Mensaje ↩️</button></a>
                 @if ($reply_report->solved == 0)
-                <button class="reply-delete">Borrar Mensaje ⛔</button>
                 <button class="reply-solve">Marcar como resuelto ✔️</button>
                 @endif
             </div>

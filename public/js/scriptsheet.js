@@ -4,6 +4,59 @@ $(document).ready(function() {
 	} else {
 		$('.footer').css('position', 'relative');
 	}
+	if (getCookie('NSFW_CHECK') == 'TRUE') {
+		$('.blurry-logo, .blurry-container, .nsfw-banner').remove();
+		$('.blurry').removeClass('blurry');
+	}
+	$(document).on('click', '.modal-nsfw-allow', function(event) {
+		document.cookie = "NSFW_CHECK=TRUE;path=/";
+		$('.blurry-logo, .blurry-container, .nsfw-banner').remove();
+		$('.blurry').removeClass('blurry');
+		$('.modal').fadeOut('fast', function() {
+			$('.modal').remove();
+		})
+	});
+	$(document).on('click', '.modal-nsfw-deny', function(event) {
+		$('.modal').fadeOut('fast', function() {
+			$('.modal').remove();
+		})
+	});
+	$('.thread-body').each(function(index, el) {
+		if ($(this).prop('scrollHeight') > 400) {
+			$(this).parent().find('.thread-info:first').prepend('<button class="thread-read-more">Ver más</button>');
+			$(this).css('height', '400px');
+		}
+	});
+	$(document).on('click', '.thread-read-more', function(event) {
+		event.preventDefault();
+		var threadBody = $(this).parent().parent().find('.thread-body');
+		if ($(threadBody).prop('scrollHeight') > 400) {
+			$(threadBody).css('height', 'max-content');
+			$(this).text('Ver menos');
+			$(this).attr('class', 'thread-read-less');
+		}
+	});
+	$(document).on('click', '.thread-read-less', function(event) {
+		event.preventDefault();
+		var threadBody = $(this).parent().parent().find('.thread-body');
+		if ($(threadBody).prop('scrollHeight') > 400) {
+			$(threadBody).css('height', '400px');
+			$(this).text('Ver más');
+			$(this).attr('class', 'thread-read-more');
+		}
+	});
+	/*setInterval(function() {
+		$.post('/Oz5ebsV9HnflVOUTX7d23AdcJyILNMtM0A2t08udzbsKCKNwgYzDTT8NmlwuIyxH', 
+			{
+				_token: $('meta[name="csrf-token"]').attr('content')
+			}, function(data, textStatus, xhr) {
+				if ($.isEmptyObject(data.on)) {
+					console.log('user_is_off');
+				} else {
+					console.log('user_is_on');
+				}
+		});
+	}, 300000);*/
 	if (getCookie('DARK_THEME_CHECK') == 'TRUE') {
 		$('html').css('background-color', '#1b1b1b');
 		$('.profile-dark-theme').attr('class', 'profile-light-theme');
@@ -30,7 +83,7 @@ $(document).ready(function() {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
 	});
 
-	$('.thread-reply-user-register').each(function(index, el) {
+	$('.thread-reply-user-register, .element-date-affiliate').each(function(index, el) {
 		$(this).text(moment($(this).text()).format('MMM YYYY'));
 	});
 	$('.thread-info').each(function(index, el) {
@@ -45,7 +98,17 @@ $(document).ready(function() {
 		 	notifyUser("🔗 Enlace copiado 🔗");
 		 });	
 	});
-
+	$(document).on('click', '.spoiler-container button', function(event) {
+		event.preventDefault();
+		var spoiler = $(this).parent().find('.spoiler-data:first');
+		if (spoiler.is(':visible')) {
+			$(this).text('Spoiler +');
+			spoiler.hide('400');
+		} else {
+			$(this).text('Spoiler -');
+			spoiler.show('400');
+		}
+	});
 	$('marquee').click(function(event) {
 		createModal();
 		createElement('h2', null, '.modal-body', $(this).parent().parent().find('.thread-title').text());
@@ -262,12 +325,12 @@ function nsfwModal() {
 	createModal(); // Call function
 	// Modal Body Elements
 		createElement('label', {style: 'font-size: 50px;'}, '.modal-body', '🔞'); // Title
-		createElement('p', null, '.modal-body', 'Estás a punto de acceder a contenido NSFW (+18)'); // Message
-		createElement('p', null, '.modal-body', 'Deseas visualizarlo?'); // Message
+		createElement('p', null, '.modal-body', 'Estás a punto de acceder a contenido NSFW (+18)<br>y dirigido exclusivamente a <b>mayores de 18 años</b>'); // Message
+		createElement('p', null, '.modal-body', 'Estás seguro de querer continuar?'); // Message
 		// Allow Button
-		createElement('button', {class: 'modal-button modal-nsfw-allow'}, '.modal-body', 'Permitir');	
+		createElement('button', {class: 'modal-button modal-nsfw-allow'}, '.modal-body', 'Sí, soy mayor de 18');	
 		// Deny Button
-		createElement('button', {class: 'modal-button modal-nsfw-deny'}, '.modal-body', 'Denegar');	
+		createElement('button', {class: 'modal-button modal-nsfw-deny'}, '.modal-body', 'Volver');	
 }
 
 function registerModal() {
@@ -545,7 +608,7 @@ function getNotifications() {
 		createElement('h1', null, '.modal-body', 'Notificaciones');
 		$.get('/yT5rjyh3QA1Pk8kH4A3rLchG1oGgGMtr7Hs3qpwvhgC8UagAaVoSlCZgEzdiMHxn', function(data) {
 			if (data.length == 0) {
-				createElement('label', null, '.modal-body', 'No hay notificaciones');
+				createElement('label', null, '.modal-body', 'No tienes notificaciones');
 			} else {
 				// Notifications
 				createElement('div', {class: 'modal-notifications'}, '.modal-body');
@@ -563,6 +626,9 @@ function getNotifications() {
 						createElement('img', {src: '/src/media/pcxzXveYfflI0wyaZVGqjDQkW2NJkgE4m4r2itlqO1ZZnrtnZ88uFhy6L1qQ1KUi.webp'}, '.notification-image:last');	
 					} else if (val.type == "thread_report") {
 						createElement('img', {src: '/src/media/a42LpoWdP5QGTjDyoSCcWUCdF9sp249AxWfjY1PvA6xEj8zbbnIhcHuAURbwZQMU.webp'}, '.notification-image:last')
+					} else if (val.type == "community_rank") {
+						var data = $.parseJSON(val.notification);
+						createElement('img', {class: 'community', src: data.community_logo}, '.notification-image:last');
 					}
 					// Notification Info
 					createElement('div', {class: 'notification-info'}, '.modal-notification:last');
@@ -574,6 +640,9 @@ function getNotifications() {
 						createElement('a', { href: /c/+val.community+'/t/'+val.notification, title: val.thread}, '.notification-info b:last', 'un tema ');
 						createElement('b', null, '.notification-info:last', 'de ');
 						createElement('a', { href: /c/+val.community+'/reportes', title: val.community_title}, '.notification-info b:last', ' tu comunidad');
+					} else if (val.type == "community_rank") {
+						createElement('b', null, '.notification-info:last', 'Se ha actualizado tu rango a '+data.user_rank+'<br>');
+						createElement('a', {href: '/c/'+data.community_tag}, '.notification-info:last', data.community_title);
 					} else {
 						createElement('b', null, '.notification-info:last', val.notification);
 					}
@@ -595,7 +664,7 @@ function submitQuickReply(element) {
 		{
 			_token: $('meta[name="csrf-token"]').attr('content'),
 			thread_id: $(element).closest('.thread').attr('data-id'),
-			text: $(element).prev('.thread-quick-reply-text').val()
+			text: $(element).parent().find('.thread-quick-reply-text').val()
 		}, function(data, textStatus, xhr) {
 			$.each(data, function(index, val) {
 				if (data.success) {

@@ -187,6 +187,13 @@ class DataController extends Controller {
                                 $notification->community_title = Community::where('id', $community_id)->value('title');
                             }
                         }
+                        if ($notification->type == "community_rank") {
+                            $data = json_encode($notification->notification);
+                            $data = json_decode($data);
+                            $notification->community_tag = $data;
+                            
+                            
+                        }
                     } 
                     return $notifications;
                 } else {
@@ -243,6 +250,12 @@ class DataController extends Controller {
             }
         }
             
-        
+        function isLoged() {
+            if (Auth::check()) {
+                return response()->json(['on' => 'Is Online']);
+            } else {
+                return response()->json(['off' => 'Is Offline']);
+            }
+        }
 
 }

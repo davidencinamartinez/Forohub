@@ -1,6 +1,6 @@
 @extends('layouts.desktop.main')
 
-@section('title', 'ForoHub')
+@section('title', 'Forohub')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="css/desktop/register.css">
@@ -31,5 +31,4 @@
             <img src="/src/media/logo_white.webp"  width="100%">
         </div>
     </div>
-
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.desktop.main')
 
-@section('title', 'Reportes: '.$community->title.' - Forohub')
+@section('title', 'Reportes · c/'.$community->tag.' - Forohub')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/reports.css">

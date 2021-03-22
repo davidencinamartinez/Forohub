@@ -111,4 +111,13 @@ class ReplyController extends Controller {
     		return response()->json(['response' => 'Ha ocurrido un problema (Error 500)']);
     	}
     }
+
+    function wipeReply(Request $request) {
+        try {
+            Reply::removeReply($request);
+        } catch (\Error $e) {
+            abort(404);
+        }
+        
+    }
 }

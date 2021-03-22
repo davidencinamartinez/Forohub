@@ -101,6 +101,7 @@
 
 		.lateral-community-procedures {
 			padding: 10px;
+			text-align: center;
 		}
 
 		.lateral-community-data {
@@ -122,6 +123,7 @@
 
 		.lateral-community-tag {
 		    font-style: italic;
+		    font-weight: bold;
 		}
 
 		.lateral-community-description {
@@ -223,8 +225,12 @@
 		}
 
 		.profile-cube > div {
-			display: grid;
-			margin: 10px;
+			background: #ffb600;
+		    display: grid;
+		    padding: 6px;
+		    margin-top: 10px;
+		    border-radius: 0px 0px 8px 8px;
+		    border-top: solid 1px black;
 		}
 
 		.profile-cube > div > b {

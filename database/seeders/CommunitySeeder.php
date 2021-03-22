@@ -23,8 +23,8 @@ class CommunitySeeder extends Seeder {
             'created_at' => Carbon::now()->sub('1 day 22 hours 30 minutes'),
             'updated_at' => Carbon::now()->sub('1 day 22 hours 30 minutes'),
         	'tag' => 'forohub',
-            'title' => 'ForoHub - Oficial',
-            'description' => 'Comunicados oficiales de ForoHub',
+            'title' => 'Forohub - Oficial',
+            'description' => 'Comunicados oficiales de Forohub',
             'logo' => '/src/communities/logo/s2HGcJxofEphgzMYmZvPnRlQi1Admxl.webp',
         ]);
         DB::table('communities')->insert([
@@ -75,7 +75,7 @@ class CommunitySeeder extends Seeder {
             'updated_at' => Carbon::now()->sub('1 day 22 hours 10 minutes'),
         	'community_id' => 11071967,
             'rule' => 'Sé bueno',
-            'rule_description' => 'El usuario acepta usar los servicios de ForoHub de forma consciente y libre, con intenciones lícitas y de buena fe. Siendo el único responsable de sus actos, exonerando de toda responsabilidad por los mismos a los gestores o colaboradores de ForoHub',
+            'rule_description' => 'El usuario acepta usar los servicios de Forohub de forma consciente y libre, con intenciones lícitas y de buena fe. Siendo el único responsable de sus actos, exonerando de toda responsabilidad por los mismos a los gestores o colaboradores de Forohub',
         ]);
         DB::table('communities_rules')->insert([
             'created_at' => Carbon::now()->sub('1 day 22 hours 5 minutes'),

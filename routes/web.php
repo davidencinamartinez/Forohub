@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Route;
 
 	Route::post('/logout', [App\Http\Controllers\Site\User\LogController::class, 'logout'])->name('logout');
 
+	Route::post('/Oz5ebsV9HnflVOUTX7d23AdcJyILNMtM0A2t08udzbsKCKNwgYzDTT8NmlwuIyxH', [App\Http\Controllers\Site\User\DataController::class, 'isLoged']);
+
 
 /* COMMUNITY ROUTES */
 	
@@ -59,20 +61,28 @@ use Illuminate\Support\Facades\Route;
 	/* Delete Thread From Community */
 	Route::post('/MnwBIllIldnKdXEQIPjzD5Lw9afwhWnlwhPbNR74rqJwnY4GOpVho1k86BtzlmAe', [App\Http\Controllers\Site\Thread\ThreadController::class, 'deleteThread']);
 
+	/* Close Thread From Community */
+	Route::post('/yj6fXnl79TqYcl0qzQcSgDf5nmffpks17WHwwl0XSa4Awv4QQF7oG1BamLMPRX2o', [App\Http\Controllers\Site\Thread\ThreadController::class, 'closeThread']);
+
+	/* Community Affiliates */
+	Route::get('/c/{community_tag}/afiliados/{character?}', [App\Http\Controllers\Site\Community\CommunityController::class, 'getAffiliates']);
+
+		/* Rank as Affiliate */
+		Route::post('/MgJCirumZx0M57VrYsez96UcOcLDldCSdSlbUB8htSQaHP81rSFHWLm1GfEfX3K0', [App\Http\Controllers\Site\Community\CommunityController::class, 'rankAsAffiliate']);
+
+		/* Rank as Moderator */
+		Route::post('/4DzqRtvvMOTK0UIy6z9wXPaHwDTu0qiJk9288x8SGVv9DGkOWYh5elW2tad2ab6T', [App\Http\Controllers\Site\Community\CommunityController::class, 'rankAsModerator']);
+
+		/* Rank as Leader */
+		Route::post('/nn6pOlrj9U80946uspAXdcdBQylNZEK5cvyQKWDcZHTm05PQAfAaTpX8lH27IFVm', [App\Http\Controllers\Site\Community\CommunityController::class, 'rankAsLeader']);
+
 	/* COMMUNITY REPORTS */
 	
 		/* Get Community Reports */
 		Route::get('/c/{community_tag}/reportes', [App\Http\Controllers\Site\Community\CommunityController::class, 'getCommunityReports']);
 
-
-		/* Close Thread From Community */
-		Route::post('/yj6fXnl79TqYcl0qzQcSgDf5nmffpks17WHwwl0XSa4Awv4QQF7oG1BamLMPRX2o', [App\Http\Controllers\Site\Community\ReportController::class, 'closeThread']);
-
 		/* Solve Thread Report */
 		Route::post('/O6pbHM8Jj18jTPAAwKAyLfL0TCbduWNcGxykzWm7qwb876B2y3pJAdeD9ZOgaZX3', [App\Http\Controllers\Site\Community\ReportController::class, 'solveThread']);
-
-		/* Wipe Reply */
-		Route::post('/T1QjrednUfNiJxYousLYfcBNGu8f5UzSgtb6JgL7ZicvswZgv8T0gkfh97PqVqFu', [App\Http\Controllers\Site\Community\ReportController::class, 'wipeReply']);
 
 		/* Solve Reply Report */
 		Route::post('/fs8wk39otA5BO5feaB7xWkvhMCBgXOHuWZIhYjNe72Zy9XBMpTYUAFQHyFtdI7iS', [App\Http\Controllers\Site\Community\ReportController::class, 'solveReply']);
@@ -88,6 +98,9 @@ use Illuminate\Support\Facades\Route;
 /* REPLY ROUTES */
 
 	Route::post('/bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', [App\Http\Controllers\Site\Thread\ReplyController::class, 'makeReply']);
+
+	/* Wipe Reply */
+		Route::post('/T1QjrednUfNiJxYousLYfcBNGu8f5UzSgtb6JgL7ZicvswZgv8T0gkfh97PqVqFu', [App\Http\Controllers\Site\Thread\ReplyController::class, 'wipeReply']);
 
 /* GUIDE ROUTES */
 

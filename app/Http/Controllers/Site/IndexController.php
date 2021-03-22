@@ -342,11 +342,12 @@ class IndexController extends Controller {
 
          function test() {
             
-             if (Thread::where('id', 29082002)->first()->closed == 1) {
-                return 'is closed ';
-            } else {
-                return  'is open ';
-            }
+            $lala = '<div class="slideshow-content" data-source="https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986146/kfduhzyfhct4a3jhvrr0.gif,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986147/qrytboxjdc5paeoitrxs.jpg,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986148/n56di08fxxtsimjsdlwo.jpg,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986150/zvchhcrynix9kip7k5rs.jpg"><div class="slideshow-media blurry"><div class="blurry-container"><div class="nsfw-banner"><label>🔞</label><label>Contenido NSFW</label><label>Si deseas visualizarlo, haz click aquí</label></div></div><img src="https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986146/kfduhzyfhct4a3jhvrr0.gif" data-id="0"></div><a class="slide-previous">❮</a><a class="slide-next">❯</a><label class="slideshow-page">1/1</label></div><marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="stop()" onmouseleave="start()">sdfsdfdsf</marquee>';
+
+            preg_match( '@src="([^"]+)"@', $lala, $match);
+
+            return $match;
+            
             
         
             

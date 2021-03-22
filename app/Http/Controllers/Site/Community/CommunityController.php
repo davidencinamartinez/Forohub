@@ -12,6 +12,7 @@ use App\Models\PollOption;
 use App\Models\UserCommunity;
 use App\Models\Vote;
 use App\Models\ReportThread;
+use App\Models\Notification;
 use Auth;
 use DB;
 use Redirect;
@@ -40,9 +41,11 @@ class CommunityController extends Controller {
 
 		if (Auth::user()) {
 			foreach ($community->community_moderators as $moderator) {
-				if ($moderator->user_id == Auth::user()->id) {
+				if ($moderator->user_id == Auth::user()->id && $moderator->subscription_type == 2000) {
 					$community->is_mod = 'true';
-				}
+				} elseif ($moderator->user_id == Auth::user()->id && $moderator->subscription_type == 5000) {
+                    $community->is_leader = 'true';
+                }
 			}
 		}
 
@@ -160,5 +163,79 @@ class CommunityController extends Controller {
                 'thread_reports' => $thread_reports->first()->sortByDesc('created_at')->sortBy('solved'),
                 'reply_reports' => $threads->pluck('replies.*.reports', 'thread_id')->collapse()->collapse()->sortByDesc('created_at')->sortBy('solved')
         ]);
+    }
+
+    function getAffiliates($community_tag, $character = null) {
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        $community = Community::where('tag', $community_tag)->first();
+        $affiliates = Community::getAffiliates($community->id, $character);
+        if (!Auth::check()) {
+            abort(404);
+        } elseif (UserCommunity::where('community_id', $community->id)->where('user_id', Auth::user()->id)->where('subscription_type', 5000)->doesntExist()) {
+            abort(404);
+        }
+        return view('layouts.desktop.templates.community.affiliates.affiliates',
+            [   'unread_notifications' => $unread_notifications,
+                'community' => $community,
+                'affiliates' => $affiliates->sortByDesc('subscription_type'),
+                'character' => $character
+            ]);
+    }
+
+    function rankAsAffiliate(Request $request) {
+        $community = Community::where('tag', $request->community_tag)->first();
+        if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
+            abort(404);
+        }
+        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 0]);
+        // Notification JSON
+        $data["community_tag"] = $community->tag;
+        $data["community_title"] = $community->title;
+        $data["community_logo"] = $community->logo;
+        $data["user_rank"] = "Afiliado";
+        Notification::createNotification($request->user_id, json_encode($data), "community_rank");
+        return back();
+    }
+
+    function rankAsModerator(Request $request) {
+        $community = Community::where('tag', $request->community_tag)->first();
+        if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
+            abort(404);
+        }
+        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 2000]);
+        // Notification JSON
+        $data["community_tag"] = $community->tag;
+        $data["community_title"] = $community->title;
+        $data["community_logo"] = $community->logo;
+        $data["user_rank"] = "Moderador";
+        Notification::createNotification($request->user_id, json_encode($data), "community_rank");
+        return back();
+    }
+
+    function rankAsLeader(Request $request) {
+        // Variables
+        $community = Community::where('tag', $request->community_tag)->first();
+        if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
+            abort(404);
+        }
+        $leader = UserCommunity::where('community_id', $community->id)->where('subscription_type', 5000)->first();
+        // Queries
+        UserCommunity::where('community_id', $community->id)->where('user_id', $leader->user_id)->update(['subscription_type' => 0]);
+        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 5000]);
+        // Notifications
+            // Notification JSON
+            $data["community_tag"] = $community->tag;
+            $data["community_title"] = $community->title;
+            $data["community_logo"] = $community->logo;
+            $data["user_rank"] = "Líder";
+            Notification::createNotification($request->user_id, json_encode($data), "community_rank");
+            // Notification JSON
+            $data["community_tag"] = $community->tag;
+            $data["community_title"] = $community->title;
+            $data["community_logo"] = $community->logo;
+            $data["user_rank"] = "Afiliado";
+            Notification::createNotification($leader->user_id, json_encode($data), "community_rank");
+        // Response
+        return redirect()->route('index');
     }
 }

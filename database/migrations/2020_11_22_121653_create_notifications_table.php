@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration {
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('notification', 100);
+            $table->string('notification', 300);
             $table->string('type', 20);
             $table->boolean('read')->default(false);
         });

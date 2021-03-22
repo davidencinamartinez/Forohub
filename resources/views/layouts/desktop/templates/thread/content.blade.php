@@ -86,6 +86,10 @@
                     <div class="thread-quick-reply">
                         <div>
                             <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
+                            <div class="character-counter">
+                                <label>0</label>
+                                <label>/3000</label>
+                            </div>
                             <button class="thread-quick-reply-send" type="submit">Responder</button>
                             <button class="thread-quick-reply-cancel">Cancelar</button>
                         </div>

@@ -1,6 +1,10 @@
 @extends('layouts.desktop.main')
 
-@section('title', 'Guía de usuarios - Forohub')
+@isset ($character)
+	@section('title', 'Guía de usuarios ('.strtoupper($character).') - Forohub')
+@else
+	@section('title', 'Guía de usuarios - Forohub')
+@endif
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/classes.css">

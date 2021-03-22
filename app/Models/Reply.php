@@ -60,4 +60,20 @@ class Reply extends Model {
         }
     }
 
+    public static function removeReply($request) {
+        if (Auth::user()) {
+            $community_id = Reply::where('id', $request->reply_id)
+                            ->with('thread.communities')
+                            ->get()->pluck('thread.communities')
+                            ->first()->value('id');
+            if (UserCommunity::where('user_id', Auth::user()->id)->where('community_id', $community_id)->whereIn('subscription_type', [2000,5000])->doesntExist()) {
+                abort(404);
+            } else {
+                Reply::where('id', $request->reply_id)->update(['text' => '<i>Mensaje eliminado</i>']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
 }
