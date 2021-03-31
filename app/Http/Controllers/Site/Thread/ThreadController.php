@@ -8,6 +8,7 @@ use App\Models\Reply;
 use App\Models\Notification;
 use App\Models\UserReward;
 use App\Models\UserCommunity;
+use App\Models\UserCommunityBan;
 use App\Models\Thread;
 use App\Models\Community;
 use App\Models\User;
@@ -25,7 +26,12 @@ class ThreadController extends Controller {
 
 	function getCommunityTag(Request $request, $tag) {
 		if (Auth::user() && $request->ajax()) {
-			$communities = Community::where('tag', 'like', '%'.$tag.'%')->take(5)->select('id', 'title', 'tag', 'logo', 'description')->get();
+			$nonAllowedCommunities = UserCommunityBan::where('user_id', Auth::user()->id)->pluck('community_id');
+			$communities = Community::whereNotIn('id', $nonAllowedCommunities)
+			->where('tag', 'like', '%'.$tag.'%')
+			->take(5)
+			->select('id', 'title', 'tag', 'logo', 'description')
+			->get();
 			foreach ($communities as $community) {
 				$community->user_count = UserCommunity::userCount($community->id);
 	    	}

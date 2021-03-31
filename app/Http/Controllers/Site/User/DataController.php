@@ -9,6 +9,7 @@ use App\Models\UserReward;
 use App\Models\User;
 use App\Models\Community;
 use App\Models\UserCommunity;
+use App\Models\UserCommunityBan;
 use App\Models\Thread;
 use App\Models\File;
 use Auth;
@@ -191,8 +192,6 @@ class DataController extends Controller {
                             $data = json_encode($notification->notification);
                             $data = json_decode($data);
                             $notification->community_tag = $data;
-                            
-                            
                         }
                     } 
                     return $notifications;
@@ -229,11 +228,12 @@ class DataController extends Controller {
                     $query = DB::table('users_communities')->where('community_id', '=', $community->id)->where('user_id', '=', Auth::user()->id)->exists();
                     if ($query) {
                         return response()->json(['response' => 'Ya estás suscrito a esta comunidad']);
-                    } else {
-                        UserCommunity::JoinCommunity($community->id);
-                        return response()->json(['success' => '👥 Te has suscrito a '.$community->title.' 👥']);
                     }
-                    
+                    if (UserCommunityBan::isUserBanned(Auth::user()->id, $community->id)) {
+                        return response()->json(['response' => '⛔ Estás baneado de esta comunidad ⛔']);
+                    }
+                    UserCommunity::JoinCommunity($community->id);
+                    return response()->json(['success' => '👥 Te has suscrito a '.$community->title.' 👥']);
                 } else {
                     abort(404);
                 }

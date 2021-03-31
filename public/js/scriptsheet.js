@@ -22,15 +22,15 @@ $(document).ready(function() {
 		})
 	});
 	$('.thread-body').each(function(index, el) {
-		if ($(this).prop('scrollHeight') > 400) {
+		if ($(this).prop('scrollHeight') > 600) {
 			$(this).parent().find('.thread-info:first').prepend('<button class="thread-read-more">Ver más</button>');
-			$(this).css('height', '400px');
+			$(this).css('height', '600px');
 		}
 	});
 	$(document).on('click', '.thread-read-more', function(event) {
 		event.preventDefault();
 		var threadBody = $(this).parent().parent().find('.thread-body');
-		if ($(threadBody).prop('scrollHeight') > 400) {
+		if ($(threadBody).prop('scrollHeight') > 600) {
 			$(threadBody).css('height', 'max-content');
 			$(this).text('Ver menos');
 			$(this).attr('class', 'thread-read-less');
@@ -39,8 +39,8 @@ $(document).ready(function() {
 	$(document).on('click', '.thread-read-less', function(event) {
 		event.preventDefault();
 		var threadBody = $(this).parent().parent().find('.thread-body');
-		if ($(threadBody).prop('scrollHeight') > 400) {
-			$(threadBody).css('height', '400px');
+		if ($(threadBody).prop('scrollHeight') > 600) {
+			$(threadBody).css('height', '600px');
 			$(this).text('Ver más');
 			$(this).attr('class', 'thread-read-more');
 		}
@@ -103,9 +103,11 @@ $(document).ready(function() {
 		var spoiler = $(this).parent().find('.spoiler-data:first');
 		if (spoiler.is(':visible')) {
 			$(this).text('Spoiler +');
+			$(this).siblings('label').text(' (Pulsa para visualizar)');
 			spoiler.hide('400');
 		} else {
 			$(this).text('Spoiler -');
+			$(this).siblings('label').text(' (Pulsa para ocultar)');
 			spoiler.show('400');
 		}
 	});
@@ -626,7 +628,7 @@ function getNotifications() {
 						createElement('img', {src: '/src/media/pcxzXveYfflI0wyaZVGqjDQkW2NJkgE4m4r2itlqO1ZZnrtnZ88uFhy6L1qQ1KUi.webp'}, '.notification-image:last');	
 					} else if (val.type == "thread_report") {
 						createElement('img', {src: '/src/media/a42LpoWdP5QGTjDyoSCcWUCdF9sp249AxWfjY1PvA6xEj8zbbnIhcHuAURbwZQMU.webp'}, '.notification-image:last')
-					} else if (val.type == "community_rank") {
+					} else if (val.type == "community_rank" || val.type == "community_ban") {
 						var data = $.parseJSON(val.notification);
 						createElement('img', {class: 'community', src: data.community_logo}, '.notification-image:last');
 					}
@@ -642,6 +644,9 @@ function getNotifications() {
 						createElement('a', { href: /c/+val.community+'/reportes', title: val.community_title}, '.notification-info b:last', ' tu comunidad');
 					} else if (val.type == "community_rank") {
 						createElement('b', null, '.notification-info:last', 'Se ha actualizado tu rango a '+data.user_rank+'<br>');
+						createElement('a', {href: '/c/'+data.community_tag}, '.notification-info:last', data.community_title);
+					} else if (val.type == "community_ban") {
+						createElement('b', null, '.notification-info:last', 'Has sido expulsado de <br>');
 						createElement('a', {href: '/c/'+data.community_tag}, '.notification-info:last', data.community_title);
 					} else {
 						createElement('b', null, '.notification-info:last', val.notification);
@@ -659,7 +664,7 @@ function getNotifications() {
 }
 
 function submitQuickReply(element) {
-	$(element).parent().find('.error, .thread-quick-reply-success').remove();
+	$(element).parent().find('.thread-quick-reply-error, .thread-quick-reply-success').remove();
 	$.post('/bkXekAj1QU3vFgFB3Sk8XtZxnxzsuSaKmJbktKTXVEz8jm9JKBs8v3QC7RoKfbIm', 
 		{
 			_token: $('meta[name="csrf-token"]').attr('content'),
@@ -670,12 +675,12 @@ function submitQuickReply(element) {
 				if (data.success) {
 					createElement('p', {class: 'thread-quick-reply-success'}, $(element).parent(), val);	
 				} else if (data.remaining_time) {
-					createElement('p', {class: 'error'}, $(element).parent(), 'Espera '+val+' segundo(s) para enviar el mensaje');	
-				} else if (data.empty) {
-					createElement('p', {class: 'error'}, $(element).parent(), val);	
+					createElement('p', {class: 'thread-quick-reply-error'}, $(element).parent(), 'Espera '+val+' segundo(s) para enviar el mensaje');	
+				} else if (data.empty || data.closed || data.banned) {
+					createElement('p', {class: 'thread-quick-reply-error'}, $(element).parent(), val);
 				} else {
 					$.each(data.error, function(index, val) {
-						createElement('p', {class: 'error'}, $(element).parent(), val);	
+						createElement('p', {class: 'thread-quick-reply-error'}, $(element).parent(), val);	
 					});
 				}
 			});

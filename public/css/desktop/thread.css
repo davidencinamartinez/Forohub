@@ -491,6 +491,15 @@
                         color: limegreen;
                     }
 
+                    .thread-quick-reply-error {
+                        display: inline;
+                        margin-left: 10px;
+                        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                        font-weight: bold;
+                        color: #e80000;
+                        font-size: 14px;
+                    }
+
         /* THREAD REPLIES */
 
             .thread-replies {

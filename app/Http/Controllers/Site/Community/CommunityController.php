@@ -13,6 +13,7 @@ use App\Models\UserCommunity;
 use App\Models\Vote;
 use App\Models\ReportThread;
 use App\Models\Notification;
+use App\Models\UserCommunityBan;
 use Auth;
 use DB;
 use Redirect;
@@ -177,7 +178,7 @@ class CommunityController extends Controller {
         return view('layouts.desktop.templates.community.affiliates.affiliates',
             [   'unread_notifications' => $unread_notifications,
                 'community' => $community,
-                'affiliates' => $affiliates->sortByDesc('subscription_type'),
+                'affiliates' => $affiliates,
                 'character' => $character
             ]);
     }
@@ -237,5 +238,14 @@ class CommunityController extends Controller {
             Notification::createNotification($leader->user_id, json_encode($data), "community_rank");
         // Response
         return redirect()->route('index');
+    }
+
+    function banUserFromCommunity(Request $request) {
+        $community = Community::where('tag', $request->community_tag)->first();
+        if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
+            abort(404);
+        }
+        UserCommunityBan::banUser($request->user_id, $community->id);
+        return back();
     }
 }

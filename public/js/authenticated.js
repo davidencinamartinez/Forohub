@@ -94,6 +94,7 @@ $(document).ready(function() {
 				community: $(this).prev('.thread-community').find('.thread-community-name').text()
 			},
 		}).done(function(data) {
+			console.log(data);
 			if (data.success) {
 				var parentCommunity = $(element).parent().find('.thread-community-name').text();
 				var elements = $('.thread-community-join');
@@ -106,7 +107,7 @@ $(document).ready(function() {
 				});
 				notifyUser(data.success);
 			} else {
-				notifyUser(data.error);
+				notifyUser(data.response);
 			}
 		}).fail(function() {
 			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');

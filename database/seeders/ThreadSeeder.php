@@ -32,7 +32,7 @@ class ThreadSeeder extends Seeder {
             'community_id' => 11071968,
             'user_id' => 24111998,
             'title' => 'Mi hamburguesa casera GORDURA INSAID',
-            'body' => '<div class="picture"><img src="https://i.imgur.com/l7RKj1r.jpg"></div><marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="stop()" onmouseleave="start()">Morid de envidia veganos</marquee>',
+            'body' => '<div class="picture"><img src="https://media-cdn.tripadvisor.com/media/photo-p/18/e2/2c/78/img-20190811-135756-largejpg.jpg"></div><marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="stop()" onmouseleave="start()">Morid de envidia veganos</marquee>',
         ]);
         DB::table('threads')->insert([
             'created_at' => Carbon::now()->sub('1 day 4 hours'),

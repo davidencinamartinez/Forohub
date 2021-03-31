@@ -29,7 +29,7 @@
 					<label class="element-extra" title="Spoiler">💥</label>
 					@endif
 					</i>
-					<label class="element-date-threads">{{ $thread->created_at }}</label>
+					<label><label>{{$thread->author->name}}</label> · <label class="element-date-threads">{{ $thread->created_at }}</label></label>
 				</div>
 				<div class="element-stats">
 			        <div title="Mensajes">

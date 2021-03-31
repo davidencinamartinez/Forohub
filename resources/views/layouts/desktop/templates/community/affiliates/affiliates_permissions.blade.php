@@ -19,4 +19,7 @@
         <label class="element-extra">👑</label>
         <button class="checkbox-button leader"></button>
     </div>
+    <div>
+        <button class="ban-user-button">Expulsar</button>
+    </div>
 </div>

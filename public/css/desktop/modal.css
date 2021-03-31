@@ -247,9 +247,6 @@
 		.notification-info {
 			float: right;
 			width: 300px;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
 		}
 
 	/* MODAL MARQUEE */

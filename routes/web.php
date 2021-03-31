@@ -76,6 +76,9 @@ use Illuminate\Support\Facades\Route;
 		/* Rank as Leader */
 		Route::post('/nn6pOlrj9U80946uspAXdcdBQylNZEK5cvyQKWDcZHTm05PQAfAaTpX8lH27IFVm', [App\Http\Controllers\Site\Community\CommunityController::class, 'rankAsLeader']);
 
+		/* Ban from Community */
+		Route::post('/Tlka8Kyzu5R0srMvRS6oXzoDqmjcuGc6747JTgBamYS5lBwYgzZExLg2ii6KSOPO', [App\Http\Controllers\Site\Community\CommunityController::class, 'banUserFromCommunity']);
+
 	/* COMMUNITY REPORTS */
 	
 		/* Get Community Reports */

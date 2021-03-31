@@ -108,6 +108,9 @@ class Thread extends Model {
 
     public static function createPostThread($request) {
         $community_id = Community::where('tag', $request->community)->value('id');
+        if (UserCommunityBan::isUserBanned(Auth::user()->id, $community_id)) {
+            abort(404);
+        }
         $body = '';
         $type;
         if ($request->exists('check_spoiler')) {
@@ -162,15 +165,15 @@ class Thread extends Model {
             $type = "THREAD_YT";
             $body .= '<div class="media-embed"><iframe width="560" height="315" src="https://www.youtube.com/embed/'.$request->link.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>';
         }
-        if ($request->type == "poll") {
-            $type = "THREAD_POLL";
-            $body .= 'IS_POLL';
-        }
         if ($request->exists('check_important')) {
             $body .= '<div class="important-reminder"><label><b>❗ IMPORTANTE ❗</b> Este es un <b>TEMA SERIO</b></label><label>Se ruega evitar escribir cualquier mensaje que lo desvirtúe (Troll, Spam, etc...)</label><label>Todos los usuarios, así como el OP, deben mostrar respeto hacia los demás.</label></div>';
         }
         if ($request->exists('check_spoiler')) {
             $body .= '</div></div>';
+        }
+        if ($request->type == "poll") {
+            $type = "THREAD_POLL";
+            $body = 'IS_POLL';
         }
         Thread::create([
             'created_at' => Carbon::now(),
@@ -193,6 +196,11 @@ class Thread extends Model {
         }
         if (!UserCommunity::where('user_id', Auth::user()->id)->where('community_id', $community_id)->exists()) {
             UserCommunity::JoinCommunity($community_id);
+        }
+        // Reward
+        if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '10')->doesntExist()) {
+            UserReward::createUserReward(Auth::user()->id, '10');
+            Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Un pequeño paso para el hombre, un gran salto para la humanidad", "reward");
         }
         return Redirect::to('/c/'.$request->community.'/t/'.$thread_id);
     }

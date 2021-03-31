@@ -12,7 +12,7 @@
 	width: 300px;
 	border: solid 1px black;
 	display: inline-flex;
-	background-color: #a20000;
+	background: linear-gradient( to bottom, #a2a2a2, #e2e2e2, #6f6f6f);
 	border-radius: 6px;
 	font-weight: bold;
 }

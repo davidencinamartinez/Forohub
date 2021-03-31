@@ -14,13 +14,12 @@ $(document).ready(function() {
 		var userName = $(this).closest('.element').attr('data-name');
 		makeLeader(userId, userName);
 	});
+	$(document).on('click', '.ban-user-button', function(event) {
+		var userId = $(this).closest('.element').attr('data-id');
+		var userName = $(this).closest('.element').attr('data-name');
+		kickAffiliate(userId, userName);
+	});
 });
-
-function makeLeader() {
-	createModal();
-}
-
-
 
 function makeAffiliate(userId, userName) {
 	createModal();
@@ -75,4 +74,25 @@ function makeLeader(userId, userName) {
 	createElement('input', {type: 'hidden', name: 'user_id', value: userId}, '.modal-body div:last form');
 	createElement('input', {type: 'hidden', name: 'community_tag', value: window.location.href.split('/')[4]}, '.modal-body div:last form');
 	createElement('button', {type: 'submit'}, '.modal-body div:last form', 'Actualizar Rango');
+}
+
+function kickAffiliate(userId, userName) {
+	createModal();
+	createElement('h1', null, '.modal-body', 'Expulsar Afiliado');
+	createElement('p', null, '.modal-body', 'El usuario <b>'+userName+'</b> será baneado de la comunidad');
+	createElement('p', null, '.modal-body', 'Se mantendrán:');
+	createElement('ul', null, '.modal-body');
+	createElement('li', {style: 'text-align: left'}, '.modal-body ul', 'Temas creados en la comunidad');
+	createElement('li', {style: 'text-align: left'}, '.modal-body ul', 'Mensajes escritos en temas de la comunidad');
+	createElement('li', {style: 'text-align: left'}, '.modal-body ul', 'Reportes enviados por el usuario');
+	createElement('label', null, '.modal-body', 'El usuario perderá el derecho a interactuar con<br>los demás miembros dentro de la comunidad')
+	createElement('p', null, '.modal-body', '<b>* Esta acción no se podrá revertir *</b>')
+	createElement('p', null, '.modal-body', 'Estás seguro de querer continuar?');
+	createElement('div', {style: 'display: inline-flex'}, '.modal-body');
+	createElement('button', {class: 'modal-exit', style: 'margin-right: 2px'}, '.modal-body div:last', 'Volver');
+	createElement('form', {method: 'POST', action: '/Tlka8Kyzu5R0srMvRS6oXzoDqmjcuGc6747JTgBamYS5lBwYgzZExLg2ii6KSOPO'}, '.modal-body div:last');
+	createElement('input', {type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content')}, '.modal-body div:last form');
+	createElement('input', {type: 'hidden', name: 'user_id', value: userId}, '.modal-body div:last form');
+	createElement('input', {type: 'hidden', name: 'community_tag', value: window.location.href.split('/')[4]}, '.modal-body div:last form');
+	createElement('button', {type: 'submit'}, '.modal-body div:last form', 'Expulsar');
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Reply;
 use App\Models\Notification;
 use App\Models\UserReward;
+use App\Models\UserCommunityBan;
 use App\Models\Community;
 use App\Models\Thread;
 use Carbon\Carbon;
@@ -19,7 +20,9 @@ class ReplyController extends Controller {
 
     function makeReply(Request $request) {
         if (Thread::where('id', $request->thread_id)->first()->closed == 1) {
-            abort(404);
+            return response()->json([
+                    'closed' => 'Este tema está cerrado',
+                ]);
         }
         $request->text = strip_tags($request->text);
     	if (Auth::user()) {
@@ -60,6 +63,9 @@ class ReplyController extends Controller {
                 $community_id = Thread::where('id', $request->thread_id)->value('community_id');
                 $community_tag = Community::where('id', $community_id)->value('tag');
                 $thread_replies = Reply::where('thread_id', $request->thread_id)->with('user:id,name')->get(['id', 'user_id', 'text']);
+                if (UserCommunityBan::isUserBanned(Auth::user()->id, $community_id)) {
+                    return response()->json(['banned' => 'Estás baneado de esta comunidad']);
+                }
                 Reply::createReply($request->thread_id, preg_replace_callback('/#([0-9]+)/', 
                     function ($matches) use ($request, $community_id, $community_tag, $thread_replies) {
                         $quote_page = 0;

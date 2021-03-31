@@ -19,4 +19,11 @@
 </form>
 	@include('layouts.desktop.templates.community.character_selection')
 	@include('layouts.desktop.templates.community.affiliates.affiliates_guide')
+	@if ($affiliates->hasPages())
+	  <div style="text-align: center;">
+	    <div class="pageSelector">
+	      {!!$affiliates->links()!!}
+	    </div>
+	  </div>
+	@endif
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\FailedAuthAttempt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -22,12 +23,18 @@ class LogController extends Controller {
 
     protected function login(Request $request) {
 
-        Session::flush();
+        $ip = User::getClientIPAddress($request);
 
-    	$request->validate([
-            'name' => 'required',
-            'password' => 'required'
-        ]);
+        $attempts = FailedAuthAttempt::where('ip_address', $ip)
+        ->whereBetween('created_at', [Carbon::now()->subMinutes(30), Carbon::now()])
+        ->get();
+
+        if ($attempts->count() > 4) {
+            $remaining_time = Carbon::now()->diffInMinutes(Carbon::parse($attempts->first()->value('created_at'))->addMinutes(31), false);
+            return redirect()->back()->with('err', 'Se ha rechazado tu solicitud. Vuelve a intentarlo en '.$remaining_time.' minuto(s)');
+        }
+
+        Session::flush();
 
         $credentials = $request->except(['_token']);
 
@@ -35,11 +42,17 @@ class LogController extends Controller {
 
         if (auth()->attempt($credentials)) {
             Auth::user($user)->fresh();
+            FailedAuthAttempt::where('ip_address', $ip)->delete();
             return Redirect::back();
 
         } else {
+            FailedAuthAttempt::createFailedAuthAttempt($request);
             session()->flash('err', 'Invalid credentials');
-            return redirect()->back()->with('err', 'Nombre de usuario y/o contraseña incorrectos');
+            if ($attempts->count() == 4) {
+                $remaining_time = Carbon::now()->diffInMinutes(Carbon::parse($attempts->first()->value('created_at'))->addMinutes(31), false);
+                return redirect()->back()->with('err', 'Se ha rechazado tu solicitud. Vuelve a intentarlo en '.$remaining_time.' minuto(s)');
+            }
+            return redirect()->back()->with('err', 'Usuario o contraseña incorrectos. Intentos restantes: '.(5-($attempts->count()+1)));
         }
     }
 

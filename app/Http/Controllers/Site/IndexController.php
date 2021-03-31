@@ -12,6 +12,7 @@ use App\Models\Vote;
 use App\Models\Reply;
 use App\Models\UserReward;
 use App\Models\UserCommunity;
+use App\Models\UserCommunityBan;
 use App\Models\Notification;
 use App\Models\PollOption;
 use App\Models\ReportReply;
@@ -237,8 +238,8 @@ class IndexController extends Controller {
 
                         $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
                         if (Vote::getUserUpvotes($request->thread_id) == 1) {
-                            if (UserReward::userHasReward($thread_author_id, 10) == false) {
-                                UserReward::createUserReward($thread_author_id, 10);
+                            if (UserReward::userHasReward($thread_author_id, 12) == false) {
+                                UserReward::createUserReward($thread_author_id, 12);
                                 Notification::createNotification($thread_author_id, "Logro desbloqueado: Me gusta", "reward");
                             }
                         }
@@ -341,15 +342,17 @@ class IndexController extends Controller {
          }
 
          function test() {
-            
-            $lala = '<div class="slideshow-content" data-source="https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986146/kfduhzyfhct4a3jhvrr0.gif,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986147/qrytboxjdc5paeoitrxs.jpg,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986148/n56di08fxxtsimjsdlwo.jpg,https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986150/zvchhcrynix9kip7k5rs.jpg"><div class="slideshow-media blurry"><div class="blurry-container"><div class="nsfw-banner"><label>🔞</label><label>Contenido NSFW</label><label>Si deseas visualizarlo, haz click aquí</label></div></div><img src="https://res.cloudinary.com/dt4uoou5x/image/upload/v1615986146/kfduhzyfhct4a3jhvrr0.gif" data-id="0"></div><a class="slide-previous">❮</a><a class="slide-next">❯</a><label class="slideshow-page">1/1</label></div><marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="stop()" onmouseleave="start()">sdfsdfdsf</marquee>';
 
-            preg_match( '@src="([^"]+)"@', $lala, $match);
-
-            return $match;
-            
-            
+            if (Auth::user()) {
+            $nonAllowedCommunities = UserCommunityBan::where('user_id', Auth::user()->id)->pluck('community_id');
+            $communities = Community::where('tag', 'like', '%f%')
+            ->whereNotIn('id', $nonAllowedCommunities)
+            ->take(5)->select('id', 'title', 'tag', 'logo', 'description')->get();
         
+            return $communities;
+        
+            
+            }
             
          }
 }

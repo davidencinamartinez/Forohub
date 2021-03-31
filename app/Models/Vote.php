@@ -37,8 +37,6 @@ class Vote extends Model
         foreach ($author_threads as $thread) {
             $thread_author_upvote_count = $thread_author_upvote_count+Vote::where('thread_id', $thread->id)->count();   
         }
-
         return $thread_author_upvote_count;
-
     }
 }

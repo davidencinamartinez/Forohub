@@ -46,7 +46,7 @@ class GuideController extends Controller {
     $threads = Guides::getThreads($character);
     return view('layouts.desktop.templates.guides.threads',
         [   'unread_notifications' => $unread_notifications,
-            'threads' => $threads->sortByDesc('title'),
+            'threads' => $threads->sortByDesc('created_at'),
             'character' => $character
         ]);
     }

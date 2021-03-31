@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\UserCommunity;
+use App\Models\UserReward;
+use Auth;
 use App\Models\CommunityTags;
 use Illuminate\Support\Collection;
 use Validator;
@@ -139,6 +141,11 @@ class Community extends Model {
                 'title' => $request->title,
                 'description' => $request->description
             ]);
+            /* Reward */
+            if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '8')->doesntExist()) {
+                UserReward::createUserReward(Auth::user()->id, '8');
+                Notification::createNotification(Auth::user()->id, "Logro desbloqueado: La unión hace la fuerza", "reward");
+            }
             /* Set Master Mod */
             UserCommunity::leaderJoinCommunity($community->id);
             /* Set Community Tags */
@@ -156,14 +163,14 @@ class Community extends Model {
             if (is_numeric($character)) {
                 $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->whereHas('user', function($q) {
                     $q->where('name', 'regexp', '^[0-9]+');
-                })->get();
+                })->orderBy('subscription_type', 'desc')->paginate(30, ['*'], 'pagina');
             } else {
                 $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->whereHas('user', function($q) use ($character) {
                     $q->where('name', 'like', $character.'%');
-                })->get();
+                })->orderBy('subscription_type', 'desc')->paginate(30, ['*'], 'pagina');
             }
         } else {
-            $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->take(50)->get();
+            $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->orderBy('subscription_type', 'desc')->paginate(30, ['*'], 'pagina');
         }
         return $users;
     }
