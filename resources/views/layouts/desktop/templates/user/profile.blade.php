@@ -10,13 +10,9 @@
     <link rel="stylesheet" type="text/css" href="/css/desktop/user.css">
 @endpush
 @push('scripts')
-	<script type="text/javascript" src="/js/guides.js"></script>
+	<script type="text/javascript" src="/js/profile_actions.js"></script>
 @endpush
 @section('body')
-	<script type="text/javascript">
-		console.log({!! $data !!});
-		console.log({!! $rewards !!});
-	</script>
 	<div class="index-panel">
 	    <div style="width: 10%"></div>
 	    <div class="threads-panel">
@@ -24,26 +20,21 @@
 	    	<div class="profile-configuration">
 				<div class="profile-configuration-title">Configuración</div>
 	    	    <form>
-	    	    	<div class="community-title">
-		        		<b class="input-title">Título:</b>
-		        		<br>
-		        		<b class="input-title-small">* El título debe contener un mínimo de 3 carácteres *</b>
-		        		<div class="name-error"></div>
-		        		<input type="search" class="form-input" name="name" maxlength="40" placeholder="Nombre de la comunidad ..." value="{{ Auth::user()->about }}">
-		        		<div class="character-counter">
-		        			<label>0</label>
-		        			<label>/40</label>
+	    	    	<div>
+		        		<h4 class="input-title">Fecha de registro: <label class="user-register-date" style="text-transform: capitalize;">{{ Auth::user()->created_at }}</label></h4>
+		        	</div>
+	    	    	<div class="profile-configuration-set configuration-password">
+	    	    		<div>
+			        		<b class="input-title">Contraseña: </b>
+			        		<label style="margin-left: 10px;">**********</label>
+			        		<img class="edit-element" src="/src/media/edit_icon.webp">
 		        		</div>
 		        	</div>
-		        	<div class="community-title">
-		        		<b class="input-title">Título:</b>
-		        		<br>
-		        		<b class="input-title-small">* El título debe contener un mínimo de 3 carácteres *</b>
-		        		<div class="name-error"></div>
-		        		<input type="search" class="form-input" name="name" maxlength="40" placeholder="Nombre de la comunidad ..." value="{{ Auth::user()->about }}">
-		        		<div class="character-counter">
-		        			<label>0</label>
-		        			<label>/40</label>
+		        	<div class="profile-configuration-set configuration-title">
+		        		<div>
+			        		<b class="input-title">Título: </b>
+			        		<label style="margin-left: 10px;">{{ Auth::user()->about }}</label>
+			        		<img class="edit-element" src="/src/media/edit_icon.webp">
 		        		</div>
 		        	</div>
 	    	    </form>

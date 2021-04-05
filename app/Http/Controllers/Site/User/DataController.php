@@ -20,6 +20,7 @@ use Validator;
 use App\Models\Vote;
 use App\Models\PollVote;
 use App\Models\PollOption;
+use Hash;
 
 class DataController extends Controller {
 
@@ -101,6 +102,53 @@ class DataController extends Controller {
                 'threads' => $threads
         ]);
     }
+
+    /* UPDATES */
+
+        /* UPDATE PASSWORD */
+
+        function passwordUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'oldPassword.required' => 'No se permiten campos vacíos',
+                    'oldPassword.password' => 'La contraseña proporcionada no se corresponde con la actual del usuario',
+                    'newPassword.required' => 'No se permiten campos vacíos',
+                    'newPassword.min' => 'La contraseña debe contener mínimo 8 carácteres',
+                    'newPassword.max' => 'La contraseña debe contener máximo 64 carácteres',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'oldPassword' => 'required|password',
+                    'newPassword' => 'required|min:8|max:64'
+                ], $messages);
+                if ($validator->passes()) {
+                    User::find(Auth::user()->id)->update(['password'=> Hash::make($request->newPassword)]);
+                    return response()->json(['success' => 'Tu contraseña se ha cambiado con éxito 🗸']);
+                } else {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+            }
+        }
+
+        /* UPDATE TITLE */
+
+        function titleUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'title.required' => 'No se permiten campos vacíos',
+                    'title.min' => 'El título debe contener mínimo 1 carácter',
+                    'title.max' => 'El título debe contener un máximo de 40 carácteres',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'title' => 'required|min:1|max:40'
+                ], $messages);
+                if ($validator->passes()) {
+                    User::where('id', Auth::user()->id)->update(['about'=> $request->title]);
+                    return response()->json(['success' => 'Tu título se ha cambiado con éxito 🗸']);
+                } else {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+            }
+        }
 
     /* AVATAR */
 

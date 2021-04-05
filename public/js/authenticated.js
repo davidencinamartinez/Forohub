@@ -94,7 +94,6 @@ $(document).ready(function() {
 				community: $(this).prev('.thread-community').find('.thread-community-name').text()
 			},
 		}).done(function(data) {
-			console.log(data);
 			if (data.success) {
 				var parentCommunity = $(element).parent().find('.thread-community-name').text();
 				var elements = $('.thread-community-join');
@@ -258,16 +257,4 @@ $(document).ready(function() {
 		event.preventDefault();
 		votePollOption(this);
 	});
-	$(document).on('click', '.profile-configuration-trigger', function(event) {
-		event.preventDefault();
-		if ($('.profile-configuration').css('display') == 'none') {
-			$('.threads-panel').children().css('display', 'none');
-            $('.profile-configuration').css('display', 'block');
-            return false;
-		} else {
-			$('.threads-panel').children().css('display', 'block');
-            $('.profile-configuration').css('display', 'none');
-            return false;
-		}
-	});	
 });

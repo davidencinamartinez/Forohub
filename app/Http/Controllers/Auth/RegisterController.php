@@ -77,7 +77,7 @@ class RegisterController extends Controller {
                 'terms' => 'accepted'
             ], $messages);
 
-            return response()->json(['error' =>$validator->getMessageBag()->toArray()]);
+            return response()->json(['error' => $validator->getMessageBag()->toArray()]);
         } else {
             return response()->json(['error' => 'Conexión rechazada por el servidor (500)']);
         }

@@ -49,6 +49,11 @@ use Illuminate\Support\Facades\Route;
 
 	Route::post('/Oz5ebsV9HnflVOUTX7d23AdcJyILNMtM0A2t08udzbsKCKNwgYzDTT8NmlwuIyxH', [App\Http\Controllers\Site\User\DataController::class, 'isLoged']);
 
+	/* UPDATE USER DATA */
+
+		Route::post('/fOvpJZWfCJAULgNxBxVINoFyr6k9rBxxqG2HMbGGDZjN3HidWmWTrUPqaJPNCIqV', [App\Http\Controllers\Site\User\DataController::class, 'passwordUpdate']);
+
+		Route::post('/FRsS0qDC72HsM1TxceEpmyUtU3vT4rA5T9H0j2QB8AJd1UdFklUpGSc5takQTpLg', [App\Http\Controllers\Site\User\DataController::class, 'titleUpdate']);
 
 /* COMMUNITY ROUTES */
 	

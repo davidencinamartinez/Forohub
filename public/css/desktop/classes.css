@@ -79,7 +79,6 @@
 		margin-top: 6px;
 	    padding: 10px 6px;
 	    box-sizing: border-box;
-	    padding: 10px 6px;
 	    width: 100%;
 	    margin-bottom: 4px;
 	}
@@ -102,4 +101,18 @@
 
 	.checkbox-button:hover:not(.checked) {
 		background-color: #ffb600;
+	}
+
+/* EDIT ELEMENT */
+
+	.edit-element {
+		width: 20px;
+		float: right;
+		transition: 0.5s;
+		cursor: pointer;
+	}
+
+	.edit-element:hover {
+		transform: scale(1.5);
+		transition: 0.5s;
 	}

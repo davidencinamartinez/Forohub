@@ -83,7 +83,7 @@ $(document).ready(function() {
 		$(this).text("Hace "+(moment($(this).text(), 'YYYY-MM-DD HH:mm:ss').fromNow(true)));
 	});
 
-	$('.thread-reply-user-register, .element-date-affiliate').each(function(index, el) {
+	$('.thread-reply-user-register, .element-date-affiliate, .user-register-date').each(function(index, el) {
 		$(this).text(moment($(this).text()).format('MMM YYYY'));
 	});
 	$('.thread-info').each(function(index, el) {
