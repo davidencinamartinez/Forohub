@@ -700,7 +700,7 @@ function updateProfilePicture() {
 			createElement('div', {class: 'modal-avatar-form'}, '.modal-body');
 			createElement('form', {method: 'POST', action: '/hT8IFRUl6hAVCSCmv7iBeGDKBSMgT0XQl3quQh4EJOzeMCQ1ZwTMzWE6VMWo3le7', enctype: "multipart/form-data"}, '.modal-avatar-form');
 			createElement('input', {type: 'hidden', name: '_token', value: $('meta[name="csrf-token"]').attr('content')}, '.modal-avatar-form form');
-			createElement('input', {type: 'file', name: 'avatar', accept: 'image/*, .jpeg, .jpg, .gif, .webp, .png'}, '.modal-avatar-form form');
+			createElement('input', {type: 'file', id: 'avatar-update-file', name: 'avatar', accept: 'image/*, .jpeg, .jpg, .webp, .png'}, '.modal-avatar-form form');
 		// Report Buttons
 			createElement('div', {class: 'modal-avatar-buttons', style: 'margin-top: 10px'}, '.modal-avatar-form form');
 			createElement('button', {class: 'modal-exit', style: 'margin-right: 2px'}, '.modal-avatar-buttons', 'Cancelar');

@@ -114,12 +114,10 @@ function PA_TitleUpdate(element) {
 		},
 	})
 	.done(function(data) {
-		console.log(data);
-		if ($(data).has(data.error)) {
+		if (data) {
 			createElement('p', {class: 'error'}, '.configuration-title-panel', data.error);
-		}
-		if ($(data).has(data.success)) {
-			createElement('p', {class: 'success'}, '.configuration-title-panel', data.success);
+		} else {
+			location.reload();
 		}
 	})
 	.fail(function() {

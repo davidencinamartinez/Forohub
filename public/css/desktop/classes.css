@@ -116,3 +116,21 @@
 		transform: scale(1.5);
 		transition: 0.5s;
 	}
+
+/* FOROHUB BUTTON */
+
+	.fh-button {
+		background: linear-gradient(to right, #ffb600 50%, #e5e5e5 50%);
+	    background-size: 200% 100%;
+	    background-position: right bottom;
+	    margin: 5px 0px 5px 0px;
+	    border: solid 1px black;
+	    padding: 6px;
+	    outline: none;
+	    cursor: pointer;
+	    transition: 0.5s;
+	}
+
+	.fh-button:hover {
+		background-position: left bottom;
+	}

@@ -157,13 +157,13 @@ class DataController extends Controller {
             $messages = [
                 'avatar.required' => 'Debes seleccionar un archivo',
                 'avatar.image' => 'Sólo se permiten ficheros de tipo imagen',
-                'avatar.mimes' => 'Extensiones válidas: jpg, png, gif, webp',
+                'avatar.mimes' => 'Extensiones válidas: .jpg, .png, .webp',
                 'avatar.dimensions' => 'El fichero no cumple con las dimensiones permitidas (Min: 64x64 / Máx: 3840x2160) ',
                 'avatar.max' => 'El tamaño máximo del fichero no puede superar los 4Mb (4096Kb)',
             ];
 
             $validator = Validator::make($request->all(), [
-                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|dimensions:min_width=64,min_height=64,max_width=3840,max_height=2160|max:4096'
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,webp|dimensions:min_width=64,min_height=64,max_width=3840,max_height=2160|max:4096'
             ], $messages);
 
             // IF VALIDATION OK

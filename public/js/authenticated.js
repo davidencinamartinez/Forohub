@@ -212,7 +212,7 @@ $(document).ready(function() {
 		updateProfilePicture();
 	});
 	$(document).on('change', '.modal-avatar-form input', function(event) {
-		var file =  $("input[type=file]").get(0).files[0];
+		var file =  $("#avatar-update-file").get(0).files[0];
         if (file) {
             var reader = new FileReader();
             reader.onload = function() {
@@ -224,7 +224,7 @@ $(document).ready(function() {
 	$(document).on('submit', '.modal-avatar-form form', function(event) {
 		event.preventDefault();
 		avatarForm = new FormData();
-		avatarForm.append('avatar', $("input[type=file]").get(0).files[0]);
+		avatarForm.append('avatar', $("#avatar-update-file").get(0).files[0]);
 		$('.modal-error').css('display', 'none');
 		$.ajaxSetup({
 		    headers: {

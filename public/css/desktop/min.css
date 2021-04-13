@@ -55,6 +55,12 @@
 	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
 	}
 
+/* FILE ANIMATION */
+
+	@keyframes fileAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #ffb600;}
+	}
+
 /* ERROR - SUCCESS */
 
 	.error {

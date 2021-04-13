@@ -84,6 +84,12 @@ use Illuminate\Support\Facades\Route;
 		/* Ban from Community */
 		Route::post('/Tlka8Kyzu5R0srMvRS6oXzoDqmjcuGc6747JTgBamYS5lBwYgzZExLg2ii6KSOPO', [App\Http\Controllers\Site\Community\CommunityController::class, 'banUserFromCommunity']);
 
+	/* UPDATE COMMUNITY DATA */
+
+		Route::post('/kXQ2kAuP1djrzKllFvbRBQGKJlvg9iHzmUyhfZM7PcsAJcQBOGvPY1rZ8E1GjlN6', [App\Http\Controllers\Site\Community\CommunityController::class, 'titleUpdate']);
+
+		Route::post('/RQvm8SR9ZOTZ7nSCFEYCCxirXnlam7VblDkIEYkVbbTCUaKuBnlCJG6DBlW7E8nF', [App\Http\Controllers\Site\Community\CommunityController::class, 'logoUpdate']);
+
 	/* COMMUNITY REPORTS */
 	
 		/* Get Community Reports */

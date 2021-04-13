@@ -34,7 +34,7 @@
 <body>
 	<div class='header'>
 		<a href="/">
-			<img class='logo' src='/src/media/logo_white.webp' alt='forohub_logo' title='Forohub' clickeable>
+			<img class='forohub-logo' src='/src/media/logo_white.webp' alt='forohub_logo' title='Forohub' clickeable>
 		</a>
 		<div class='user-login'>
 			@if (Auth::check())

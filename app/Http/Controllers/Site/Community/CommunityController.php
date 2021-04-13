@@ -17,6 +17,7 @@ use App\Models\UserCommunityBan;
 use Auth;
 use DB;
 use Redirect;
+use Validator;
 
 class CommunityController extends Controller {
     
@@ -248,4 +249,60 @@ class CommunityController extends Controller {
         UserCommunityBan::banUser($request->user_id, $community->id);
         return back();
     }
+
+    /* UPDATES */
+
+        /* UPDATE TITLE */
+
+        function titleUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'title.required' => 'No se permiten campos vacíos',
+                    'title.min' => 'El título de la comunidad debe contener mínimo 3 carácteres',
+                    'title.max' => 'El título de la comunidad debe contener máximo 50 carácteres',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'title' => 'required|min:3|max:50',
+                    'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    Community::where('id', $community_id)->update(['title' => $request->title]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+        /* LOGO UPDATE */
+
+        function logoUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'logo.required' => 'Debes seleccionar un archivo',
+                    'logo.image' => 'Sólo se permiten ficheros de tipo imagen',
+                    'logo.mimes' => 'Extensiones válidas: .jpg, .png, .webp',
+                    'logo.dimensions' => 'El fichero no cumple con las dimensiones permitidas (Min: 64x64 / Máx: 2048x2048)',
+                    'logo.max' => 'El tamaño máximo del fichero no puede superar los 2Mb (2048Kb)',
+                ];
+                $validator = Validator::make($request->all(), [
+                   'logo' => 'required|image|mimes:jpeg,png,jpg,webp|dimensions:min_width=64,min_height=64,max_width=2048,max_height=2048|max:2048'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    $upload = cloudinary()->upload($request->file('logo')->getRealPath())->getSecurePath();
+                    Community::where('id', $community_id)->update(['logo' => $upload]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
 }

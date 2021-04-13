@@ -5,11 +5,11 @@
 		<div style="display: flex;">
 			<div class="guide-community">
 	            <div class="guide-community-logo">
-	                <img class="lateral-community-logo" src="/src/communities/logo/s2HGcJxofEphgzMYmZvPnRlQi1Admxl.webp">
+	                <img class="lateral-community-logo" src="{{ $community->logo }}">
 	            </div>
 	            <div class="guide-community-data">
-	                <a href="/c/forohub">Forohub - Oficial</a>
-	                <label>c/forohub</label>
+	                <a href="/c/{{ $community->tag }}">{{ $community->title }}</a>
+	                <label>c/{{ $community->tag }}</label>
 	            </div>
 	        </div>
 	        <div style="margin: auto; display: grid;">

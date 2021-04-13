@@ -1,0 +1,111 @@
+.profile-configuration, .community-configuration {
+	float: right;
+	width: 80%;
+	border-radius: 10px;
+	border: solid 1px black;
+	min-width: 600px;
+	display: none;
+	background-color: #6B6B6B;
+}
+
+.profile-configuration-title, .community-configuration-title {
+	float: right;
+    min-width: 600px;
+    transition: 0.25s;
+    border-top: none;
+    width: 100%;
+    border-bottom: solid 1px black;
+    background-color: #FFB600;
+    border-radius: 8px 8px 0px 0px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.profile-configuration > form, .community-configuration > form {
+	margin-top: 40px;
+	padding: 20px;
+}
+
+.profile-configuration-set, .community-configuration-set {
+	background-color: darkgrey;
+    padding: 20px 20px 10px 20px;
+    border: solid 1px black;
+}
+
+.configuration-panel {
+	display: none;
+}
+
+/* ---------------------------------------------------------- */
+
+.configuration-panel {
+	display: none;
+    float: right;
+    width: 80%;
+    border-radius: 10px;
+    border: solid 1px black;
+    min-width: 600px;
+    display: none;
+    background-color: #6B6B6B;
+}
+
+.panel-title {
+	float: right;
+    min-width: 600px;
+    transition: 0.25s;
+    border-top: none;
+    width: 100%;
+    border-bottom: solid 1px black;
+    background-color: #FFB600;
+    border-radius: 8px 8px 0px 0px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.configuration-set {
+	padding: 20px;
+    margin-top: 40px;
+}
+
+.configuration-element {
+	background-color: darkgrey;
+    padding: 20px;
+    border: solid 1px black;
+}
+
+.configuration-datafield {
+	display: none;
+}
+
+.configuration-logo {
+	display: flex;
+	margin: 20px 0px 20px 10px;
+}
+
+.configuration-logo > img  {
+	width: 150px;
+	height: 150px;
+	background-color: ghostwhite;
+	border: solid 1px black;
+	border-radius: 50%;
+	align-self: center;
+}
+
+.configuration-logo > div {
+	width: 70%;
+	margin-left: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.configuration-set input[type="file"] {
+	width: 100%;
+	box-sizing: border-box;
+	background-color: ghostwhite;
+}

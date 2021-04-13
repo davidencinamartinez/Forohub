@@ -7,8 +7,10 @@
     <link rel="stylesheet" type="text/css" href="/css/desktop/misc_panel.css">
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread.css">
     <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
+    <link rel="stylesheet" type="text/css" href="/css/desktop/configuration.css">
 @endpush
 @push('scripts')
+    <script type="text/javascript" src="/js/community.js"></script>
 @endpush
 @section('body')
 @if (session('status'))
@@ -43,6 +45,7 @@
 <div class="index-panel">
     <div style="width: 10%"></div>
     <div class="threads-panel">
+    @include('layouts.desktop.templates.community.community_configuration')
     @if ($threads->isNotEmpty())
         @foreach ($threads as $thread)
             @include('layouts.desktop.templates.thread.content')
