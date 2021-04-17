@@ -19,29 +19,6 @@
         </div>
     </div>
 </div>
-@isset ($thread)
-    @if ($thread->user_is_admin)
-        <div class="lateral-cube">
-            <div class="lateral-title">Acciones</div>
-            <div class="lateral-thread-options">
-                @if ($thread->closed == 0)
-                <button class="thread-options thread-close">Cerrar Tema 🔒</button>
-                @endif
-                <button class="thread-options thread-delete">Eliminar Tema ⛔</button>
-            </div>
-        </div> 
-    @endif
-@endisset
-@if ($community->is_leader)
-<div class="lateral-cube">
-    <div class="lateral-title">Acciones</div>
-    <div class="profile-panel-buttons">
-        <button class="community-configuration-trigger">Configuración</button>
-        <button>Comunidades</button>
-        <button class="profile-dark-theme">Tema Oscuro</button>
-    </div>
-</div>
-@endif
 @if ($community->community_rules->isNotEmpty())
     <div class="lateral-cube lateral-community-data">
         <div class="lateral-title">Reglamento</div>

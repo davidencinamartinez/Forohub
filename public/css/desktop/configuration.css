@@ -83,12 +83,12 @@
 	display: none;
 }
 
-.configuration-logo {
+.configuration-logo, .configuration-background {
 	display: flex;
 	margin: 20px 0px 20px 10px;
 }
 
-.configuration-logo > img  {
+.configuration-logo > img, .configuration-background > img {
 	width: 150px;
 	height: 150px;
 	background-color: ghostwhite;
@@ -97,7 +97,7 @@
 	align-self: center;
 }
 
-.configuration-logo > div {
+.configuration-logo > div, .configuration-background > div {
 	width: 70%;
 	margin-left: 10px;
 	font-size: 14px;
@@ -108,4 +108,59 @@
 	width: 100%;
 	box-sizing: border-box;
 	background-color: ghostwhite;
+}
+
+.configuration-datafield textarea {
+	width: 100%;
+    padding: 10px 6px 0px 6px;
+    outline: none;
+    border-radius: 2px;
+    resize: none;
+    border: solid 1px black;
+    box-sizing: border-box;
+    margin-top: 6px;
+}
+
+.configuration-rule {
+	border: solid 1px black;
+	padding: 10px;
+	border-radius: 4px;
+	background-color: #6b6b6b;
+	margin-bottom: 10px;
+	display: flex;
+}
+
+.configuration-rule div:first-child {
+	width: 100%;
+	text-align: justify;
+}
+
+.configuration-rule div:nth-child(2) {
+	display: grid;
+	padding: 10px 0px 10px 20px;
+	align-content: center;
+}
+
+.configuration-rule div:nth-child(2) button:first-child {
+	height: 32px;
+	width: 32px;
+	margin-bottom: 4px;
+}
+
+.configuration-rule div:nth-child(2) button:first-child img {
+	width: 20px;
+}
+
+.configuration-add-rule-textarea {
+	resize: none;
+    width: 400px;
+    height: 70px;
+    margin-top: 4px;
+    border: solid 1px black;
+    outline: none;
+    padding: 10px;
+    text-align: justify;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: 4px;
 }

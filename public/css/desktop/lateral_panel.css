@@ -47,8 +47,10 @@
 		}
 
 		.top-community-logo {
+			background-color: ghostwhite;
 			margin: 10px auto 10px auto;
 			width: 50px;
+			height: 50px;
 			border: solid 1px black;
 			border-radius: 50%;
 			box-shadow: 1px 1px 5px 0px #2d2d2d;
@@ -130,11 +132,12 @@
 
 		.lateral-community-description {
 		    border: solid 1px black;
-		    text-align: justify;
-		    margin: 10px;
-		    padding: 10px;
-		    border-radius: 6px;
-		    background-color: ghostwhite;
+	        text-align: left;
+	        margin: 10px;
+	        padding: 10px;
+	        border-radius: 6px;
+	        background-color: ghostwhite;
+	        white-space: pre-line;
 		}
 
 		.lateral-community-users {
@@ -218,6 +221,7 @@
 		}
 
 		.profile-cube > img {
+			background-color: ghostwhite;
 			margin: auto;
 			width: 180px;
 			height: 180px;

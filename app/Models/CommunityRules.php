@@ -15,7 +15,8 @@ class CommunityRules extends Model {
         'created_at',
         'updated_at',
         'community_id',
-        'body'
+        'rule',
+        'rule_description'
     ];
 
     public function communities() {

@@ -14,10 +14,12 @@ use App\Models\Vote;
 use App\Models\ReportThread;
 use App\Models\Notification;
 use App\Models\UserCommunityBan;
+use App\Models\CommunityRules;
 use Auth;
 use DB;
 use Redirect;
 use Validator;
+use Carbon\Carbon;
 
 class CommunityController extends Controller {
     
@@ -252,7 +254,7 @@ class CommunityController extends Controller {
 
     /* UPDATES */
 
-        /* UPDATE TITLE */
+        /* TITLE UPDATE */
 
         function titleUpdate(Request $request) {
             if (Auth::check()) {
@@ -279,6 +281,34 @@ class CommunityController extends Controller {
             }
         }
 
+        /* DESCRIPTION UPDATE */
+
+        function descriptionUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'description.required' => 'No se permiten campos vacíos',
+                    'description.min' => 'El título de la comunidad debe contener mínimo 3 carácteres',
+                    'description.max' => 'El título de la comunidad debe contener máximo 50 carácteres',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'description' => 'required|min:3|max:500',
+                    'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    Community::where('id', $community_id)->update(['description' => $request->description]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+
         /* LOGO UPDATE */
 
         function logoUpdate(Request $request) {
@@ -289,17 +319,162 @@ class CommunityController extends Controller {
                     'logo.mimes' => 'Extensiones válidas: .jpg, .png, .webp',
                     'logo.dimensions' => 'El fichero no cumple con las dimensiones permitidas (Min: 64x64 / Máx: 2048x2048)',
                     'logo.max' => 'El tamaño máximo del fichero no puede superar los 2Mb (2048Kb)',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
                 ];
                 $validator = Validator::make($request->all(), [
-                   'logo' => 'required|image|mimes:jpeg,png,jpg,webp|dimensions:min_width=64,min_height=64,max_width=2048,max_height=2048|max:2048'
+                   'logo' => 'required|image|mimes:jpeg,png,jpg,webp|dimensions:min_width=64,min_height=64,max_width=2048,max_height=2048|max:2048',
+                   'community' => 'required|exists:communities,tag'
                 ], $messages);
                 if (!$validator->passes()) {
                     return response()->json(['error' => $validator->getMessageBag()->first()]);
                 }
-                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                $community_id = Community::where('tag', $request->community)->value('id');
                 if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
                     $upload = cloudinary()->upload($request->file('logo')->getRealPath())->getSecurePath();
                     Community::where('id', $community_id)->update(['logo' => $upload]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+        /* BACKGROUND UPDATE */
+
+        function backgroundUpdate(Request $request) {
+            if (Auth::check()) {
+                $messages = [
+                    'background.required' => 'Debes seleccionar un archivo',
+                    'background.image' => 'Sólo se permiten ficheros de tipo imagen',
+                    'background.mimes' => 'Extensiones válidas: .jpg, .png, .webp',
+                    'background.dimensions' => 'El fichero no cumple con las dimensiones permitidas (Min: 1366x768 / Máx: 7680x4096)',
+                    'background.max' => 'El tamaño máximo del fichero no puede superar los 4Mb (4096Kb)',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                   'background' => 'required|image|mimes:jpeg,png,jpg,webp|dimensions:min_width=1366,min_height=768,max_width=7680,max_height=4320|max:4096',
+                   'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                $community_id = Community::where('tag', $request->community)->value('id');
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    $upload = cloudinary()->upload($request->file('background')->getRealPath())->getSecurePath();
+                    Community::where('id', $community_id)->update(['background' => $upload]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+        /* ADD COMMUNITY RULE */
+
+        function addCommunityRule(Request $request) {
+            if (Auth::check()) {
+                $request->ruleTitle = strip_tags($request->ruleTitle);
+                $request->ruleDescription = strip_tags($request->ruleDescription);
+                $messages = [
+                    'ruleTitle.required' => 'Campo vacío (Título)',
+                    'ruleTitle.min' => 'El título debe contener mínimo 3 carácteres',
+                    'ruleTitle.max' => 'El título excede la longitud máxima permitida (60 carácteres)',
+                    'ruleDescription.required' => 'Campo vacío (Descripción)',
+                    'ruleDescription.min' => 'La descripción debe contener mínimo 3 carácteres',
+                    'ruleDescription.max' => 'La descripción excede la longitud máxima permitida (300 carácteres)',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                   'ruleTitle' => 'required|min:3|max:60',
+                   'ruleDescription' => 'required|min:3|max:300',
+                   'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                $community_id = Community::where('tag', $request->community)->value('id');
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    CommunityRules::create([
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                        'community_id' => $community_id,
+                        'rule' => $request->ruleTitle,
+                        'rule_description' => $request->ruleDescription,
+                    ]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+        /* EDIT COMMUNITY RULE */
+
+        function editCommunityRule(Request $request) {
+            if (Auth::check()) {
+                $community_id = Community::where('tag', $request->community)->value('id');
+                if (CommunityRules::where('id', $request->ruleId)->where('community_id', $community_id)->doesntExist()) {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+                $request->ruleTitle = strip_tags($request->ruleTitle);
+                $request->ruleDescription = strip_tags($request->ruleDescription);
+                $messages = [
+                    'ruleId.required' => 'Ha ocurrido un problema (Error 500)',
+                    'ruleId.exists' => 'Ha ocurrido un problema (Error 500)',
+                    'ruleTitle.required' => 'Campo vacío (Título)',
+                    'ruleTitle.min' => 'El título debe contener mínimo 3 carácteres',
+                    'ruleTitle.max' => 'El título excede la longitud máxima permitida (60 carácteres)',
+                    'ruleDescription.required' => 'Campo vacío (Descripción)',
+                    'ruleDescription.min' => 'La descripción debe contener mínimo 3 carácteres',
+                    'ruleDescription.max' => 'La descripción excede la longitud máxima permitida (300 carácteres)',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'ruleId' => 'required|exists:communities_rules,id',
+                    'ruleTitle' => 'required|min:3|max:60',
+                    'ruleDescription' => 'required|min:3|max:300',
+                    'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    CommunityRules::where('id', $request->ruleId)
+                    ->where('community_id', $community_id)
+                    ->update([
+                        'rule' => $request->ruleTitle,
+                        'rule_description' => $request->ruleDescription,
+                    ]);
+                } else {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+            }
+        }
+
+        /* DELETE COMMUNITY RULE */
+
+        function deleteCommunityRule(Request $request) {
+            if (Auth::check()) {
+                $community_id = Community::where('tag', $request->community)->value('id');
+                if (CommunityRules::where('id', $request->ruleId)->where('community_id', $community_id)->doesntExist()) {
+                    return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
+                }
+                $messages = [
+                    'ruleId.required' => 'Ha ocurrido un problema (Error 500)',
+                    'ruleId.exists' => 'Ha ocurrido un problema (Error 500)',
+                    'community.required' => 'Esta comunidad no existe o no está disponible',
+                    'community.exists' => 'Esta comunidad no existe o no está disponible',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'ruleId' => 'required|exists:communities_rules,id',
+                    'community' => 'required|exists:communities,tag'
+                ], $messages);
+                if (!$validator->passes()) {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+                if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
+                    CommunityRules::where('id', $request->ruleId)->delete();
                 } else {
                     return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
                 }

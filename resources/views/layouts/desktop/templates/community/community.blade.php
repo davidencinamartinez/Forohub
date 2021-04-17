@@ -51,8 +51,9 @@
             @include('layouts.desktop.templates.thread.content')
         @endforeach
     @else
-        <h3>Todavía no hay temas en esta comunidad</h3>
-        <h3 class="required-auth"><a href="/crear/tema">Sé el primero en hacerlo</a></h3>
+        <h3 class="required-auth">
+            <a href="/crear/tema">Todavía no hay temas en esta comunidad.<br>Sé el primero en crear uno</a>
+        </h3>
     @endif
 </div>
     <div class="lateral-panel">
@@ -75,6 +76,7 @@
                 <a href="/c/{{ $community->tag }}/afiliados/">
                     <button>Afiliados 👥</button>
                 </a>
+                <button class="community-configuration-trigger">Configuración ⚙️</button>
             </div>
         </div>
         @endif

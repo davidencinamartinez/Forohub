@@ -88,7 +88,17 @@ use Illuminate\Support\Facades\Route;
 
 		Route::post('/kXQ2kAuP1djrzKllFvbRBQGKJlvg9iHzmUyhfZM7PcsAJcQBOGvPY1rZ8E1GjlN6', [App\Http\Controllers\Site\Community\CommunityController::class, 'titleUpdate']);
 
+		Route::post('/OC7OuuXnoN00lT5xb9Mu49UcKBsy2Ghe6TOk0T2OA4Ucl4nM7azA4zaRI611e3xc', [App\Http\Controllers\Site\Community\CommunityController::class, 'descriptionUpdate']);
+
+		Route::post('/hlZ2PLZqClmRv5hJiOx9yuTxloMkRc9dnIeIGvbGDLuSXZzgSLtMQeWWCRprHOTu', [App\Http\Controllers\Site\Community\CommunityController::class, 'addCommunityRule']);
+
+		Route::post('/FtxRLrW2w7crAx99m5gT6ukkiwxeG1HcZTq7tWreG0w5uiqbugrFGihXRQDGM7il', [App\Http\Controllers\Site\Community\CommunityController::class, 'editCommunityRule']);
+
+		Route::post('/ShFf3C9lafsFix1WiQZaYibRKnNRnACmocgHSpHq4cPqVfXdkD0YzT6io2uV0keL', [App\Http\Controllers\Site\Community\CommunityController::class, 'deleteCommunityRule']);
+
 		Route::post('/RQvm8SR9ZOTZ7nSCFEYCCxirXnlam7VblDkIEYkVbbTCUaKuBnlCJG6DBlW7E8nF', [App\Http\Controllers\Site\Community\CommunityController::class, 'logoUpdate']);
+
+		Route::post('/4pT8SAeIt9rpNsm2W8tUd9cytXHUOXANLXec6V6aTqjbehfFd8EXT6f5Yp6jezQs', [App\Http\Controllers\Site\Community\CommunityController::class, 'backgroundUpdate']);
 
 	/* COMMUNITY REPORTS */
 	

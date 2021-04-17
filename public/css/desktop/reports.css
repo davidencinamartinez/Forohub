@@ -23,6 +23,7 @@
 }
 
 .reports-community-logo > img {
+	background-color: ghostwhite;
 	margin: 10px auto 10px auto;
 	width: 50px;
 	border: solid 1px black;
