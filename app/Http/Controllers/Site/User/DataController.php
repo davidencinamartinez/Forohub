@@ -143,10 +143,11 @@ class DataController extends Controller {
                 ], $messages);
                 if ($validator->passes()) {
                     User::where('id', Auth::user()->id)->update(['about'=> $request->title]);
-                    return response()->json(['success' => 'Tu título se ha cambiado con éxito 🗸']);
                 } else {
                     return response()->json(['error' => $validator->getMessageBag()->first()]);
                 }
+            } else {
+                return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
             }
         }
 
@@ -175,12 +176,11 @@ class DataController extends Controller {
                         'updated_at' => Carbon::now()
                     ]
                 );
-                return response()->json(['success' => 'Tu avatar ha sido actualizado con éxito']);
             } else {
                 return response()->json(['error' => $validator->getMessageBag()->toArray()]);
             }
         } else {
-            abort(404);
+            return response()->json(['error' => 'Ha ocurrido un problema (Error 500)']);
         }
     }
     

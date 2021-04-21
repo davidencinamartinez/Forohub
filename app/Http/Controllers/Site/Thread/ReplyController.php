@@ -10,6 +10,7 @@ use App\Models\UserReward;
 use App\Models\UserCommunityBan;
 use App\Models\Community;
 use App\Models\Thread;
+use App\Models\Reward;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -21,8 +22,8 @@ class ReplyController extends Controller {
     function makeReply(Request $request) {
         if (Thread::where('id', $request->thread_id)->first()->closed == 1) {
             return response()->json([
-                    'closed' => 'Este tema está cerrado',
-                ]);
+                'closed' => 'Este tema está cerrado',
+            ]);
         }
         $request->text = strip_tags($request->text);
     	if (Auth::user()) {
@@ -88,24 +89,52 @@ class ReplyController extends Controller {
     			$user_reply_count = Reply::where('user_id', Auth::user()->id)->count();
     			if ($user_reply_count == 1) {
                     if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '2')->doesntExist()) {
+                        $reward = Reward::where('id', 2)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
         				UserReward::createUserReward(Auth::user()->id, '2');
-        				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: ¡Buen viaje!", "reward");
                     }
     			} elseif ($user_reply_count == 100) {
-    				UserReward::createUserReward(Auth::user()->id, '3');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Paso a paso", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '3')->doesntExist()) {
+                        $reward = Reward::where('id', 3)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                        UserReward::createUserReward(Auth::user()->id, '3');
+                    }
     			} elseif ($user_reply_count == 500) {
-    				UserReward::createUserReward(Auth::user()->id, '4');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Voy a tope!", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '4')->doesntExist()) {
+                        $reward = Reward::where('id', 4)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                        UserReward::createUserReward(Auth::user()->id, '4');
+                    }
     			} elseif ($user_reply_count == 1000) {
-    				UserReward::createUserReward(Auth::user()->id, '5');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Gas Gas Gas", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '5')->doesntExist()) {
+                        $reward = Reward::where('id', 5)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                        UserReward::createUserReward(Auth::user()->id, '5');
+                    }
     			} elseif ($user_reply_count == 10000) {
-    				UserReward::createUserReward(Auth::user()->id, '6');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Sayonara, Baby", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '6')->doesntExist()) {
+                        $reward = Reward::where('id', 6)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                        UserReward::createUserReward(Auth::user()->id, '6');
+                    }
     			} elseif ($user_reply_count == 50000) {
-    				UserReward::createUserReward(Auth::user()->id, '7');
-    				Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Interstellar", "reward");
+                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '7')->doesntExist()) {
+                        $reward = Reward::where('id', 7)->first();
+                        $data["reward_title"] = $reward->name;
+                        $data["reward_logo"] = $reward->filename;
+                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                        UserReward::createUserReward(Auth::user()->id, '7');
+                    }
     			}
             	return response()->json([
             		'success' => 'Mensaje enviado con éxito 🗸',

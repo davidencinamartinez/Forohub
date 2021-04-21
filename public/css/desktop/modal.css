@@ -202,6 +202,14 @@
 			box-shadow: 0px 0px 4px 2px green;
 		}
 
+		.reward-unlocked {
+			margin: 4px;
+		    border: solid 1px black;
+		    border-radius: 6px;
+		    width: 64px;
+		    background-image: linear-gradient(to top, #BF953F 10%, #ffef50 45%, #BF953F);
+		}
+
 	/* MODAL NOTIFICATIONS */
 
 		.modal-notifications {

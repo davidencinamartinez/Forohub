@@ -213,3 +213,4 @@ use Illuminate\Support\Facades\Route;
 /* TEST ROUTES */
 
 Route::get('/test', [App\Http\Controllers\Site\IndexController::class, 'test']);
+Route::get('/test2', [App\Http\Controllers\Site\IndexController::class, 'test2']);

@@ -623,7 +623,8 @@ function getNotifications() {
 					// Notification Image
 					createElement('div', {class: 'notification-image'}, '.modal-notification:last');
 					if (val.type == "reward") {
-						createElement('img', {src: '/src/media/2HK2HLmhsvYs6ZwK34DJkyB80LIJdS8DTdJXICI3PJS3tj4kZgBujRaxQCgzSLi7.webp'}, '.notification-image:last');	
+						var reward = $.parseJSON(val.notification);
+						createElement('img', {class: 'reward-unlocked', src: '/src/rewards/'+reward.reward_logo}, '.notification-image:last');	
 					} else if (val.type == "mention") {
 						createElement('img', {src: '/src/media/pcxzXveYfflI0wyaZVGqjDQkW2NJkgE4m4r2itlqO1ZZnrtnZ88uFhy6L1qQ1KUi.webp'}, '.notification-image:last');	
 					} else if (val.type == "thread_report") {
@@ -634,7 +635,9 @@ function getNotifications() {
 					}
 					// Notification Info
 					createElement('div', {class: 'notification-info'}, '.modal-notification:last');
-					if (val.type == 'mention') {
+					if (val.type == 'reward') {
+						createElement('b', null, '.notification-info:last', 'Logro desbloqueado: '+reward.reward_title);
+					} else if (val.type == 'mention') {
 						createElement('b', null, '.notification-info:last', 'Te han mencionado ');
 						createElement('a', { href: /c/+val.community+'/t/'+val.notification, title: val.thread}, '.notification-info b:last', 'en un tema');
 					} else if (val.type == 'thread_report') {

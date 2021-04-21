@@ -96,7 +96,13 @@ class RegisterController extends Controller {
                     'user_id' =>  Auth::user()->id,
                     'reward_id' => 1
                 ]);
-                Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Iniciado", "reward");
+                if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '1')->doesntExist()) {
+                    $reward = Reward::where('id', 1)->first();
+                    $data["reward_title"] = $reward->name;
+                    $data["reward_logo"] = $reward->filename;
+                    Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+                    UserReward::createUserReward(Auth::user()->id, '1');
+                }
                 /**/
             } else {
                 $status = "Tu cuenta ya ha sido verificada";

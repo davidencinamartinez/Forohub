@@ -24,25 +24,24 @@ use Carbon\Carbon;
 class CommunityController extends Controller {
     
     function getCommunity($community_tag) {
-
-    	$communityId = Community::where('tag', $community_tag)->value('id');
-
-    	$unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-
-		$threads = Thread::orderBy('created_at', 'desc')
-	    ->where('community_id', $communityId)
-	    ->with('communities')
-	    ->with('author')
-	    ->with('first_reply')
-	    ->withCount('replies')
-	    ->withCount('upvotes')
-	    ->withCount('downvotes')
-	    ->paginate(4, ['*'], 'pagina');
-
-	    $community = Community::where('id', $communityId)->with('community_moderators')->with('community_rules')->withCount('threads')->first();
-        $community->sub_count = UserCommunity::userCount($communityId);
-		$community->index = Community::getCommunityPlacing($communityId);
-
+    	// UNREAD NOTIFICATIONS
+            $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        // GET COMMUNITY ID
+    	   $communityId = Community::where('tag', $community_tag)->value('id');
+        // GET THREADS FROM COMMUNITY
+    		$threads = Thread::orderBy('created_at', 'desc')
+    	    ->where('community_id', $communityId)
+    	    ->with('communities')
+    	    ->with('author')
+    	    ->withCount('replies')
+    	    ->withCount('upvotes')
+    	    ->withCount('downvotes')
+    	    ->paginate(4, ['*'], 'pagina');
+        // GET COMMUNITY DATA
+	       $community = Community::where('id', $communityId)->with('community_moderators')->with('community_rules')->withCount('threads')->first();
+            $community->sub_count = UserCommunity::userCount($communityId);
+            $community->index = Community::getCommunityPlacing($communityId);
+        // USER ADMIN/LEADER
 		if (Auth::user()) {
 			foreach ($community->community_moderators as $moderator) {
 				if ($moderator->user_id == Auth::user()->id && $moderator->subscription_type == 2000) {
@@ -52,8 +51,8 @@ class CommunityController extends Controller {
                 }
 			}
 		}
-
-		$tags = CommunityTags::where('community_id', $communityId)->get();
+        // GET COMMUNITY TAGS
+		  $tags = CommunityTags::where('community_id', $communityId)->get();
 
 	    if ($threads) {
     		foreach ($threads as $thread) {

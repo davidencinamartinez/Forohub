@@ -28,6 +28,25 @@
 			        		<b class="input-title">Contraseña: </b>
 			        		<label style="margin-left: 10px;">**********</label>
 			        		<img class="edit-element" src="/src/media/edit_icon.webp">
+			        		<div class="configuration-password-panel configuration-panel">
+			        			<h3>Cambiar contraseña</h3>
+			        			<div class="old-password">
+			        				<b>Contraseña actual:</b>
+			        				<input type="password" class="form-input" placeholder="Contraseña actual" autocomplete="off" maxlength="64">
+			        				<div class="character-counter">
+			        					<label>0</label>
+			        					<label>/64</label>
+			        				</div>
+			        			</div>
+			        			<div class="new-password">
+			        				<b>Nueva contraseña:</b>
+			        				<input type="password" class="form-input" placeholder="Nueva contraseña" autocomplete="off" maxlength="64">
+			        				<div class="character-counter">
+			        					<label>0</label>
+			        					<label>/64</label>
+			        				</div>
+			        			</div>
+			        			<button class="configuration-update-password">Actualizar</button></div>
 		        		</div>
 		        	</div>
 		        	<div class="profile-configuration-set configuration-title">
@@ -35,6 +54,18 @@
 			        		<b class="input-title">Título: </b>
 			        		<label style="margin-left: 10px;">{{ Auth::user()->about }}</label>
 			        		<img class="edit-element" src="/src/media/edit_icon.webp">
+			        		<div class="configuration-title-panel configuration-panel">
+			        			<h3>Modificar título</h3>
+			        			<div class="new-title">
+			        				<b>Nuevo título:</b>
+			        				<input type="search" class="form-input" placeholder="Título" autocomplete="off" maxlength="40">
+			        				<div class="character-counter">
+			        					<label>0</label>
+			        					<label>/40</label>
+			        				</div>
+			        			</div>
+			        			<button class="configuration-update-title">Actualizar</button>
+			        		</div>
 		        		</div>
 		        	</div>
 	    	    </form>
@@ -64,7 +95,7 @@
 	            <div class="lateral-title">Acciones</div>
 	            <div class="profile-panel-buttons">
 	            	<button class="profile-configuration-trigger">Configuración</button>
-	            	<button>Comunidades</button>
+	            	<button>Suscripciones</button>
 	            	<button class="profile-dark-theme">Tema Oscuro</button>
 	        	</div>
 	        </div>

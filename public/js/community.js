@@ -311,7 +311,7 @@ function deleteCommunityRuleModal(id) {
 		// Rule Id
 		createElement('input', {type: 'hidden', id: 'configuration-delete-rule-id', value: id}, '.modal-body');
 		// Rule Name
-		createElement('b', null, '.modal-body', 'Se eliminará la regla<br><br>*No se podrán revertir los cambios*<br><br>Deseas continuar?<br><br>');
+		createElement('label', null, '.modal-body', 'Se eliminará la regla<br><br><b>*No se podrán revertir los cambios*</b><br><br>Deseas continuar?<br><br>');
 		// Modal Error
 			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-body');
 			createElement('ul', null, '.modal-error');

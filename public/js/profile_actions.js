@@ -13,17 +13,15 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '.edit-element', function(event) {
 		event.preventDefault();
-		var main = $(this).closest('.profile-configuration-set');
-		$('.configuration-panel').remove();
-		if ($(main).hasClass('configuration-password')) {
-			PA_PasswordUpdatePanel(this);
-		}
-		if ($(main).hasClass('configuration-title')) {
-			PA_TitleUpdatePanel(this);
+		$('.configuration-datafield').hide('400');
+		var datafield = $(this).siblings('.configuration-panel');
+		if ($(datafield).is(':visible')) {
+			$(datafield).hide('400');
+		} else {
+			$(datafield).show('400');
 		}
 	});
 	$(document).on('click', '.configuration-update-password', function(event) {
-		event.preventDefault();
 		PA_PasswordUpdate();
 	});
 	$(document).on('click', '.configuration-update-title', function(event) {
@@ -70,13 +68,12 @@ function PA_PasswordUpdate() {
 		},
 	})
 	.done(function(data) {
-		console.log(data);
-		if ($(data).has(data.error)) {
+		if (!$.isEmptyObject(data)) {
+			document.documentElement.style.cursor = "default";
 			createElement('p', {class: 'error'}, '.configuration-password-panel', data.error);
-		}
-		if ($(data).has(data.success)) {
-			createElement('p', {class: 'success'}, '.configuration-password-panel', data.success);
-		}
+		} else {
+			location.reload();
+		}	
 	})
 	.fail(function() {
 		notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
@@ -103,8 +100,9 @@ function PA_TitleUpdatePanel(element) {
 	$('.configuration-title-panel').show(400);
 }
 
-function PA_TitleUpdate(element) {
-	$('.configuration-panel .error, .configuration-panel .success').remove();
+function PA_TitleUpdate() {
+	$('.configuration-title-panel .error').remove();
+	document.documentElement.style.cursor = "progress";
 	$.ajax({
 		url: '/FRsS0qDC72HsM1TxceEpmyUtU3vT4rA5T9H0j2QB8AJd1UdFklUpGSc5takQTpLg',
 		type: 'POST',
@@ -114,7 +112,9 @@ function PA_TitleUpdate(element) {
 		},
 	})
 	.done(function(data) {
-		if (data) {
+		console.log(data);
+		if (!$.isEmptyObject(data)) {
+			document.documentElement.style.cursor = "default";
 			createElement('p', {class: 'error'}, '.configuration-title-panel', data.error);
 		} else {
 			location.reload();

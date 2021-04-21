@@ -35,7 +35,6 @@ class IndexController extends Controller {
     	$threads = Thread::orderBy('created_at', 'desc')
         ->with('communities')
         ->with('author')
-        ->with('first_reply')
         ->withCount('replies')
         ->withCount('upvotes')
         ->withCount('downvotes')
@@ -240,7 +239,10 @@ class IndexController extends Controller {
                         if (Vote::getUserUpvotes($request->thread_id) == 1) {
                             if (UserReward::userHasReward($thread_author_id, 12) == false) {
                                 UserReward::createUserReward($thread_author_id, 12);
-                                Notification::createNotification($thread_author_id, "Logro desbloqueado: Me gusta", "reward");
+                                $reward = Reward::where('id', 12)->first();
+                                $data["reward_title"] = $reward->name;
+                                $data["reward_logo"] = $reward->filename;
+                                Notification::createNotification($thread_author_id, json_encode($data), "reward");
                             }
                         }
                         return response()->json([
@@ -343,16 +345,26 @@ class IndexController extends Controller {
 
          function test() {
 
-            if (Auth::user()) {
-            $nonAllowedCommunities = UserCommunityBan::where('user_id', Auth::user()->id)->pluck('community_id');
-            $communities = Community::where('tag', 'like', '%f%')
-            ->whereNotIn('id', $nonAllowedCommunities)
-            ->take(5)->select('id', 'title', 'tag', 'logo', 'description')->get();
+          $threads = Thread::orderBy('created_at', 'desc')
+            ->where('community_id', 11071967)
+            ->with('communities')
+            ->with('author')
+            ->withCount('replies')
+            ->withCount('upvotes')
+            ->withCount('downvotes')
+            ->get();
         
-            return $communities;
-        
+            return $threads;
             
-            }
             
+         }
+
+         function test2() {
+            $community = Community::where('id', 11071967)
+            ->with('threads')
+            ->with('threads.author')
+            ->paginate(1);
+
+            return $community;
          }
 }
