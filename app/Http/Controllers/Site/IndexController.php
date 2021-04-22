@@ -29,9 +29,9 @@ class IndexController extends Controller {
     /* INDEX */
 
     public function index() {
-
+        // Unread Notifications
         $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-
+        // Threads
     	$threads = Thread::orderBy('created_at', 'desc')
         ->with('communities')
         ->with('author')
@@ -39,49 +39,38 @@ class IndexController extends Controller {
         ->withCount('upvotes')
         ->withCount('downvotes')
         ->paginate(4, ['*'], 'pagina');
-
-        $top_communities = Community::get();
-        foreach ($top_communities as $community) {
-            $community->score = Community::getCommunityScore($community->id);
-        }
-        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
-
-        $fh_data = array(
-            'count_communities' => Community::count(),
-            'count_users' => User::count(),
-            'count_threads' => Thread::count(),
-            'count_replies' => Reply::count(),
-        );
-                
-        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->take(5)->get();
-        
-    	foreach ($threads as $thread) {
-    		if (Auth::user() and $thread->votes->isNotEmpty()) {
-    			if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
-    				$thread->user_has_voted = 'true';
-    				$thread->user_vote_type = 1;
-    			} 
-                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
-    				$thread->user_has_voted = 'true';
-    				$thread->user_vote_type = 0;
-                }
-    		} 
-    		else {
-    			$thread->user_has_voted = 'false';  			
-    		}
-    	}
-        
+        // Foreach Thread Loop
         foreach ($threads as $thread) {
-            if (Auth::user()) {
-                if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+            // Is User Loged
+            if (Auth::check()) {
+                // Has User Voted Thread
+                if ($thread->votes->isNotEmpty()) {
+                    if (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 1)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 1;
+                    } elseif (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 0)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 0;
+                    }
+                } else {
+                    $thread->user_has_voted = 'false';              
+                }
+                // Is User Subscribed To Community
+                if (DB::table('users_communities')->where('community_id', $thread->communities->id)
+                    ->where('user_id', Auth::user()->id)
+                    ->exists()) {
                         $thread->user_joined_community = 'true';
                 } else {
                     $thread->user_joined_community = 'false';
                 }
             }
-        }
-
-        foreach ($threads as $thread) {
+            // Is Thread Poll
             if ($thread->body == "IS_POLL") {
                 $poll_total_votes = PollVote::getCountVotes($thread->id);
                 $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
@@ -102,26 +91,47 @@ class IndexController extends Controller {
                 }
             }
         }
-
+        // Top Communities
+        $top_communities = Community::get();
+        foreach ($top_communities as $community) {
+            $community->score = Community::getCommunityScore($community->id);
+        }
+        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
+        // Forohub Data
+        $fh_data = array(
+            'count_communities' => Community::count(),
+            'count_users' => User::count(),
+            'count_threads' => Thread::count(),
+            'count_replies' => Reply::count(),
+        );
+        // Latest Replies           
+        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')
+        ->join('communities', 'communities.id', '=', 'threads.community_id')
+        ->join('users', 'users.id', '=', 'replies.user_id')
+        ->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')
+        ->orderBy('replies.created_at', 'desc')
+        ->take(5)
+        ->get();
+        // If Threads Are Null
         if ($threads->isEmpty()) {
             return redirect()->route('index');
         }
-
-    	return view('layouts.desktop.templates.index',
-    		[	'unread_notifications' => $unread_notifications,
+        // Return Data
+        return view('layouts.desktop.templates.index',
+            [   'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
                 'fh_data' => $fh_data,
                 'top_communities' => $sorted_top_communities,
                 'latest_replies' => $latest_replies
-    		]);
-    }
+            ]);
+    }   
 
-    /* FEATURED INDEX */
+    /* RELEVANT INDEX */
 
-    public function featuredIndex() {
-
+    public function relevantIndex() {
+        // Unread Notifications
         $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-
+        // Relevant Threads
         $threads = Thread::with('communities')
         ->with('author')
         ->with('first_reply')
@@ -131,49 +141,39 @@ class IndexController extends Controller {
         ->orderBy('upvotes_count', 'desc')
         ->whereBetween('created_at', [Carbon::now()->subDays(7), Carbon::now()])
         ->paginate(4, ['*'], 'pagina');
-
-        $top_communities = Community::get();
-        foreach ($top_communities as $community) {
-            $community->score = Community::getCommunityScore($community->id);
-        }
-        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
-
-        $fh_data = array(
-            'count_communities' => Community::count(),
-            'count_users' => User::count(),
-            'count_threads' => Thread::count(),
-            'count_replies' => Reply::count(),
-        );
-                
-        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')->join('communities', 'communities.id', '=', 'threads.community_id')->join('users', 'users.id', '=', 'replies.user_id')->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')->orderBy('replies.created_at', 'desc')->take(5)->get();
-        
+        // Foreach Thread Loop
         foreach ($threads as $thread) {
-            if (Auth::user() and $thread->votes->isNotEmpty()) {
-                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
-                    $thread->user_has_voted = 'true';
-                    $thread->user_vote_type = 1;
-                } 
-                if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
-                    $thread->user_has_voted = 'true';
-                    $thread->user_vote_type = 0;
+            // Is User Loged
+            if (Auth::check()) {
+                // Has User Voted Thread
+                if ($thread->votes->isNotEmpty()) {
+                    if (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 1)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 1;
+                    } elseif (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 0)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 0;
+                    }
+                } else {
+                    $thread->user_has_voted = 'false';              
                 }
-            } 
-            else {
-                $thread->user_has_voted = 'false';              
-            }
-        }
-        
-        foreach ($threads as $thread) {
-            if (Auth::user()) {
-                if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
+                // Is User Subscribed To Community
+                if (DB::table('users_communities')
+                    ->where('community_id', $thread->communities->id)
+                    ->where('user_id', Auth::user()->id)
+                    ->exists()) {
                         $thread->user_joined_community = 'true';
                 } else {
                     $thread->user_joined_community = 'false';
                 }
             }
-        }
-
-        foreach ($threads as $thread) {
+            // Is Thread Poll
             if ($thread->body == "IS_POLL") {
                 $poll_total_votes = PollVote::getCountVotes($thread->id);
                 $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
@@ -194,11 +194,32 @@ class IndexController extends Controller {
                 }
             }
         }
-
+        // Top Communities
+        $top_communities = Community::get();
+        foreach ($top_communities as $community) {
+            $community->score = Community::getCommunityScore($community->id);
+        }
+        $sorted_top_communities = $top_communities->sortByDesc('score')->take(6);
+        // Forohub Data
+        $fh_data = array(
+            'count_communities' => Community::count(),
+            'count_users' => User::count(),
+            'count_threads' => Thread::count(),
+            'count_replies' => Reply::count(),
+        );
+        // Latest Replies           
+        $latest_replies = Reply::join('threads', 'threads.id', '=', 'replies.thread_id')
+        ->join('communities', 'communities.id', '=', 'threads.community_id')
+        ->join('users', 'users.id', '=', 'replies.user_id')
+        ->select('replies.created_at', 'users.name', 'threads.title', 'communities.tag', 'threads.id', 'replies.text')
+        ->orderBy('replies.created_at', 'desc')
+        ->take(5)
+        ->get();
+        // If Threads Are Null
         if ($threads->isEmpty()) {
             return redirect()->route('index');
         }
-
+        // Return Data
         return view('layouts.desktop.templates.index',
             [   'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
@@ -211,160 +232,50 @@ class IndexController extends Controller {
     /* VOTE THREAD */
 
     public function voteThread(Request $request) {
-        if ($request->ajax()) {
-            if (Auth::user()) {
-                $validator = Validator::make($request->all(), ['vote_type' => 'min:0|max:1']);
-                if (!$validator->passes()) {
-                    return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);
-                } else {
-                    if (Vote::where('user_id', '=', Auth::user()->id)
-                        ->where('thread_id', '=', $request->thread_id)
-                        ->where('vote_type', '=', $request->vote_type)
-                        ->exists()) {
-
-                        Vote::where('user_id', '=', Auth::user()->id)
-                        ->where('thread_id', '=', $request->thread_id)
-                        ->where('vote_type', '=', $request->vote_type)
-                        ->delete();
-                        return response()->json([
-                            'response' => '💾 Se han guardado los cambios 💾',
-                            'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
-                        ]);
-                    } else {
-                        Vote::updateOrCreate(
-                            ['user_id' => Auth::user()->id, 'thread_id' => $request->thread_id],
-                            ['vote_type' => $request->vote_type]);
-
-                        $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
-                        if (Vote::getUserUpvotes($request->thread_id) == 1) {
-                            if (UserReward::userHasReward($thread_author_id, 12) == false) {
-                                UserReward::createUserReward($thread_author_id, 12);
-                                $reward = Reward::where('id', 12)->first();
-                                $data["reward_title"] = $reward->name;
-                                $data["reward_logo"] = $reward->filename;
-                                Notification::createNotification($thread_author_id, json_encode($data), "reward");
-                            }
-                        }
-                        return response()->json([
-                            'response' => '💾 Se han guardado los cambios 💾',
-                            'votes' => Vote::where('thread_id', $request->thread_id)->where('vote_type', 1)->count() - Vote::where('thread_id', $request->thread_id)->where('vote_type', 0)->count()
-                        ]);
-                    }
-                }
-            } else {
-               return response()->json(['response' => '😁 Debes estar logeado para poder votar 😁']);
-            }
-        } 
+        // If Not Ajax
+        if (!$request->ajax()) {
+            abort(404);
+        }
+        // If User Not Logged In
+        if (!Auth::check()) {
+            abort(404);
+        }
+        // Validation
+        $validator = Validator::make($request->all(), ['vote_type' => 'min:0|max:1']);
+        if (!$validator->passes()) {
+            // If Validation Fails
             return response()->json(['response' => '⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️']);
-        
-    }
-
-    /* USER THREADS */
-
-        function userThreads($user_id) {
-
-            $threads = Thread::orderBy('created_at', 'desc')
-            ->where('user_id', $user_id)
-            ->with('communities')
-            ->with('author')
-            ->withCount('replies')
-            ->withCount('upvotes')
-            ->withCount('downvotes')
-            ->paginate(4, ['*'], 'pagina');
-
-            if ($threads) {
-                foreach ($threads as $thread) {
-                    if (Auth::user() and $thread->votes->isNotEmpty()) {
-                        if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
-                            $thread->user_has_voted = 'true';
-                            $thread->user_vote_type = 1;
-                        } 
-                        if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
-                            $thread->user_has_voted = 'true';
-                            $thread->user_vote_type = 0;
-                        }
-                    } 
-                    else {
-                        $thread->user_has_voted = 'false';              
-                    }
-                }
-                
-                foreach ($threads as $thread) {
-                    if (Auth::user()) {
-                        if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
-                                $thread->user_joined_community = 'true';
-                        } else {
-                            $thread->user_joined_community = 'false';
-                        }
-                    }
-                }
-
-                foreach ($threads as $thread) {
-                    if ($thread->body == "IS_POLL") {
-                        $poll_total_votes = PollVote::getCountVotes($thread->id);
-                        $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
-                        foreach ($poll_options as $option) {
-                            if ($poll_total_votes != 0) {
-                                $thread->total_votes = $poll_total_votes;
-                                $thread->poll_options = $poll_options;
-                                foreach ($thread->poll_options as $option) {
-                                    $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
-                                }
-                            } else {
-                                $thread->total_votes = 0;
-                                $thread->poll_options = $poll_options;
-                                foreach ($thread->poll_options as $option) {
-                                    $option->percentage = 0;
-                                }
-                            }
-                        }
+        } else {
+            // If Vote Exists -> Delete
+            if (Vote::hasUserVotedThread($request->thread_id, $request->vote_type)) {
+                Vote::deleteUserVotedThread($request->thread_id, $request->vote_type);
+            } else {
+                // Create Vote
+                Vote::updateOrCreate(
+                    ['user_id' => Auth::user()->id, 'thread_id' => $request->thread_id],
+                    ['vote_type' => $request->vote_type]);
+                // Reward Thread Author
+                $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
+                if (User::getUserUpvotes($thread_author_id) == 1) {
+                    if (!UserReward::userHasReward($thread_author_id, 12)) {
+                        USerReward::createUserReward($thread_author_id, 12);
                     }
                 }
             }
-        return response()->json([
-            'threads' => $threads
-        ]);
+            return response()->json([
+                'response' => '💾 Se han guardado los cambios 💾',
+                'votes' => Vote::getThreadVotes($request->thread_id)
+            ]);
+        }
     }
-    
-    /* TEST */	
-    
-    public function fileUpload(Request $request){
-        $response = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
-                dd($response);
+    function test() {
 
-                return back()
-                    ->with('success', 'File uploaded successfully');
+    return Community::getCommunityScore(11071967);
 
 
-        
-      }
-         function createForm() {
-            return view('layouts.test');
-         }
 
-         function test() {
 
-          $threads = Thread::orderBy('created_at', 'desc')
-            ->where('community_id', 11071967)
-            ->with('communities')
-            ->with('author')
-            ->withCount('replies')
-            ->withCount('upvotes')
-            ->withCount('downvotes')
-            ->get();
-        
-            return $threads;
-            
-            
-         }
+    }
 
-         function test2() {
-            $community = Community::where('id', 11071967)
-            ->with('threads')
-            ->with('threads.author')
-            ->paginate(1);
-
-            return $community;
-         }
 }

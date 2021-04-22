@@ -22,109 +22,123 @@ use Validator;
 use Carbon\Carbon;
 
 class CommunityController extends Controller {
+
+    /* GET COMMUNITY DATA */
     
     function getCommunity($community_tag) {
-    	// UNREAD NOTIFICATIONS
-            $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-        // GET COMMUNITY ID
-    	   $communityId = Community::where('tag', $community_tag)->value('id');
-        // GET THREADS FROM COMMUNITY
-    		$threads = Thread::orderBy('created_at', 'desc')
-    	    ->where('community_id', $communityId)
-    	    ->with('communities')
-    	    ->with('author')
-    	    ->withCount('replies')
-    	    ->withCount('upvotes')
-    	    ->withCount('downvotes')
-    	    ->paginate(4, ['*'], 'pagina');
-        // GET COMMUNITY DATA
-	       $community = Community::where('id', $communityId)->with('community_moderators')->with('community_rules')->withCount('threads')->first();
-            $community->sub_count = UserCommunity::userCount($communityId);
-            $community->index = Community::getCommunityPlacing($communityId);
-        // USER ADMIN/LEADER
-		if (Auth::user()) {
-			foreach ($community->community_moderators as $moderator) {
-				if ($moderator->user_id == Auth::user()->id && $moderator->subscription_type == 2000) {
-					$community->is_mod = 'true';
-				} elseif ($moderator->user_id == Auth::user()->id && $moderator->subscription_type == 5000) {
-                    $community->is_leader = 'true';
+        // Unread Notifications
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        // Get Community Id
+        $community = Community::where('tag', $community_tag)
+        ->with('community_moderators')
+        ->with('community_rules')
+        ->withCount('threads')
+        ->first();
+        $community->sub_count = UserCommunity::userCount($community->id);
+        $community->index = Community::getCommunityPlacing($community->id);
+        // Is User Admin/Leader
+        if (Auth::check()) {
+            if (UserCommunity::isUserAdmin(Auth::user()->id, $community->id)) {
+                $community->is_mod = 'true';
+            }
+            if (UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
+                $community->is_leader = 'true';
+            }
+        }
+        // Get Community Tags
+        $tags = CommunityTags::where('community_id', $community->id)->get();
+        // Threads
+        $threads = Thread::orderBy('created_at', 'desc')
+        ->where('community_id', $community->id)
+        ->with('communities')
+        ->with('author')
+        ->withCount('replies')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->paginate(4, ['*'], 'pagina');
+        // If Threads Are Null
+        if ($threads->isEmpty()) {
+            // Return Data
+            return view('layouts.desktop.templates.community.community',
+                [   'unread_notifications' => $unread_notifications,
+                    'community' => $community,
+                    'tags' => $tags,
+            ]);
+        }
+        // Foreach Thread Loop
+        foreach ($threads as $thread) {
+            // Is User Loged
+            if (Auth::check()) {
+                // Has User Voted Thread
+                if ($thread->votes->isNotEmpty()) {
+                    if (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 1)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 1;
+                    } elseif (Vote::where('user_id', Auth::user()->id)
+                    ->where('thread_id', $thread->id)
+                    ->where('vote_type', 0)
+                    ->exists()) {
+                        $thread->user_has_voted = 'true';
+                        $thread->user_vote_type = 0;
+                    }
+                } else {
+                    $thread->user_has_voted = 'false';              
                 }
-			}
-		}
-        // GET COMMUNITY TAGS
-		  $tags = CommunityTags::where('community_id', $communityId)->get();
-
-	    if ($threads) {
-    		foreach ($threads as $thread) {
-    			if (Auth::user() and $thread->votes->isNotEmpty()) {
-    				if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 1)->exists()) {
-    					$thread->user_has_voted = 'true';
-    					$thread->user_vote_type = 1;
-    				} 
-    	            if (Vote::where('user_id', '=', Auth::user()->id)->where('thread_id', '=', $thread->id)->where('vote_type', '=', 0)->exists()) {
-    					$thread->user_has_voted = 'true';
-    					$thread->user_vote_type = 0;
-    	            }
-    			} 
-    			else {
-    				$thread->user_has_voted = 'false';  			
-    			}
-    		}
-    	    
-    	    foreach ($threads as $thread) {
-    	        if (Auth::user()) {
-    	            if (DB::table('users_communities')->where('community_id', '=', $thread->communities->id)->where('user_id', '=', Auth::user()->id)->exists()) {
-    	                    $thread->user_joined_community = 'true';
-    	            } else {
-    	                $thread->user_joined_community = 'false';
-    	            }
-    	        }
-    	    }
-
-    	    foreach ($threads as $thread) {
-    	        if ($thread->body == "IS_POLL") {
-    	            $poll_total_votes = PollVote::getCountVotes($thread->id);
-    	            $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
-    	            foreach ($poll_options as $option) {
-    	                if ($poll_total_votes != 0) {
-    	                    $thread->total_votes = $poll_total_votes;
-    	                    $thread->poll_options = $poll_options;
-    	                    foreach ($thread->poll_options as $option) {
-    	                        $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
-    	                    }
-    	                } else {
-    	                    $thread->total_votes = 0;
-    	                    $thread->poll_options = $poll_options;
-    	                    foreach ($thread->poll_options as $option) {
-    	                        $option->percentage = 0;
-    	                    }
-    	                }
-    	            }
-    	        }
-    	    }
-    		return view('layouts.desktop.templates.community.community',
-    			[	'unread_notifications' => $unread_notifications,
-    	            'threads' => $threads,
-    	            'community' => $community,
-    	            'tags' => $tags,
-    			]);
-		} else {
-			return view('layouts.desktop.templates.community.community',
-				[	'unread_notifications' => $unread_notifications,
-					'community' => $community,
-					'tags' => $tags,
-			]);
-		}
+                // Is User Subscribed To Community
+                if (UserCommunity::isUserSubscribed(Auth::user()->id, $community->id)) {
+                    $thread->user_joined_community = 'true';
+                } else {
+                    $thread->user_joined_community = 'false';
+                }
+            }
+            // Is Thread Poll
+            if ($thread->body == "IS_POLL") {
+                $poll_total_votes = PollVote::getCountVotes($thread->id);
+                $poll_options = PollOption::where('thread_id', $thread->id)->withCount('votes')->get();
+                foreach ($poll_options as $option) {
+                    if ($poll_total_votes != 0) {
+                        $thread->total_votes = $poll_total_votes;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = round(($option->votes_count/$poll_total_votes)*100, 1);
+                        }
+                    } else {
+                        $thread->total_votes = 0;
+                        $thread->poll_options = $poll_options;
+                        foreach ($thread->poll_options as $option) {
+                            $option->percentage = 0;
+                        }
+                    }
+                }
+            }
+        }
+        // Return Data
+        return view('layouts.desktop.templates.community.community',
+            [   'unread_notifications' => $unread_notifications,
+                'threads' => $threads,
+                'community' => $community,
+                'tags' => $tags,
+            ]);
     }
+
+    /* NEW COMMUNITY VIEW */
 
     function newCommunity() {
         if (Auth::user()) {
+            // Unread Notifications
             $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-            return view('layouts.desktop.templates.community.create')->with('unread_notifications', $unread_notifications);
+            // Return To View
+            return view('layouts.desktop.templates.community.create')
+            ->with('unread_notifications', $unread_notifications);
         } else {
             return Redirect::to('/');
         }
     }
+
+    /* VALIDATE NEW COMMUNITY */
 
     function validateNewCommunity(Request $request) {
         if (Auth::user() && $request->ajax()) {

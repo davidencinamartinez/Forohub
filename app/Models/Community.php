@@ -61,32 +61,23 @@ class Community extends Model {
         return $this->hasMany(CommunityTags::class, 'community_id');
     }
 
-    public static function getCommunityScore($community_id) {
-        $community_score = 0;
-        $threads = Thread::where('community_id', $community_id)->get();
-        foreach ($threads as $thread) {
-            $upvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 1)->count();
-            $downvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 0)->count();
-            $community_score += 0.05+($upvotes*0.025)+($downvotes*(-0.025));
-        }
-
-        $community_score += UserCommunity::where('community_id', $community_id)->count()*0.035;
-
-        return $community_score;
+    public function upvotes() {
+        return $this->hasManyThrough('App\Models\Vote', 'App\Models\Thread')->where('vote_type', 1);
     }
 
-    public static function getTopCommunityScore($community_id, $time) {
-        $community_score = 0;
-        $threads = Thread::where('community_id', $community_id)->get();
-        foreach ($threads as $thread) {
-            $upvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 1)->count();
-            $downvotes = Vote::where('thread_id', $thread->id)->where('vote_type', 0)->count();
-            $community_score += 0.05+($upvotes*0.025)+($downvotes*(-0.025));
-        }
+    public function downvotes() {
+        return $this->hasManyThrough('App\Models\Vote', 'App\Models\Thread')->where('vote_type', 0);
+    }
 
-        $community_score += UserCommunity::where('community_id', $community_id)->count()*0.035;
-
-        return $community_score;
+    public static function getCommunityScore($community_id) {
+        // Community
+        $community = Community::where('id', $community_id)
+        ->withCount('threads')
+        ->withCount('upvotes')
+        ->withCount('downvotes')
+        ->first();
+        // Return Result
+        return ($community->threads_count*0.05)+($community->upvotes_count*0.025)+($community->downvotes_count*(-0.025));
     }
 
     public static function getCommunityPlacing($community_id) {
@@ -146,7 +137,12 @@ class Community extends Model {
                 UserReward::createUserReward(Auth::user()->id, '8');
                 Notification::createNotification(Auth::user()->id, "Logro desbloqueado: La unión hace la fuerza", "reward");
             }
-            /* Set Master Mod */
+            // Reward Thread Author
+            $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
+            if (!UserReward::userHasReward(Auth::user()->id, 8)) {
+                USerReward::createUserReward($thread_author_id, 8);
+            }
+            /* Set User As Leader */
             UserCommunity::leaderJoinCommunity($community->id);
             /* Set Community Tags */
             foreach ($request->tags as $tagname) {

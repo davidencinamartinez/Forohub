@@ -65,24 +65,23 @@ class UserCommunity extends Model {
     }
 
     public static function isUserAdmin($user_id, $community_id) {
-        if (UserCommunity::where('user_id', $user_id)
-            ->where('community_id', $community_id)
-            ->whereIn('subscription_type', [5000,2000])
-            ->exists()) {
-            return true;
-        } else {
-            return false;
-        }
+        return UserCommunity::where('user_id', $user_id)
+        ->where('community_id', $community_id)
+        ->where('subscription_type', 2000)
+        ->exists();
     }
 
     public static function isUserLeader($user_id, $community_id) {
-        if (UserCommunity::where('user_id', $user_id)
-            ->where('community_id', $community_id)
-            ->where('subscription_type', 5000)
-            ->exists()) {
-            return true;
-        } else {
-            return false;
-        }
+        return UserCommunity::where('user_id', $user_id)
+        ->where('community_id', $community_id)
+        ->where('subscription_type', 5000)
+        ->exists();
     }
+
+    public static function isUserSubscribed($user_id, $community_id) {
+        return UserCommunity::where('community_id', $community_id)
+        ->where('user_id', Auth::user()->id)
+        ->exists();
+    }
+    
 }

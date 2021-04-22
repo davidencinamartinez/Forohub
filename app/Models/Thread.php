@@ -53,6 +53,10 @@ class Thread extends Model {
     	return $this->hasMany(Reply::class);
     }
 
+    public function first_reply() {
+        return $this->hasMany(Reply::class)->oldest();
+    }
+
     public function votes() {
         return $this->hasMany(Vote::class);
     }
@@ -194,25 +198,10 @@ class Thread extends Model {
             UserCommunity::JoinCommunity($community_id);
         }
         // Reward
-        if (UserReward::userHasReward(Auth::user()->id, 10) == false) {
-            UserReward::createUserReward(Auth::user()->id, 10);
-            $reward = Reward::where('id', 10)->first();
-            $data["reward_title"] = $reward->name;
-            $data["reward_logo"] = $reward->filename;
-            Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
+        if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '10')->doesntExist()) {
+            UserReward::createUserReward(Auth::user()->id, '10');
+            Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Un pequeño paso para el hombre, un gran salto para la humanidad", "reward");
         }
         return Redirect::to('/c/'.$request->community.'/t/'.$thread_id);
-    }
-
-    public static function threadData(community_id) {
-        $data = Thread::with('communities')
-        ->with('author')
-        ->with('first_reply')
-        ->withCount('replies')
-        ->withCount('upvotes')
-        ->withCount('downvotes')
-        ->orderBy('upvotes_count', 'desc')
-        ->whereBetween('created_at', [Carbon::now()->subDays(7), Carbon::now()])
-        ->paginate(4, ['*'], 'pagina');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Thread;
+use Auth;
 
 class Vote extends Model
 {
@@ -38,5 +39,27 @@ class Vote extends Model
             $thread_author_upvote_count = $thread_author_upvote_count+Vote::where('thread_id', $thread->id)->count();   
         }
         return $thread_author_upvote_count;
+    }
+
+    public static function hasUserVotedThread($thread_id, $vote_type) {
+        return Vote::where('user_id', Auth::user()->id)
+                ->where('thread_id', $thread_id)
+                ->where('vote_type', $vote_type)
+                ->exists();
+    }
+
+    public static function deleteUserVotedThread($thread_id, $vote_type) {
+        Vote::where('user_id', Auth::user()->id)
+        ->where('thread_id', $thread_id)
+        ->where('vote_type', $vote_type)
+        ->delete();
+    }
+
+    public static function getThreadVotes($thread_id) {
+        $upvotes = Vote::where('thread_id', $thread_id)
+        ->where('vote_type', 1)->count();
+        $downvotes = Vote::where('thread_id', $thread_id)
+        ->where('vote_type', 0)->count();
+        return $upvotes-$downvotes;
     }
 }

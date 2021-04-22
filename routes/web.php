@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
-	Route::get('/destacados', [App\Http\Controllers\Site\IndexController::class, 'featuredIndex']);
+	Route::get('/destacados', [App\Http\Controllers\Site\IndexController::class, 'relevantIndex']);
 
 /* USER ROUTES */
 

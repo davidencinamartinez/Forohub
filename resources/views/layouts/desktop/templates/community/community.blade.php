@@ -46,15 +46,16 @@
     <div style="width: 10%"></div>
     <div class="threads-panel">
     @include('layouts.desktop.templates.community.community_configuration')
-    @if ($threads->isNotEmpty())
+    @isset($threads)
         @foreach ($threads as $thread)
             @include('layouts.desktop.templates.thread.content')
         @endforeach
-    @else
+    @endisset
+    @empty($threads)
         <h3 class="required-auth">
             <a href="/crear/tema">Todavía no hay temas en esta comunidad.<br>Sé el primero en crear uno</a>
         </h3>
-    @endif
+    @endempty
 </div>
     <div class="lateral-panel">
         @if ($community->is_mod) 
@@ -83,11 +84,13 @@
         @include('layouts.desktop.templates.lateral.lateral_community')
     </div>
 </div>
-@if ($threads->hasPages())
-    <div style="text-align: center;">
-        <div class="pageSelector">
-          {!!$threads->links()!!}
+@isset($threads)
+    @if ($threads->hasPages())
+        <div style="text-align: center;">
+            <div class="pageSelector">
+              {!!$threads->links()!!}
+            </div>
         </div>
-    </div>
-@endif
+    @endif
+@endisset
 @endsection
