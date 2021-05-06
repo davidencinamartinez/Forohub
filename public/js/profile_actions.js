@@ -2,12 +2,12 @@ $(document).ready(function() {
 	$(document).on('click', '.profile-configuration-trigger', function(event) {
 		event.preventDefault();
 		if ($('.profile-configuration').css('display') == 'none') {
-			$('.threads-panel').children().css('display', 'none');
-            $('.profile-configuration').css('display', 'block');
+			$('.threads-panel').children().hide('400');
+            $('.profile-configuration').show('400');
             return false;
 		} else {
-			$('.threads-panel').children().css('display', 'block');
-            $('.profile-configuration').css('display', 'none');
+			$('.threads-panel').children().show('400');
+            $('.profile-configuration').hide('400');
             return false;
 		}
 	});
@@ -58,6 +58,7 @@ function PA_PasswordUpdatePanel(element) {
 
 function PA_PasswordUpdate() {
 	$('.configuration-panel .error, .configuration-panel .success').remove();
+	document.documentElement.style.cursor = "progress";
 	$.ajax({
 		url: '/fOvpJZWfCJAULgNxBxVINoFyr6k9rBxxqG2HMbGGDZjN3HidWmWTrUPqaJPNCIqV',
 		type: 'POST',
@@ -68,6 +69,7 @@ function PA_PasswordUpdate() {
 		},
 	})
 	.done(function(data) {
+		console.log(data);
 		if (!$.isEmptyObject(data)) {
 			document.documentElement.style.cursor = "default";
 			createElement('p', {class: 'error'}, '.configuration-password-panel', data.error);

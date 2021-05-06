@@ -2,6 +2,8 @@
 
 @section('title', 'Crear Tema - Forohub')
 
+@section('description', $meta_description)
+
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
     <link rel="stylesheet" type="text/css" href="/css/desktop/new_thread.css">

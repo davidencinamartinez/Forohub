@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reward;
+use App\Models\UserReward;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -61,17 +62,17 @@ class RegisterController extends Controller {
             // IF VALIDATION OK
         	if ($validator->passes()) {
     			$user = User::create([
-    					'name' => iconv( 'UTF-8' , 'ASCII//TRANSLIT//IGNORE' , $request->input('name')),
-    			        'email' => $request->input('email'),
-    			        'password' => Hash::make($request->input('password')),
-    			    ]);
+					'name' => iconv( 'UTF-8' , 'ASCII//TRANSLIT//IGNORE' , $request->input('name')),
+			        'email' => $request->input('email'),
+			        'password' => Hash::make($request->input('password')),
+			    ]);
     			Auth::login($user);
                 $verifyUser = VerifyUser::create([
                     'user_id' => $user->id,
                     'token' => sha1(time())
-                  ]);
-                  Mail::to($user->email)->send(new VerifyMail($user));
-                  return $user;
+                ]);
+                Mail::to($user->email)->send(new VerifyMail($user));
+                return $user;
     		} else {
         		return response()->json(['error' => $validator->getMessageBag()->toArray()]);
     		}
@@ -89,21 +90,10 @@ class RegisterController extends Controller {
                 $verifyUser->user->save();
                 $status = "Tu cuenta ha sido verificada";
                 Auth::login($user);
-                /* REWARD */
-                DB::table('users_rewards')->insert([
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                    'user_id' =>  Auth::user()->id,
-                    'reward_id' => 1
-                ]);
-                if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '1')->doesntExist()) {
-                    $reward = Reward::where('id', 1)->first();
-                    $data["reward_title"] = $reward->name;
-                    $data["reward_logo"] = $reward->filename;
-                    Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                    UserReward::createUserReward(Auth::user()->id, '1');
+                // Reward Verified
+                if (!UserReward::userHasReward(Auth::user()->id, 1)) {
+                    UserReward::createUserReward(Auth::user()->id, 1);
                 }
-                /**/
             } else {
                 $status = "Tu cuenta ya ha sido verificada";
                 Auth::login($user);

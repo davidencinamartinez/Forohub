@@ -28,6 +28,6 @@ class VerifyMail extends Mailable {
   * @return $this
   */
   public function build() {
-    return $this->view('emails.verifyUser');
+    return $this->subject('Verifica tu cuenta - Forohub')->view('emails.user_verification_email');
   }
 }

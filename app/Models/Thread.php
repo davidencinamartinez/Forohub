@@ -198,10 +198,24 @@ class Thread extends Model {
             UserCommunity::JoinCommunity($community_id);
         }
         // Reward
-        if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '10')->doesntExist()) {
-            UserReward::createUserReward(Auth::user()->id, '10');
-            Notification::createNotification(Auth::user()->id, "Logro desbloqueado: Un pequeño paso para el hombre, un gran salto para la humanidad", "reward");
+        if (!UserReward::userHasReward(Auth::user()->id, 10)) {
+            UserReward::createUserReward(Auth::user()->id, 10);
         }
         return Redirect::to('/c/'.$request->community.'/t/'.$thread_id);
+    }
+
+    public static function getTopThreads() {
+        $threads = Thread::get();
+        foreach ($threads as $thread) {
+            $thread->score = Thread::getCommunityScore($thread->id);
+        }
+
+        $sorted = $threads->sortByDesc('score');
+        return array_search($thread_id, array_column($sorted->toArray(), 'id'))+1;
+    }
+
+    public static function getThreadScore($thread) {
+        // Return Result
+        return ($thread->upvotes_count*0.025)+($thread->downvotes_count*(-0.025)+($thread->replies_count*0.010));
     }
 }

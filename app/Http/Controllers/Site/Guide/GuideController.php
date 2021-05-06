@@ -51,12 +51,16 @@ class GuideController extends Controller {
         ]);
     }
 
-    function topsByDate($date = null) {
+    function getTops() {
     $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-    $communities = Guides::getTopCommunities($date);
-    return view('layouts.desktop.templates.guides.tops',
+    $communities = Guides::getTopCommunities();
+    $threads = Guides::getTopThreads();
+    $users = Guides::getTopUsers();
+    return view('layouts.desktop.templates.tops.tops',
         [   'unread_notifications' => $unread_notifications,
-            'communities' => $communities
+            'communities' => $communities,
+            'threads' => $threads,
+            'users' => $users
         ]);
     }
     

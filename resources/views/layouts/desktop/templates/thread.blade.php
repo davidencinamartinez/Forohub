@@ -1,7 +1,8 @@
 @extends('layouts.desktop.main')
 
-@section('description', $meta_description)
 @section('title', $thread->title.' - Forohub')
+
+@section('description', $meta_description)
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
 @endpush
 @push('scripts')
-@if ($thread->user_is_admin)
+@if ($thread->user_is_admin || $thread->user_is_leader)
     <script type="text/javascript" src="/js/thread_actions.js"></script>
 @endif
 @endpush

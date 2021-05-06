@@ -1,5 +1,7 @@
 @extends('layouts.desktop.main')
 
+@section('description', 'Índice de comunidades. Aquí encontrarás un listado con todas las comunidades existentes en Forohub')
+
 @isset ($character)
 	@section('title', 'Guía de comunidades ('.strtoupper($character).') - Forohub')
 @else

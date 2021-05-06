@@ -1,3 +1,38 @@
+/* GUIDE SELECTION */
+
+	.guide-selection {
+		margin: auto;
+		text-align: center;
+		border: solid 1px black;
+		width: fit-content;
+		display: flex;
+		border-radius: 6px;
+		background-color: #2F2F2F;
+	}
+
+	.guide-selection a {
+		padding: 6px;
+	}
+
+	.guide-selection a:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+		background-color: #6b6b6b;
+		color: white;
+	}
+
+	.guide-selection a:not(:last-child) {
+		border-right: solid 1px black;
+	}
+
+	.guide-selection a:first-child {
+		border-radius: 4px 0px 0px 4px;
+	}
+
+	.guide-selection a:last-child {
+		border-radius: 0px 4px 4px 0px;
+	}
+
 .empty-data {
 	text-align: center;
 }

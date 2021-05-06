@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Community;
+use App\Models\Guides;
 use App\Models\Thread;
 use App\Models\Reward;
 use App\Models\Vote;
@@ -116,13 +117,16 @@ class IndexController extends Controller {
         if ($threads->isEmpty()) {
             return redirect()->route('index');
         }
+        // Meta Description
+        $meta_description = "Forohub es una red de comunidades basada en los intereses de sus usuarios. Podrás encontrar la respuesta a cualquier tipo de consulta que tengas. Y si no la encuentras, pregunta y te ayudaremos! Aquí estamos para eso";
         // Return Data
         return view('layouts.desktop.templates.index',
             [   'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
                 'fh_data' => $fh_data,
                 'top_communities' => $sorted_top_communities,
-                'latest_replies' => $latest_replies
+                'latest_replies' => $latest_replies,
+                'meta_description' => $meta_description
             ]);
     }   
 
@@ -219,13 +223,16 @@ class IndexController extends Controller {
         if ($threads->isEmpty()) {
             return redirect()->route('index');
         }
+        // Meta Description
+        $meta_description = "Aquí aparecerán los temas más populares del foro. La popularidad de estos es basada en el número de mensajes y el número de votos positivos recibidos. Si uno de tus temas se populariza, es probable que recibas alguna recompensa, ya sea que aumente tu karma dentro del foro, o incluso conseguir algún logro";
         // Return Data
         return view('layouts.desktop.templates.index',
             [   'unread_notifications' => $unread_notifications,
                 'threads' => $threads,
                 'fh_data' => $fh_data,
                 'top_communities' => $sorted_top_communities,
-                'latest_replies' => $latest_replies
+                'latest_replies' => $latest_replies,
+                'meta_description' => $meta_description
             ]);
     }
 
@@ -258,7 +265,7 @@ class IndexController extends Controller {
                 $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
                 if (User::getUserUpvotes($thread_author_id) == 1) {
                     if (!UserReward::userHasReward($thread_author_id, 12)) {
-                        USerReward::createUserReward($thread_author_id, 12);
+                        UserReward::createUserReward($thread_author_id, 12);
                     }
                 }
             }
@@ -271,8 +278,7 @@ class IndexController extends Controller {
 
     function test() {
 
-    return Community::getCommunityScore(11071967);
-
+        return Guides::getTopUsers();
 
 
 

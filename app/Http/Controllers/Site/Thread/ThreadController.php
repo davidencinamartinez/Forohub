@@ -126,6 +126,9 @@ class ThreadController extends Controller {
             	if (UserCommunity::isUserAdmin(Auth::user()->id, $thread->communities->id)) {
             		$thread->user_is_admin = 'true';
             	}
+            	if (UserCommunity::isUserLeader(Auth::user()->id, $thread->communities->id)) {
+            		$thread->user_is_leader = 'true';
+            	}
             }
 
             $community = Community::where('id', $community_id)->with('community_moderators')->with('community_rules')->withCount('threads')->first();

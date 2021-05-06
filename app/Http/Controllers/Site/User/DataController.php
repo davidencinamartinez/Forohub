@@ -95,11 +95,14 @@ class DataController extends Controller {
                 }
             }
         }
+        // Meta Description
+        $meta_description = 'Perfil de '.$data->name.' ('.$data->about.')';
         return view('layouts.desktop.templates.user.profile',
             [   'unread_notifications' => $unread_notifications,
                 'data' => $data,
                 'rewards' => $user_rewards,
-                'threads' => $threads
+                'threads' => $threads,
+                'meta_description' => $meta_description
         ]);
     }
 
@@ -122,7 +125,6 @@ class DataController extends Controller {
                 ], $messages);
                 if ($validator->passes()) {
                     User::find(Auth::user()->id)->update(['password'=> Hash::make($request->newPassword)]);
-                    return response()->json(['success' => 'Tu contraseña se ha cambiado con éxito 🗸']);
                 } else {
                     return response()->json(['error' => $validator->getMessageBag()->first()]);
                 }

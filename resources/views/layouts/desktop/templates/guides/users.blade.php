@@ -1,5 +1,7 @@
 @extends('layouts.desktop.main')
 
+@section('description', 'Índice de usuarios. Aquí encontrarás un listado con todos los usuarios de Forohub')
+
 @isset ($character)
 	@section('title', 'Guía de usuarios ('.strtoupper($character).') - Forohub')
 @else

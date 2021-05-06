@@ -5,9 +5,9 @@
 		border-top: 2px solid black;
 	}
 
-	/* FOROHUB LOGO */
+	/* MAIN LOGO */
 
-		.forohub-logo {	
+		.main-logo {	
 			width: 30%;
 			max-width: 350px;
 		}
@@ -28,6 +28,8 @@
 				padding: 8px;
 			    border: solid 2px black;
 			    background-color: #2F2F2F;
+			    display: grid;
+			    color: white;
 			}
 
 			.user-unread-notifications {
@@ -41,21 +43,24 @@
 				background: red;
 				color: white;
 				cursor: pointer;
+				z-index: 1;
 			}
 
-			.user-welcome {
-				float: left;
-				color: white;
-				margin-left: 10px;
+			.user-info b, .user-info label {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				cursor: default;
 			}
 
-			.user-welcome b {
-				float: left;
-			}
-
-			.user-welcome label {
-				float: left;
+			.user-info label {
 				font-size: 12px;
+			}
+
+			.user-info {
+				display: grid;
+			    text-align: left;
+			    margin-left: 50px;
+			    width: 210px;
 			}
 
 			.user-buttons {
@@ -72,7 +77,6 @@
 				width: 40px;
 				height: 40px;
 				float: left;
-				vertical-align: middle;
 				border: solid 1px black;
 				background-color: ghostwhite;
 			}

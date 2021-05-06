@@ -19,8 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/', [App\Http\Controllers\Site\IndexController::class, 'index'])->name('index');
 
-	Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
-
 	Route::get('/destacados', [App\Http\Controllers\Site\IndexController::class, 'relevantIndex']);
 
 /* USER ROUTES */
@@ -134,7 +132,7 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/temas/{character?}', [App\Http\Controllers\Site\Guide\GuideController::class, 'threadsGuide']);
 
-	Route::get('/tops/{date}', [App\Http\Controllers\Site\Guide\GuideController::class, 'topsByDate']);
+	Route::get('/tops', [App\Http\Controllers\Site\Guide\GuideController::class, 'getTops']);
 
 /* AJAX CALLS */
 

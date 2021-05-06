@@ -47,6 +47,8 @@ class CommunityController extends Controller {
         }
         // Get Community Tags
         $tags = CommunityTags::where('community_id', $community->id)->get();
+        // Meta Description
+        $meta_description = $community->description.'. Tags: '.implode(', ', $tags->pluck('tagname')->toArray());
         // Threads
         $threads = Thread::orderBy('created_at', 'desc')
         ->where('community_id', $community->id)
@@ -63,6 +65,7 @@ class CommunityController extends Controller {
                 [   'unread_notifications' => $unread_notifications,
                     'community' => $community,
                     'tags' => $tags,
+                    'meta_description' => $meta_description
             ]);
         }
         // Foreach Thread Loop
@@ -121,6 +124,7 @@ class CommunityController extends Controller {
                 'threads' => $threads,
                 'community' => $community,
                 'tags' => $tags,
+                'meta_description' => $meta_description
             ]);
     }
 
@@ -130,9 +134,11 @@ class CommunityController extends Controller {
         if (Auth::user()) {
             // Unread Notifications
             $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+            // Meta Description
+            $meta_description = $community->description.'. Tags: '.implode(', ', $tags->pluck('tagname')->toArray());
             // Return To View
             return view('layouts.desktop.templates.community.create')
-            ->with('unread_notifications', $unread_notifications);
+            ->with('unread_notifications', $unread_notifications)->with('meta_description', $meta_description);
         } else {
             return Redirect::to('/');
         }
@@ -148,22 +154,36 @@ class CommunityController extends Controller {
         }
     }
 
+    /* GET COMMUNITY REPORTS */
+
     function getCommunityReports($community_tag) {
+        // Unread Notifications
+        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        $community = Community::where('tag', $community_tag)->first();
+        // If User Not Logged In
         if (!Auth::user()) {
             abort(404);
         }
-        $community = Community::where('tag', $community_tag)->first();
-        if (UserCommunity::where('user_id', Auth::user()->id)
-            ->where('community_id', $community->id)
-            ->whereIn('subscription_type', [5000,2000])
-            ->doesntExist()) {
+        // If User Not Moderator
+        if (!UserCommunity::isUserMod(Auth::user()->id, $community->id)) {
             abort(404);
         }
-        $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-        $thread_reports = Community::where('id', $community->id)->with('thread_reports')->with('thread_reports.author')->get()->pluck('thread_reports');
-        $reply_reports = Thread::where('community_id', $community->id)->with('reply_reports')->with('reply_reports.author')->get();
-        // REPLY REFERENCE
-       $threads = Thread::where('community_id', $community->id)->with('replies')->with('replies.reports.author')->get();
+        // Thread Reports
+        $thread_reports = Community::where('id', $community->id)
+        ->with('thread_reports')
+        ->with('thread_reports.author')
+        ->get()
+        ->pluck('thread_reports');
+        // Reply Reports
+        $reply_reports = Thread::where('community_id', $community->id)
+        ->with('reply_reports')
+        ->with('reply_reports.author')
+        ->get();
+        // Reply Reference
+        $threads = Thread::where('community_id', $community->id)
+        ->with('replies')
+        ->with('replies.reports.author')->get();
+        // Target Report
         foreach ($threads as $thread) {
             $counter = 1;
             foreach ($thread->replies as $reply) {
@@ -174,6 +194,7 @@ class CommunityController extends Controller {
                 $counter+=1;
             }
         }
+        // Return Data
         return view('layouts.desktop.templates.community.reports',
             [   'unread_notifications' => $unread_notifications,
                 'community' => $community,
@@ -182,15 +203,24 @@ class CommunityController extends Controller {
         ]);
     }
 
+    /* GET COMMUNITY AFFILIATES */
+
     function getAffiliates($community_tag, $character = null) {
+        // Unread Notifications
         $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
+        // Community Data
         $community = Community::where('tag', $community_tag)->first();
+        // Community Affiliates
         $affiliates = Community::getAffiliates($community->id, $character);
+        // If User Logged In
         if (!Auth::check()) {
             abort(404);
-        } elseif (UserCommunity::where('community_id', $community->id)->where('user_id', Auth::user()->id)->where('subscription_type', 5000)->doesntExist()) {
+        }
+        // If User Is Not Leader
+        if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
             abort(404);
         }
+        // Return Data
         return view('layouts.desktop.templates.community.affiliates.affiliates',
             [   'unread_notifications' => $unread_notifications,
                 'community' => $community,
@@ -199,35 +229,31 @@ class CommunityController extends Controller {
             ]);
     }
 
+    /* RANK USER AS AFFILIATE */
+
     function rankAsAffiliate(Request $request) {
+        // Variables
         $community = Community::where('tag', $request->community_tag)->first();
         if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
             abort(404);
         }
-        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 0]);
-        // Notification JSON
-        $data["community_tag"] = $community->tag;
-        $data["community_title"] = $community->title;
-        $data["community_logo"] = $community->logo;
-        $data["user_rank"] = "Afiliado";
-        Notification::createNotification($request->user_id, json_encode($data), "community_rank");
+        UserCommunity::rankUserCommunity($request->user_id, $community, 0, 'Afiliado');
         return back();
     }
 
+    /* RANK USER AS MODERATOR */
+
     function rankAsModerator(Request $request) {
+        // Variables
         $community = Community::where('tag', $request->community_tag)->first();
         if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
             abort(404);
         }
-        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 2000]);
-        // Notification JSON
-        $data["community_tag"] = $community->tag;
-        $data["community_title"] = $community->title;
-        $data["community_logo"] = $community->logo;
-        $data["user_rank"] = "Moderador";
-        Notification::createNotification($request->user_id, json_encode($data), "community_rank");
+        UserCommunity::rankUserCommunity($request->user_id, $community, 2000, 'Moderador');
         return back();
     }
+
+    /* RANK USER AS LEADER */
 
     function rankAsLeader(Request $request) {
         // Variables
@@ -235,26 +261,11 @@ class CommunityController extends Controller {
         if (!UserCommunity::isUserLeader(Auth::user()->id, $community->id)) {
             abort(404);
         }
-        $leader = UserCommunity::where('community_id', $community->id)->where('subscription_type', 5000)->first();
-        // Queries
-        UserCommunity::where('community_id', $community->id)->where('user_id', $leader->user_id)->update(['subscription_type' => 0]);
-        UserCommunity::where('user_id', $request->user_id)->where('community_id', $community->id)->update(['subscription_type' => 5000]);
-        // Notifications
-            // Notification JSON
-            $data["community_tag"] = $community->tag;
-            $data["community_title"] = $community->title;
-            $data["community_logo"] = $community->logo;
-            $data["user_rank"] = "Líder";
-            Notification::createNotification($request->user_id, json_encode($data), "community_rank");
-            // Notification JSON
-            $data["community_tag"] = $community->tag;
-            $data["community_title"] = $community->title;
-            $data["community_logo"] = $community->logo;
-            $data["user_rank"] = "Afiliado";
-            Notification::createNotification($leader->user_id, json_encode($data), "community_rank");
-        // Response
+        UserCommunity::rankUserCommunity($request->user_id, $community, 5000, 'Líder');
         return redirect()->route('index');
     }
+
+    /* BAN USER FROM COMMUNITY */
 
     function banUserFromCommunity(Request $request) {
         $community = Community::where('tag', $request->community_tag)->first();
@@ -285,7 +296,7 @@ class CommunityController extends Controller {
                 if (!$validator->passes()) {
                     return response()->json(['error' => $validator->getMessageBag()->first()]);
                 }
-                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                $community_id = Community::where('tag', $request->community)->value('id');
                 if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
                     Community::where('id', $community_id)->update(['title' => $request->title]);
                 } else {
@@ -312,7 +323,7 @@ class CommunityController extends Controller {
                 if (!$validator->passes()) {
                     return response()->json(['error' => $validator->getMessageBag()->first()]);
                 }
-                $community_id = Community::where('tag', $request->community)->first()->value('id');
+                $community_id = Community::where('tag', $request->community)->value('id');
                 if (UserCommunity::isUserLeader(Auth::user()->id, $community_id)) {
                     Community::where('id', $community_id)->update(['description' => $request->description]);
                 } else {

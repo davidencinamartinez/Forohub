@@ -78,20 +78,39 @@ class Guides extends Model {
     	return $threads;
     }
 
-    public static function getTopCommunities($date) {
-    	if ($date == "semana") {
-    		$communities = Community::withCount('threads')->get();
-			foreach ($communities as $community) {
-    	    	$community->index = Community::getCommunityPlacing($community->id);
-    		}
-    		$communities->sortBy('index')->take(2);
-    		foreach ($communities as $community) {
-    	    	$community->sub_count = UserCommunity::userCount($community->id);
-    	    	if (Auth::check() && UserCommunity::where('community_id', $community->id)->where('user_id', Auth::user()->id)->whereIn('subscription_type', [2000,5000])->exists()) {
-    	        	$community->is_mod = true;
-    	    	}
-    		}
-		return $communities;
-    	}
+    public static function getTopCommunities() {
+		$communities = Community::withCount('upvotes')
+        ->withCount('downvotes')
+        ->withCount('threads')
+        ->withCount('replies')
+        ->withCount('users')
+        ->get();
+		foreach ($communities as $community) {
+	    	$community->score = Community::getTopCommunityScore($community);
+        }
+        return $communities->sortByDesc('score')->take(3);
+    }
+
+    public static function getTopThreads() {
+        $threads = Thread::withCount('upvotes')
+        ->withCount('downvotes')
+        ->withCount('replies')
+        ->get();
+        foreach ($threads as $thread) {
+            $thread->score = Thread::getThreadScore($thread);
+        }
+        return $threads->sortByDesc('score')->take(3);
+    }
+
+    public static function getTopUsers() {
+        $users = User::withCount('replies')
+        ->withCount('threads')
+        ->get();
+        foreach ($users as $user) {
+            $user->score = User::getKarma($user->id);
+            $user->upvotes_count = User::getUserUpvotes($user->id);
+            $user->downvotes_count = User::getUserDownvotes($user->id);
+        }
+        return $users->sortByDesc('score')->take(3);
     }
 }

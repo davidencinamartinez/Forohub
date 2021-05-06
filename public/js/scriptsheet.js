@@ -45,18 +45,6 @@ $(document).ready(function() {
 			$(this).attr('class', 'thread-read-more');
 		}
 	});
-	/*setInterval(function() {
-		$.post('/Oz5ebsV9HnflVOUTX7d23AdcJyILNMtM0A2t08udzbsKCKNwgYzDTT8NmlwuIyxH', 
-			{
-				_token: $('meta[name="csrf-token"]').attr('content')
-			}, function(data, textStatus, xhr) {
-				if ($.isEmptyObject(data.on)) {
-					console.log('user_is_off');
-				} else {
-					console.log('user_is_on');
-				}
-		});
-	}, 300000);*/
 	if (getCookie('DARK_THEME_CHECK') == 'TRUE') {
 		$('html').css('background-color', '#1b1b1b');
 		$('.profile-dark-theme').attr('class', 'profile-light-theme');
@@ -230,6 +218,7 @@ function displayClock() {
 
 function validateRegister() {
 	event.preventDefault();
+	document.documentElement.style.cursor = "progress";
 	$('.modal-error').css('display', 'none');
 	$.ajaxSetup({
 	    headers: {
@@ -248,6 +237,7 @@ function validateRegister() {
 		},
 	})
 	.done(function(data) {
+		document.documentElement.style.cursor = "default";
 		if ($.isEmptyObject(data.error)) {
 			$('.modal-register-form, .modal-body p').remove();
 			createElement('div', {class: 'modal-success'}, '.modal-body');

@@ -92,7 +92,7 @@ class Community extends Model {
 
     public static function createCommunity($request) {
         $messages = [
-            // TAG
+            // COMMUNITY TAG
             'tag.required' => 'Campo vacío (Etiqueta)',
             'tag.unique' => 'Esta etiqueta no está disponible (Ocupada)',
             'tag.min' => 'La etiqueta debe contener mínimo 3 carácteres',
@@ -124,6 +124,7 @@ class Community extends Model {
             'tags' => 'required|array|min:3|max:20',
             'tags.*' => 'min:2|max:20|distinct|regex:/^[a-zA-Z0-9]+$/'
         ], $messages);
+        // If Validation Ok
         if ($validator->passes()) {
             $community = Community::create([
                 'created_at' => Carbon::now(),
@@ -132,15 +133,9 @@ class Community extends Model {
                 'title' => $request->title,
                 'description' => $request->description
             ]);
-            /* Reward */
-            if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '8')->doesntExist()) {
-                UserReward::createUserReward(Auth::user()->id, '8');
-                Notification::createNotification(Auth::user()->id, "Logro desbloqueado: La unión hace la fuerza", "reward");
-            }
-            // Reward Thread Author
-            $thread_author_id = Thread::where('id', $request->thread_id)->value('user_id');
+            /* Reward Community Creator */
             if (!UserReward::userHasReward(Auth::user()->id, 8)) {
-                USerReward::createUserReward($thread_author_id, 8);
+                UserReward::createUserReward(Auth::user()->id, 8);
             }
             /* Set User As Leader */
             UserCommunity::leaderJoinCommunity($community->id);
@@ -169,6 +164,21 @@ class Community extends Model {
             $users = UserCommunity::whereIn('subscription_type', [0, 2000])->with('user')->where('community_id', $community_id)->orderBy('subscription_type', 'desc')->paginate(30, ['*'], 'pagina');
         }
         return $users;
+    }
+
+    public static function getTopCommunities() {
+        $threads = Community::get();
+        foreach ($threads as $thread) {
+            $thread->score = Thread::getCommunityScore($thread->id);
+        }
+
+        $sorted = $threads->sortByDesc('score');
+        return array_search($thread_id, array_column($sorted->toArray(), 'id'))+1;
+    }
+
+    public static function getTopCommunityScore($community) {
+        // Return Result
+        return ($community->threads_count*0.05)+($community->replies_count*0.010)+($community->upvotes_count*0.025)+($community->downvotes_count*(-0.025))+($community->users_count*0.015);
     }
 
 }

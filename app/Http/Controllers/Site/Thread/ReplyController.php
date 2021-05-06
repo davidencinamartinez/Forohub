@@ -88,52 +88,28 @@ class ReplyController extends Controller {
             	// REWARDS
     			$user_reply_count = Reply::where('user_id', Auth::user()->id)->count();
     			if ($user_reply_count == 1) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '2')->doesntExist()) {
-                        $reward = Reward::where('id', 2)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-        				UserReward::createUserReward(Auth::user()->id, '2');
+                    if (!UserReward::userHasReward(Auth::user()->id, 2)) {
+                        UserReward::createUserReward(Auth::user()->id, 2);
                     }
     			} elseif ($user_reply_count == 100) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '3')->doesntExist()) {
-                        $reward = Reward::where('id', 3)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                        UserReward::createUserReward(Auth::user()->id, '3');
+                    if (!UserReward::userHasReward(Auth::user()->id, 3)) {
+                        UserReward::createUserReward(Auth::user()->id, 3);
                     }
     			} elseif ($user_reply_count == 500) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '4')->doesntExist()) {
-                        $reward = Reward::where('id', 4)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                        UserReward::createUserReward(Auth::user()->id, '4');
+                    if (!UserReward::userHasReward(Auth::user()->id, 4)) {
+                        UserReward::createUserReward(Auth::user()->id, 4);
                     }
     			} elseif ($user_reply_count == 1000) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '5')->doesntExist()) {
-                        $reward = Reward::where('id', 5)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                        UserReward::createUserReward(Auth::user()->id, '5');
+                    if (!UserReward::userHasReward(Auth::user()->id, 5)) {
+                        UserReward::createUserReward(Auth::user()->id, 5);
                     }
     			} elseif ($user_reply_count == 10000) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '6')->doesntExist()) {
-                        $reward = Reward::where('id', 6)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                        UserReward::createUserReward(Auth::user()->id, '6');
+                    if (!UserReward::userHasReward(Auth::user()->id, 6)) {
+                        UserReward::createUserReward(Auth::user()->id, 6);
                     }
     			} elseif ($user_reply_count == 50000) {
-                    if (UserReward::where('user_id', Auth::user()->id)->where('reward_id', '7')->doesntExist()) {
-                        $reward = Reward::where('id', 7)->first();
-                        $data["reward_title"] = $reward->name;
-                        $data["reward_logo"] = $reward->filename;
-                        Notification::createNotification(Auth::user()->id, json_encode($data), "reward");
-                        UserReward::createUserReward(Auth::user()->id, '7');
+                    if (!UserReward::userHasReward(Auth::user()->id, 7)) {
+                        UserReward::createUserReward(Auth::user()->id, 7);
                     }
     			}
             	return response()->json([

@@ -2,6 +2,8 @@
 
 @section('title', $community->title.' - Forohub')
 
+@section('description', $meta_description)
+
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
     <link rel="stylesheet" type="text/css" href="/css/desktop/misc_panel.css">

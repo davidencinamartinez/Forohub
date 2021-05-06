@@ -69,7 +69,7 @@ class RewardSeeder extends Seeder {
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'name' => 'Testigos del éxito',
-                'text' => 'Consigue que tu comunidad salga en el Top Mensual',
+                'text' => 'Consigue que tu comunidad salga en el Top Semanal',
                 'filename' => 'Eujy6wJ61GdtGAtgdlcJPuUctxcHlDI.webp'
             ], [
                 'created_at' => Carbon::now(),
@@ -81,7 +81,7 @@ class RewardSeeder extends Seeder {
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'name' => 'Un pequeño paso para el hombre, un gran salto para la humanidad',
-                'text' => 'Consigue que uno de tus temas salga en el Top Mensual',
+                'text' => 'Consigue que uno de tus temas salga en el Top Semanal',
                 'filename' => 'gidM281JesJTtogmJu7jv5Ayq9bAGUn.webp'
             ], [
                 'created_at' => Carbon::now(),
@@ -111,7 +111,7 @@ class RewardSeeder extends Seeder {
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'name' => 'Fuera de serie',
-                'text' => 'Consigue estar en el Top Mensual',
+                'text' => 'Consigue estar en el Top Semanal',
                 'filename' => 'N0cTuLBlBwe5eFB81uDqt5hXvt3rlzv.webp'
             ]
         ]);

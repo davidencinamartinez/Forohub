@@ -1,5 +1,7 @@
 @extends('layouts.desktop.main')
 
+@section('description', 'Índice de temas. Aquí encontrarás un listado con todos los temas existentes en Forohub')
+
 @isset ($character)
 	@section('title', 'Guía de temas ('.strtoupper($character).') - Forohub')
 @else

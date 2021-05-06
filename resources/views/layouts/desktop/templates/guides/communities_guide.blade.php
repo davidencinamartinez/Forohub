@@ -28,7 +28,7 @@
 		        </div>
 		        <div title="Posición en el Ranking">
 		            <img src="/src/media/xovLYVakqdxxo2OJVDPqbozbPp1W8InJqr4MbEPBHVzUmgM7Sf4uqFJMfGAUTalU.png">
-		            <b>{{ $community->index }}</b>
+		            <b>{{ $loop->index+1 }}</b>
 		        </div>
 			</div>
 		</div>

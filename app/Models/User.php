@@ -73,6 +73,10 @@ class User extends Authenticatable implements MustVerifyEmail {
         return $this->hasMany('App\Models\Vote', 'thread_id')->where('vote_type', 0);
     }
 
+    public function replies() {
+        return $this->hasMany('App\Models\Reply', 'user_id');
+    }
+
     public static function getKarma($user_id) {
         $karma = 1;
         $threads = Thread::where('user_id', $user_id)->withCount('upvotes')->withCount('downvotes')->get();

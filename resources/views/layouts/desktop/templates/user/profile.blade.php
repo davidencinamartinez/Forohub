@@ -2,6 +2,8 @@
 
 @section('title', $data->name.' - Forohub')
 
+@section('description', $meta_description)
+
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
     <link rel="stylesheet" type="text/css" href="/css/desktop/misc_panel.css">
@@ -19,7 +21,7 @@
 	    	@if (Auth::check() && Auth::user()->id == $data->id)
 	    	<div class="profile-configuration">
 				<div class="profile-configuration-title">Configuración</div>
-	    	    <form>
+	    	    <div class="profile-configuration-data">
 	    	    	<div>
 		        		<h4 class="input-title">Fecha de registro: <label class="user-register-date" style="text-transform: capitalize;">{{ Auth::user()->created_at }}</label></h4>
 		        	</div>
@@ -68,7 +70,7 @@
 			        		</div>
 		        		</div>
 		        	</div>
-	    	    </form>
+	    	    </div>
 	    	</div>
 	    	@endif
 	    	@if ($threads->isNotEmpty())

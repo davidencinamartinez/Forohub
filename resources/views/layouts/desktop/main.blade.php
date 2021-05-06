@@ -3,12 +3,13 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name="description" content="@yield('description')">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@if ($unread_notifications)
 		<title>({{ $unread_notifications }}) @yield('title')</title>
 	@else
 		<title>@yield('title')</title>
 	@endif
-	<link rel='shortcut icon' type='image/png' href='/src/media/favicon.png'>
+		<link rel='shortcut icon' type='image/png' href='/src/media/favicon.png'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/min.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/header.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/footer.css") }}'>
@@ -18,10 +19,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/moment_js/moment.js"></script>
 		<script type="text/javascript" src="/js/moment_js/es.js"></script>
-		<!--
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
-		-->
 		@if (Auth::check())
 		<script src='{{ asset("/js/authenticated.js") }}'></script>
 		@else
@@ -34,12 +31,11 @@
 <body>
 	<div class='header'>
 		<a href="/">
-			<img class='forohub-logo' src='/src/media/logo_white.webp' alt='forohub_logo' title='Forohub' clickeable>
+			<img class='main-logo' src='/src/media/logo_white.webp' alt='forohub_logo' title='Forohub' clickeable>
 		</a>
 		<div class='user-login'>
 			@if (Auth::check())
 				<div class='user-header-panel'>
-					<img class='user-avatar' src='{{ Auth::user()->avatar }}'>
 					@if ($unread_notifications)
 						@if ($unread_notifications > 9)
 							<div class="user-unread-notifications">9+</div>
@@ -47,13 +43,13 @@
 							<div class="user-unread-notifications">{{ $unread_notifications }}</div>
 						@endif
 					@endif
-					<span class='user-welcome'>
-						<b>{{ Auth::user()->name }}</b>
-						<br>
-						<label>{{ Auth::user()->about }}</b>
-					</span>
-					<br>
-					<br>
+					<div>
+						<img class='user-avatar' src='{{ Auth::user()->avatar }}'>
+						<div class='user-info'>
+							<b title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</b>
+							<label title="{{ Auth::user()->about }}">{{ Auth::user()->about }}</label>
+						</div>
+					</div>
 					<div class='user-buttons' style='text-align: center; display: inline-block;'>
 						<a class="user-profile" href="/u/{{ strtolower(Auth::user()->name) }}">
 					  		<button>Mi Perfil</button>
@@ -95,7 +91,7 @@
 			<div style="float: left;">
 				<a href='/' title='Inicio'>Inicio</a>
 				<a href='/destacados' id='forumEntry' title='Destacados'>Destacados</a>
-				<a href='/tops/semana' title='Tops'>Tops</a>
+				<a href='/tops' title='Tops'>Tops</a>
 				<a href='/comunidades/' title='Comunidades'>Comunidades</a>
 			</div>
 			<div style="float: right;">
