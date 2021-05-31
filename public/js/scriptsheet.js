@@ -21,6 +21,10 @@ $(document).ready(function() {
 			$('.modal').remove();
 		})
 	});
+	$(document).on('click', '#password-reset-submit', function(event) {
+		event.preventDefault();
+		submitPasswordReset();
+	});
 	$('.thread-body').each(function(index, el) {
 		if ($(this).prop('scrollHeight') > 600) {
 			$(this).parent().find('.thread-info:first').prepend('<button class="thread-read-more">Ver más</button>');
@@ -98,6 +102,35 @@ $(document).ready(function() {
 			$(this).siblings('label').text(' (Pulsa para ocultar)');
 			spoiler.show('400');
 		}
+	});
+	$(document).on('click', '#reset-password-button', function(event) {
+		event.preventDefault();
+		$('.error').remove();
+		$.ajax({
+			url: '/HpcyzfjU5XVmthirMI9HuLCq63JLSyjuxQELob8IIH47rXGuMbvmTXqsxI1iToXS',
+			type: 'POST',
+			data: {
+				_token: $('meta[name="csrf-token"]').attr('content'),
+				reset_token: window.location.href.split('/')[4],
+				email: window.location.href.split('/')[5],
+				password: $('input[name="reset-password-new-password"]').val(),
+				password_repeat: $('input[name="reset-password-confirm-password"]').val(),
+			},
+		}).done(function(data) {
+			if ($.isEmptyObject(data.error)) {
+				$('#reset-password-container').not('#reset-password-container > img').empty();
+				createElement('div', {id: 'success-container'}, '#reset-password-container');
+				createElement('p', null, '#success-container', 'Tu contraseña se ha actualizado con éxito!');
+				createElement('p', null, '#success-container', 'Serás redirigido automáticamente en 5 segundos');
+				setTimeout(function () {
+					location.replace('/');
+				}, 5000);
+			} else {
+				createElement('p', {class: 'error'}, '#reset-password-container', data.error);
+			}
+		}).fail(function() {
+			notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
+		});
 	});
 	$('marquee').click(function(event) {
 		createModal();
@@ -725,5 +758,42 @@ function votePollOption(option) {
 			$(this).find('.option-data').css('width', data.success[index].percentage+'%');
 			$(this).find('.option-data > label').text(data.success[index].percentage+'% ('+data.success[index].votes_count+' votos)');
 		});
+	});
+}
+
+function passwordResetModal() {
+	createModal();
+	// Modal Body Elements
+		createElement('img', {class: 'modal-logo', src: '/src/media/logo_black.webp'}, '.modal-body');
+		createElement('h2', null, '.modal-body', 'Restablecer contraseña'); // Title
+		createElement('p', null, '.modal-body', 'Introduce la dirección de correo electrónico vinculada a la cuenta<br>que estás intentando recuperar:')
+		createElement('input', {type: 'text', id: 'password-reset-input', placeholder: 'Correo electrónico', style: 'font-size: 16px; padding: 12px; width: 80%'}, '.modal-body');
+		createElement('button', {id: 'password-reset-submit', style: 'margin-top: 20px;'}, '.modal-body', 'Recuperar contraseña');
+		// Modal Error
+			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-body');
+			createElement('ul', null, '.modal-error');	
+}
+
+function submitPasswordReset() {
+	$.ajax({
+		url: '/a6vqpp8yQftQSQv2QcYVnI5nYyEig6BhB1lHnZmykmdcwq4FOIOogko1u7YDgqsl',
+		type: 'POST',
+		data: {
+			_token: $('meta[name="csrf-token"]').attr('content'),
+			email: $("#password-reset-input").val(),
+		},
+	}).done(function(data) {
+		if (!$.isEmptyObject(data.error)) {
+			$('.modal-error').css('display', 'block');
+			$('.modal-error ul').empty();
+			createElement('li', null, '.modal-error ul', data.error);
+		} else {
+			$('.modal-body *:not(".modal-logo")').remove();
+			createElement('div', {class: 'modal-success'}, '.modal-body');
+			createElement('p', null, '.modal-success', 'Te hemos enviado un correo electrónico para restablecer tu contraseña');
+			createElement('p', null, '.modal-success', 'Dispones de 60 minutos para efectuar los cambios correspondientes');
+		}
+	}).fail(function() {
+		notifyUser('⚠️ Lo sentimos, hubo un problema con tu petición (Error 500) ⚠️');
 	});
 }

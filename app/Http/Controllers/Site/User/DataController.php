@@ -21,6 +21,8 @@ use App\Models\Vote;
 use App\Models\PollVote;
 use App\Models\PollOption;
 use Hash;
+use Illuminate\Support\Str;
+use Mail;
 
 class DataController extends Controller {
 
@@ -308,4 +310,89 @@ class DataController extends Controller {
             }
         }
 
+        /* RESET USER PASSWORD */
+
+        function validateResetEmail(Request $request) {
+            if (!Auth::check()) {
+                $messages = [
+                    'email.required' => 'Campo vacío (Correo electrónico)',
+                    'email.email' => 'Debes introducir una dirección de correo válida',
+                    'email.exists' => 'Este correo electrónico no está vinculado a ninguna cuenta existente',
+                ];
+                $validator = Validator::make($request->all(), [
+                    'email' => 'required|email|exists:users,email'
+                ], $messages);
+                if ($validator->passes()) {
+                    $user = User::where('email', $request->email)->first();
+                    DB::table('password_resets')->insert([
+                        'email' => $request->email,
+                        'token' => Str::random(60),
+                        'created_at' => Carbon::now()
+                    ]);
+                    $token_data = DB::table('password_resets')
+                    ->where('email', $request->email)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+                    if ($this->sendResetEmail($request->email, $token_data->token)) {
+                        return response()->json(['status', 'A reset link has been sent to your email address.']);
+                    } else {
+                        return response()->json(['error' => 'A Network Error occurred. Please try again.']);
+                    }
+                } else {
+                    return response()->json(['error' => $validator->getMessageBag()->first()]);
+                }
+            }
+        }
+
+        private function sendResetEmail($email, $token) {
+            $link = '/reset/'.$token.'/'.$email;
+            $to_email = $email;
+            $data = array('link'=>$link);
+            try {
+                Mail::send('emails.user_password_reset_email', $data, function ($message) use ($to_email) {
+                    $message->to($to_email)->subject('Restablecer contraseña - Forohub');
+                    $message->from('nicolekingston1990@gmail.com', 'Forohub');
+                });
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+
+        public function resetPasswordView($token, $email) {
+            if (Auth::check()) {
+                abort(404);
+            }
+            if (DB::table('password_resets')
+                ->where('token', $token)
+                ->where('email', $email)
+                ->where('created_at', '>', Carbon::now()->subMinutes(60))
+                ->doesntExist()) {
+                abort(404);
+            }
+            return view('layouts.desktop.templates.user.reset_password');
+        }
+
+        public function resetPassword(Request $request) {
+            $messages = [
+                'password.required' => 'Es obligatorio rellenar todos los campos',
+                'password.min' => 'La contraseña debe contener mínimo 8 carácteres',
+                'password.max' => 'La contraseña debe contener máximo 64 carácteres',
+                'password_repeat.required' => 'Es obligatorio rellenar todos los campos',
+                'password_repeat.same' => 'Las contraseñas no coinciden, revísalo',
+            ];
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:8|max:64',
+                'password_repeat' => 'required|same:password'
+            ], $messages);
+            if ($validator->passes()) {
+                DB::table('password_resets')
+                ->where('email', $request->email)
+                ->where('token', $request->reset_token)
+                ->delete();
+                User::where('email', $request->email)->update(['password'=> Hash::make($request->password)]);
+            } else {
+                return response()->json(['error' => $validator->getMessageBag()->first()]);
+            }
+        }
 }

@@ -24,6 +24,7 @@ use Auth;
 use Validator;
 use DB;
 use App\Models\VerifyUser;
+use Illuminate\Support\Str;
 
 class IndexController extends Controller {
 
@@ -278,8 +279,8 @@ class IndexController extends Controller {
 
     function test() {
 
-        return Guides::getTopUsers();
-
+       $lala = User::where('email', 'davidencina1996@gmail.com')->first()->email;
+return $lala;
 
 
     }

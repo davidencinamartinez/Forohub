@@ -4,11 +4,11 @@
 	<meta charset='utf-8'>
 	<meta name="description" content="@yield('description')">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	@if ($unread_notifications)
+	@isset ($unread_notifications)
 		<title>({{ $unread_notifications }}) @yield('title')</title>
 	@else
 		<title>@yield('title')</title>
-	@endif
+	@endisset
 		<link rel='shortcut icon' type='image/png' href='/src/media/favicon.png'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/min.css") }}'>
 		<link rel='stylesheet' type='text/css' href='{{ asset("/css/desktop/header.css") }}'>
@@ -36,13 +36,13 @@
 		<div class='user-login'>
 			@if (Auth::check())
 				<div class='user-header-panel'>
-					@if ($unread_notifications)
+					@isset ($unread_notifications)
 						@if ($unread_notifications > 9)
 							<div class="user-unread-notifications">9+</div>
 						@else
 							<div class="user-unread-notifications">{{ $unread_notifications }}</div>
 						@endif
-					@endif
+					@endisset
 					<div>
 						<img class='user-avatar' src='{{ Auth::user()->avatar }}'>
 						<div class='user-info'>
@@ -71,7 +71,7 @@
 				</form>
 				<span class="register-label">
 					<b>Has olvidado tu contraseña?
-						<a style="color: #FFB600; cursor: pointer;" onclick="registerModal()">Click aquí</a>
+						<a style="color: #FFB600; cursor: pointer;" onclick="passwordResetModal()">Click aquí</a>
 					</b>
 				</span>
 				<br>

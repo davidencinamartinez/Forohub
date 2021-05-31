@@ -47,6 +47,12 @@ use Illuminate\Support\Facades\Route;
 
 	Route::post('/Oz5ebsV9HnflVOUTX7d23AdcJyILNMtM0A2t08udzbsKCKNwgYzDTT8NmlwuIyxH', [App\Http\Controllers\Site\User\DataController::class, 'isLoged']);
 
+	Route::post('/a6vqpp8yQftQSQv2QcYVnI5nYyEig6BhB1lHnZmykmdcwq4FOIOogko1u7YDgqsl', [App\Http\Controllers\Site\User\DataController::class, 'validateResetEmail']);
+
+	Route::get('/reset/{token}/{email}', [App\Http\Controllers\Site\User\DataController::class, 'resetPasswordView']);
+
+	Route::post('/HpcyzfjU5XVmthirMI9HuLCq63JLSyjuxQELob8IIH47rXGuMbvmTXqsxI1iToXS', [App\Http\Controllers\Site\User\DataController::class, 'resetPassword']);
+
 	/* UPDATE USER DATA */
 
 		Route::post('/fOvpJZWfCJAULgNxBxVINoFyr6k9rBxxqG2HMbGGDZjN3HidWmWTrUPqaJPNCIqV', [App\Http\Controllers\Site\User\DataController::class, 'passwordUpdate']);

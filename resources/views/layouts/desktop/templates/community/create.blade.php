@@ -2,7 +2,7 @@
 
 @section('title', 'Crear Comunidad - Forohub')
 
-@section('description', 'Aquí podrás crear tu propia comunidad, basándola en unos intereses concretos, y atraer a usuarios para hacerla crecer día a día')
+@section('description', 'Aquí podrás crear un tema, ya sea para resolver cualquier inquietud que tengas, o abrir un debate con el resto de usuarios de la plataforma de Forohub')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
