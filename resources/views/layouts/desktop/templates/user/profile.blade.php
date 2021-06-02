@@ -5,11 +5,11 @@
 @section('description', $meta_description)
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/misc_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/user.css">
+    <link rel="stylesheet" type="text/css" href="/css/LorEh6J3JDeDflokqvfpsYgK7yDIvyMl6qcULvqIgR8qGZ3zkagvsvtpw5pZ1rr8.css">
+    <link rel="stylesheet" type="text/css" href="/css/dYLviCaMKKoganQbQUa7lwhnlGund6PVLESCtn4jSJ00xXWCahDLUxHsMjyDFpHu.css">
+    <link rel="stylesheet" type="text/css" href="/css/L02AaerYckTaqAgneODgPhYXNglw7NjScj7Wvu2SulxxotSZiCMHJpQ7fQKdIfU0.css">
+    <link rel="stylesheet" type="text/css" href="/css/lMCdpjFSu5vMoCSIeycbdokrQqWyPZNLmvjARCwXWC4bkKQCg4BWhlpTQ1gqxMPI.css">
+    <link rel="stylesheet" type="text/css" href="/css/RUF5xFYFWBPk4UkDWGl0ZfOqJaRw7DbTYQtu3DiqNSwAfv5mP4BXZXCg5xAflVs0.css">
 @endpush
 @push('scripts')
 	<script type="text/javascript" src="/js/profile_actions.js"></script>

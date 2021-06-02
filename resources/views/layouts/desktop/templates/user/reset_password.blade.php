@@ -3,7 +3,7 @@
 @section('title', 'Restablecer contraseña - Forohub')
 
 @push('styles')
-	<link rel="stylesheet" type="text/css" href='{{ asset("/css/desktop/forgot_password.css") }}'>
+	<link rel="stylesheet" type="text/css" href='{{ asset("/css/S2t7rF0GaegLEXSHnuJogTw2tv4Po0OXHqSV5RWhUXbHLvNbJ6CoL0FheL5ZrqVL.css") }}'>
 @endpush
 @push('scripts')
 @endpush

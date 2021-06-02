@@ -5,10 +5,10 @@
 @section('description', $meta_description)
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="css/desktop/thread_panel.css">
-    <link rel="stylesheet" type="text/css" href="css/desktop/misc_panel.css">
-    <link rel="stylesheet" type="text/css" href="css/desktop/thread.css">
-    <link rel="stylesheet" type="text/css" href="css/desktop/lateral_panel.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/B7o87L2YkZdnuQkqz68BKA35j2mc0OLjT86jSOrps19DHKjTHCVjMrjaQCpz7m6k.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/dYLviCaMKKoganQbQUa7lwhnlGund6PVLESCtn4jSJ00xXWCahDLUxHsMjyDFpHu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/L02AaerYckTaqAgneODgPhYXNglw7NjScj7Wvu2SulxxotSZiCMHJpQ7fQKdIfU0.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/lMCdpjFSu5vMoCSIeycbdokrQqWyPZNLmvjARCwXWC4bkKQCg4BWhlpTQ1gqxMPI.css') }}">
 @endpush
 @push('scripts')
 @endpush

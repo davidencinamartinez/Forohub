@@ -1,0 +1,97 @@
+.top-element-container {
+    width: 400px;
+    border: solid 1px black;
+    background-color: #6b6b6b;
+    display: inline-block;
+    margin: 6px;
+    min-width: 350px;
+    max-width: 400px;
+    width: 33.3%;
+    border-radius: 12px;
+}
+
+.top-element-container-title {
+    background-color: #ffb600;
+    width: 100%;
+    text-align: center;
+    padding: 16px 0px;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: solid 1px black;
+}
+
+.top-element {
+    display: flex;
+    border-bottom: solid 1px black !important;
+    color: black;
+    text-shadow: none;
+    height: 200px;
+}
+
+.top-element:last-child {
+    border-bottom: unset;
+}
+
+.top-element-image {
+    margin-left: 20px;
+    border-radius: 50%;
+    border: solid 1px black;
+    width: 70px;
+    height: 70px;
+    background-color: ghostwhite;
+}
+
+.top-element-data {
+    padding: 10px;
+    width: 40%;
+    align-self: center;
+    display: grid;
+}
+
+.top-element-data b {
+    font-size: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.top-element-data i {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.top-position {
+    width: 30%;
+    font-size: 30px;
+    text-align: center;
+}
+
+.top-position-first {
+    border-radius: 50%;
+    padding: 10px;
+    background-image: linear-gradient(to top, #BF953F 10%, #ffef50 45%, #BF953F);
+    border: solid 2px black;
+}
+
+.top-position-second {
+    border-radius: 50%;
+    padding: 10px;
+    background-image: linear-gradient(to top, #848484 10%, #cccccc 45%, #848484);
+    border: solid 2px black;
+}
+
+.top-position-third {
+    border-radius: 50%;
+    padding: 10px;
+    background-image: linear-gradient(to top, #946700 10%, #da9800 45%, #946700);
+    border: solid 2px black;
+}
+
+.top-element-stats {
+    display: flex;
+    margin: 10px 0px;
+    font-weight: bold;
+    width: 85%;
+    margin: 20px auto;
+}
+

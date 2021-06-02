@@ -5,50 +5,8 @@
 @section('description', 'Lo mejor de lo mejor. Aquí encontrarás las mejores comunidades, los mejores temas y los usuarios más populares de la semana')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/classes.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/tops.css">
-    <style type="text/css">
-    	.top-element-container {
-    		width: 400px;
-    		border: solid 1px black;
-    		background-color: #6b6b6b;
-    		display: inline-block;
-    		margin: 6px;
-    	}
-
-    	.top-element-container-title {
-    		background-color: #ffb600;
-		    width: 100%;
-		    text-align: center;
-		    padding: 16px 0px;
-		    border-radius: 10px 10px 0px 0px;
-		    border-bottom: solid 1px black;
-    	}
-
-    	.top-element {
-    		display: flex;
-    		border-bottom: solid 1px black !important;
-    		color: black;
-    		text-shadow: none;
-    		height: 200px;
-    	}
-
-    	.top-element-image {
-    		margin-left: 20px;
-    		border-radius: 50%;
-    		border: solid 1px black;
-    		width: 70px;
-    		height: 70px;
-    		background-color: ghostwhite;
-    	}
-
-    	.top-element-data {
-    		padding: 10px;
-    		width: 40%;
-    		align-self: center;
-    		display: grid;
-    	}
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/8AE3kMi5LgMMKoboN0dEZF8aHTmAeZ1xmReLDBB2cJd4ytvHNPlzfT0m3SI5lH40.css">
+    <link rel="stylesheet" type="text/css" href="/css/Qaa3sfPYzde0Y65kX1TjRAqH2UvKzsvwoBavOYn43jhy4nbUHon8hW3I23crFrEc.css">
 @endpush
 @push('scripts')
 	<script type="text/javascript" src="/js/guides.js"></script>

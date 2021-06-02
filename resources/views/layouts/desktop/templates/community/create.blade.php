@@ -5,10 +5,10 @@
 @section('description', 'Aquí podrás crear un tema, ya sea para resolver cualquier inquietud que tengas, o abrir un debate con el resto de usuarios de la plataforma de Forohub')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/new_community.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/classes.css">
+    <link rel="stylesheet" type="text/css" href="/css/LorEh6J3JDeDflokqvfpsYgK7yDIvyMl6qcULvqIgR8qGZ3zkagvsvtpw5pZ1rr8.css">
+    <link rel="stylesheet" type="text/css" href="/css/MIRPYFD0eaGe3yaFaz6VGq4JxtbowX2Gm6qbV4xV4ChkSnP7viTLiOoaTEhOgFz7.css">
+    <link rel="stylesheet" type="text/css" href="/css/lMCdpjFSu5vMoCSIeycbdokrQqWyPZNLmvjARCwXWC4bkKQCg4BWhlpTQ1gqxMPI.css">
+    <link rel="stylesheet" type="text/css" href="/css/8AE3kMi5LgMMKoboN0dEZF8aHTmAeZ1xmReLDBB2cJd4ytvHNPlzfT0m3SI5lH40.css">
 @endpush
 @push('scripts')
 	<script type="text/javascript" src="/js/newcommunity.js"></script>

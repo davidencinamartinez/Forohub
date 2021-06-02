@@ -3,7 +3,7 @@
 @section('title', 'Reportes · c/'.$community->tag.' - Forohub')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/reports.css">
+    <link rel="stylesheet" type="text/css" href="/css/lsQ3ucw5ssUvul0bsFuTKR4vEPtw75deUZjctR9D1t3fRu2I1AaBRkhDCrpRFcHW.css">
 @endpush
 @push('scripts')
     <script type="text/javascript" src="/js/community_reports.js"></script>

@@ -5,10 +5,10 @@
 @section('description', $meta_description)
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/misc_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/LorEh6J3JDeDflokqvfpsYgK7yDIvyMl6qcULvqIgR8qGZ3zkagvsvtpw5pZ1rr8.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/dYLviCaMKKoganQbQUa7lwhnlGund6PVLESCtn4jSJ00xXWCahDLUxHsMjyDFpHu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/L02AaerYckTaqAgneODgPhYXNglw7NjScj7Wvu2SulxxotSZiCMHJpQ7fQKdIfU0.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/lMCdpjFSu5vMoCSIeycbdokrQqWyPZNLmvjARCwXWC4bkKQCg4BWhlpTQ1gqxMPI.css') }}">
 @endpush
 @push('scripts')
 @if ($thread->user_is_admin || $thread->user_is_leader)

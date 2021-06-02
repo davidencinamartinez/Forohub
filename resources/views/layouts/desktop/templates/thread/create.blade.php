@@ -5,10 +5,10 @@
 @section('description', 'Aquí podrás crear un tema, ya sea para resolver inquietudes que tengas, o abrir un debate con el resto de usuarios de la plataforma de Forohub')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="/css/desktop/thread_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/new_thread.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/lateral_panel.css">
-    <link rel="stylesheet" type="text/css" href="/css/desktop/classes.css">
+    <link rel="stylesheet" type="text/css" href="/css/B7o87L2YkZdnuQkqz68BKA35j2mc0OLjT86jSOrps19DHKjTHCVjMrjaQCpz7m6k.css">
+    <link rel="stylesheet" type="text/css" href="/css/q4qRRTPxmFxmP4XImrbCE0RV5M6g1zxkeabuZbe8f3SMElclqBrqZwkuHEHzTEIo.css">
+    <link rel="stylesheet" type="text/css" href="/css/lMCdpjFSu5vMoCSIeycbdokrQqWyPZNLmvjARCwXWC4bkKQCg4BWhlpTQ1gqxMPI.css">
+    <link rel="stylesheet" type="text/css" href="/css/8AE3kMi5LgMMKoboN0dEZF8aHTmAeZ1xmReLDBB2cJd4ytvHNPlzfT0m3SI5lH40.css">
 @endpush
 @push('scripts')
 	<script type="text/javascript" src="/js/newthread.js"></script>

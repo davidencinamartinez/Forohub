@@ -1,0 +1,77 @@
+.user-data {
+	width: 800px;
+	border: solid 1px black;
+	background-color: #6b6b6b;
+	margin: 40px auto;
+	display: flex;
+}
+
+.user-data-avatar {
+	padding: 10px 10px 10px 0px;
+	width: 400px;
+	text-align: center;
+}
+
+.user-data-avatar > img {
+	width: 90%;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+.user-data-general {
+	height: -webkit-fit-content;
+	height: -moz-fit-content;
+	height: fit-content;
+}
+
+.user-data-general > h1 {
+	margin: none;
+}
+
+.user-data-stats img {
+	width: 32px;
+	height: 32px;
+	vertical-align: bottom;
+}
+
+.profile-configuration {
+	float: right;
+	width: 80%;
+	border-radius: 10px;
+	border: solid 1px black;
+	min-width: 600px;
+	display: none;
+	background-color: #6B6B6B;
+}
+
+.profile-configuration-title {
+	float: right;
+	min-width: 600px;
+	transition: 0.25s;
+	border-top: none;
+	width: 100%;
+	border-bottom: solid 1px black;
+	background-color: #FFB600;
+	border-radius: 8px 8px 0px 0px;
+	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.profile-configuration-data {
+	margin-top: 40px;
+	padding: 20px;
+}
+
+.profile-configuration-set {
+	background-color: darkgrey;
+	padding: 20px;
+	border: solid 1px black;
+}
+
+.configuration-panel {
+	display: none;
+}
+

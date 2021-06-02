@@ -1,0 +1,121 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);/* HTML ELEMENTS */
+
+	html {
+		background-color: #AFAFAF;
+	}
+
+	body {
+		margin: 0px;
+	}
+
+	* {
+		font-family: 'Roboto', sans-serif;
+	}
+
+	button {
+		font-weight: bold;
+		padding: 4px;
+		outline: none;
+	}
+
+	input {
+		border: solid 1px black;
+		outline: none;
+		padding: 4px;
+		border-radius: 2px;
+	}
+
+	a {
+	    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    color: white;
+	    text-decoration: none;
+	    font-weight: bold;
+	}
+
+	a:hover {
+		color: #ffb600;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	marquee {
+		background-color: ghostwhite;
+	    margin: 10px 0px 0px 0px;
+	    padding: 12px;
+	    font-size: 14px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    border: solid 1px black;
+	}
+
+/* HASH ANIMATION */
+
+	@-webkit-keyframes hashAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
+	}
+
+	@keyframes hashAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
+	}
+
+/* FILE ANIMATION */
+
+	@-webkit-keyframes fileAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #ffb600;}
+	}
+
+	@keyframes fileAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #ffb600;}
+	}
+
+/* ERROR - SUCCESS */
+
+	.error {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    display: block;
+	    font-weight: bold;
+	    color: #e80000;
+	    font-size: 14px;
+	}
+
+	.success {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    display: block;
+	    font-weight: bold;
+	    color: limegreen;
+	    font-size: 14px;
+	}
+
+/* PAGINATOR */
+
+	.pageSelector li {	
+		display: inline-table;
+	}
+
+	.page-link {	
+		color: white;
+		background-color: #2F2F2F;
+		padding: 6px 10px;
+		text-decoration: none;
+		border: 1px solid black;
+		font-size: 22px;  
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	.page-link:hover {	
+		background-color: #6b6b6b;
+		color: white;
+	}
+
+	.pagination > li.active > span {
+		background-color: #FFB600;
+	}
+
+	.pagination > li > * {
+		border-radius: 4px;
+	}
+
+	.pagination > li > *:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+	}
+
