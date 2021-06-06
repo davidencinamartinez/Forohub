@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 			CommunitySeeder::class,
 			ThreadSeeder::class,
 			RewardSeeder::class,
-            ReplySeeder::class
+//            ReplySeeder::class
 		]);
     }
 }

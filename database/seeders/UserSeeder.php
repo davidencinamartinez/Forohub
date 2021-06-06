@@ -15,44 +15,18 @@ class UserSeeder extends Seeder {
      * @return void
      */
     public function run() {
+
     	// USERS
+
        	DB::table('users')->insert([
             'id' => 24111997,
-            'created_at' => Carbon::now()->sub('2 days'),
-            'updated_at' => Carbon::now()->sub('2 days'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         	'name' => 'Morfeo',
             'email' => 'davidencina1996@gmail.com',
             'password' => Hash::make('Supermarche666!'),
             'about' => 'Amo y Señor del Foro',
-            'avatar' => '/src/avatars/rAB7gUyCPXzlEe9MM4zdUrKFzpn8WKm.webp'
-        ]);
-        DB::table('users')->insert([
-            'created_at' => Carbon::now()->sub('1 day 6 hours'),
-            'updated_at' => Carbon::now()->sub('1 day 6 hours'),            
-            'name' => 'necannut',
-            'email' => 'neka541@gmail.com',
-            'password' => Hash::make('P@ssw0rd'),
-        ]);
-        DB::table('users')->insert([
-            'created_at' => Carbon::now()->sub('1 day 4 hours 30 minutes'),
-            'updated_at' => Carbon::now()->sub('1 day 4 hours 30 minutes'),
-            'name' => 'Fizkinfind',
-            'email' => 'gabri_24r@hotmail.com',
-            'password' => Hash::make('P@ssw0rd'),
-        ]);
-        DB::table('users')->insert([
-            'created_at' => Carbon::now()->sub('1 day 3 hours 10 minutes'),
-            'updated_at' => Carbon::now()->sub('1 day 3 hours 10 minutes'),
-            'name' => 'kyanitelastrada91',
-            'email' => 'carrepputo-5989@yopmail.com',
-            'password' => Hash::make('P@ssw0rd'),
-        ]);
-        DB::table('users')->insert([
-            'created_at' => Carbon::now()->sub('16 hours'),
-            'updated_at' => Carbon::now()->sub('16 hours'),
-            'name' => 'Deerweb',
-            'email' => 'jappyladdi@gmail.com',
-            'password' => Hash::make('P@ssw0rd'),
+            'avatar' => 'https://res.cloudinary.com/dt4uoou5x/image/upload/v1622984864/default_oenfws.webp'
         ]);
     }
 }

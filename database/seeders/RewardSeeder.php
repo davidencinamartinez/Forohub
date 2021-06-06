@@ -15,7 +15,9 @@ class RewardSeeder extends Seeder {
      * @return void
      */
     public function run() {
+
         // REWARD
+        
         DB::table('rewards')->insert([
             [
                 'created_at' => Carbon::now(),
