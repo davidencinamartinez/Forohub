@@ -25,6 +25,7 @@
 		<script src="{{ asset('/js/non_authenticated.js') }}"></script>
 		@endif
 		<script src="{{ asset('/js/scriptsheet.js') }}"></script>
+		<!--<script type="text/javascript" src="{{ asset('/js/zuv1CthgRAZYP0xk5OBvYDGVjcmt7dyPKmuMq7ixrgFLlPvVTFFldb4mDlohLfLv.js') }}"></script>-->
 		<meta content="{{ csrf_token() }}" name="csrf-token" />
 	@stack('scripts')
 </head>

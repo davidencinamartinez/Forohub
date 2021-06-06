@@ -134,11 +134,9 @@ class CommunityController extends Controller {
         if (Auth::user()) {
             // Unread Notifications
             $unread_notifications = app('App\Http\Controllers\Site\User\DataController')->unreadNotifications();
-            // Meta Description
-            $meta_description = $community->description.'. Tags: '.implode(', ', $tags->pluck('tagname')->toArray());
             // Return To View
             return view('layouts.desktop.templates.community.create')
-            ->with('unread_notifications', $unread_notifications)->with('meta_description', $meta_description);
+            ->with('unread_notifications', $unread_notifications);
         } else {
             return Redirect::to('/');
         }

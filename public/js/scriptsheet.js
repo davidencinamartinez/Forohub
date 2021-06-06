@@ -364,7 +364,7 @@ function registerModal() {
 		createElement('img', {class: 'modal-logo', src: '/src/media/logo_black.webp'}, '.modal-body');
 		createElement('h2', null, '.modal-body', 'Formulario de registro'); // Title
 		createElement('p', null, '.modal-body', 'Todos los campos son obligatorios (*)'); // Message
-		createElement('form', {class: 'modal-register-form', method: 'POST', action: 'http://192.168.1.5:8000/register', onsubmit: 'return validateRegister()'}, '.modal-body'); // Form
+		createElement('form', {class: 'modal-register-form', method: 'POST', action: '/register', onsubmit: 'return validateRegister()'}, '.modal-body'); // Form
 		// Modal Error
 			createElement('div', {class: 'modal-error', style: 'display: none'}, '.modal-register-form');
 			createElement('ul', null, '.modal-error');		

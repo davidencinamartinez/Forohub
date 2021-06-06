@@ -29,20 +29,3 @@ mix.sass('resources/sass/q4qRRTPxmFxmP4XImrbCE0RV5M6g1zxkeabuZbe8f3SMElclqBrqZwk
 mix.sass('resources/sass/Qaa3sfPYzde0Y65kX1TjRAqH2UvKzsvwoBavOYn43jhy4nbUHon8hW3I23crFrEc.scss', 'public/css'); // tops.css
 mix.sass('resources/sass/RUF5xFYFWBPk4UkDWGl0ZfOqJaRw7DbTYQtu3DiqNSwAfv5mP4BXZXCg5xAflVs0.scss', 'public/css'); // user.css
 mix.sass('resources/sass/S2t7rF0GaegLEXSHnuJogTw2tv4Po0OXHqSV5RWhUXbHLvNbJ6CoL0FheL5ZrqVL.scss', 'public/css'); // forgot_password.css
-
-
-mix.combine([
-    'resources/js/affiliates.js',
-    'resources/js/authenticated.js',
-    'resources/js/community.js',
-    'resources/js/community_reports.js',
-    'resources/js/guides.js',
-    'resources/js/newcommunity.js',
-    'resources/js/newthread.js',
-    'resources/js/non_authenticated.js',
-    'resources/js/profile_actions.js',
-    'resources/js/register.js',
-    'resources/js/reply.js',
-    'resources/js/scriptsheet.js',
-    'resources/js/thread_actions.js'
-], 'public/js/zuv1CthgRAZYP0xk5OBvYDGVjcmt7dyPKmuMq7ixrgFLlPvVTFFldb4mDlohLfLv.js');
