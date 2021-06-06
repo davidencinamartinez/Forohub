@@ -350,8 +350,8 @@ class DataController extends Controller {
             $data = array('link'=>$link);
             try {
                 Mail::send('emails.user_password_reset_email', $data, function ($message) use ($to_email) {
-                    $message->to($to_email)->subject('Restablecer contraseña - Forohub');
-                    $message->from('nicolekingston1990@gmail.com', 'Forohub');
+                    $message->to($to_email)->subject('Restablecer contraseña');
+                    $message->from('support@forohub.com', 'Forohub');
                 });
                 return true;
             } catch (\Exception $e) {

@@ -16,6 +16,15 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('/css/8AE3kMi5LgMMKoboN0dEZF8aHTmAeZ1xmReLDBB2cJd4ytvHNPlzfT0m3SI5lH40.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('/css/Ac7PvcuJsoVpdzpSoOMzfwJeoCGY8lDJaPjgd7JtVCHPldfs3jy12sw7wcxRZYiF.css') }}">
 	@stack('styles')
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-LR2TRJRM3Q"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-LR2TRJRM3Q');
+		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/moment_js/moment.js"></script>
 		<script type="text/javascript" src="/js/moment_js/es.js"></script>

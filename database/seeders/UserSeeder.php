@@ -26,7 +26,7 @@ class UserSeeder extends Seeder {
             'email' => 'davidencina1996@gmail.com',
             'password' => Hash::make('Supermarche666!'),
             'about' => 'Amo y Señor del Foro',
-            'avatar' => 'https://res.cloudinary.com/dt4uoou5x/image/upload/v1622984864/default_oenfws.webp'
+            'avatar' => 'https://res.cloudinary.com/dt4uoou5x/image/upload/v1622985065/mod_pu7cwk.webp'
         ]);
     }
 }
