@@ -122,7 +122,6 @@
     <div class="notification-bar"></div>
     <div class='footer'>
         <div class='social-network'>
-            <a href='https://twitter.com/forohub' target='_blank' title='Twitter'><img src='/src/media/tw_logo.webp' alt='twitter_logo'></a>
             <a href='https://www.facebook.com/forohub' target='_blank' title='Facebook'><img src='/src/media/fb_logo.webp' alt='facebook_logo'></a>
             <a href='https://www.instagram.com/forohub/' target='_blank' title='Instagram'><img src='/src/media/ig_logo.webp' alt='instagram_logo'></a>
         </div>

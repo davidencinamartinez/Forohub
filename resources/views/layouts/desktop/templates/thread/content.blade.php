@@ -86,7 +86,7 @@
                     <div class="thread-quick-reply">
                         <div>
                             <textarea class="thread-quick-reply-text" rows="4" maxlength="3000" placeholder="Deja un comentario..."></textarea>
-                            <div class="character-counter">
+                            <div class="character-counter on-thread">
                                 <label>0</label>
                                 <label>/3000</label>
                             </div>
