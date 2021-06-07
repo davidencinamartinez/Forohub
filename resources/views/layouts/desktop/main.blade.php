@@ -25,6 +25,8 @@
 
 		  gtag('config', 'G-LR2TRJRM3Q');
 		</script>
+		<!-- Google AdSense -->
+		<script data-ad-client="ca-pub-2178837299566296" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/moment_js/moment.js"></script>
 		<script type="text/javascript" src="/js/moment_js/es.js"></script>
@@ -121,7 +123,7 @@
     <div class='footer'>
         <div class='social-network'>
             <a href='https://twitter.com/forohub' target='_blank' title='Twitter'><img src='/src/media/tw_logo.webp' alt='twitter_logo'></a>
-            <a href='https://www.facebook.com/forohub/' target='_blank' title='Facebook'><img src='/src/media/fb_logo.webp' alt='facebook_logo'></a>
+            <a href='https://www.facebook.com/forohub' target='_blank' title='Facebook'><img src='/src/media/fb_logo.webp' alt='facebook_logo'></a>
             <a href='https://www.instagram.com/_u/viboxx/' target='_blank' title='Instagram'><img src='/src/media/ig_logo.webp' alt='instagram_logo'></a>
         </div>
         <div class='info'>
