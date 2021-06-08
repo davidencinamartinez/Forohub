@@ -168,6 +168,11 @@ $(document).ready(function() {
     	} 
 	});
 
+	$(document).on('click', '.thread-quick-reply-emoji', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+	});
+
 	$(document).on('click', '.modal-close, .modal-exit', function(event) {
 		$('.modal').fadeOut('fast', function() {
 			$('.modal').remove();

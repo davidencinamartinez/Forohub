@@ -187,7 +187,6 @@
                         }
 
                     .thread-body {
-                        width: 95%;
                         padding: 10px;
                         margin: 0px;
                         white-space: pre-line;
@@ -439,17 +438,18 @@
                 /* THREAD QUICK REPLY */
 
                     .thread-quick-reply {
-                        margin: 10px 0px 10px 10px;
+                        padding: 10px;
                         display: none;
                     }
 
                     .thread-quick-reply-text {
-                        width: 95%;
+                        width: 100%;
                         padding: 5px;
                         outline: none;
                         border-radius: 4px;
                         resize: none;
                         border: solid 1px black;
+                        box-sizing: border-box;
                     }
 
                     .thread-quick-reply-send {
@@ -482,6 +482,24 @@
 
                     .thread-quick-reply-cancel:hover {
                         background-color: #e80000;
+                    }
+
+                    .thread-quick-reply-emoji {
+                        margin: 0px 0px 0px 2px;
+                        border-radius: 2px;
+                        border: 1px solid #000;
+                        padding: 5px;
+                        outline: none;
+                        transition: .5s;
+                        cursor: pointer;
+                    }
+
+                    .thread-quick-reply-emoji:hover > span {
+                        display: none;
+                    }
+
+                    .thread-quick-reply-emoji:hover:before {
+                        content: "😁";
                     }
 
                     .thread-quick-reply-success {
