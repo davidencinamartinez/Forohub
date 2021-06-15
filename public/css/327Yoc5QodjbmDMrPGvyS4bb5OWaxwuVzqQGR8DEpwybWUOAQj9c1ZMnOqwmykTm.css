@@ -1,1 +1,179 @@
-@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);html{background-color:#afafaf}body{margin:0}*{font-family:Roboto,sans-serif}button{font-weight:700}button,input{padding:4px;outline:none}input{border:1px solid #000;border-radius:2px}a{text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000;color:#fff;text-decoration:none;font-weight:700}a:hover{color:#ffb600;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000}marquee{background-color:#f8f8ff;margin:10px 0 0;padding:12px;font-size:14px;border-radius:4px;cursor:pointer;border:1px solid #000}@-webkit-keyframes hashAnimation{to{box-shadow:0 0 8px 4px #b50000}}@keyframes hashAnimation{to{box-shadow:0 0 8px 4px #b50000}}@-webkit-keyframes fileAnimation{to{box-shadow:0 0 8px 4px #ffb600}}@keyframes fileAnimation{to{box-shadow:0 0 8px 4px #ffb600}}.error{color:#e80000}.error,.success{text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000;display:block;font-weight:700;font-size:14px}.success{color:#32cd32}.pageSelector li{display:inline-table}.page-link{color:#fff;background-color:#2f2f2f;padding:6px 10px;text-decoration:none;border:1px solid #000;font-size:22px;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000}.page-link:hover{background-color:#6b6b6b;color:#fff}.pagination>li.active>span{background-color:#ffb600}.pagination>li>*{border-radius:4px}.pagination>li>:hover{transition:.2s;box-shadow:1px 1px 5px 0 #2d2d2d}
+@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);/* HTML ELEMENTS */
+
+	html {
+		background-color: #AFAFAF;
+	}
+
+	body {
+		margin: 0px;
+	}
+
+	* {
+		font-family: 'Roboto', sans-serif;
+	}
+
+	button {
+		font-weight: bold;
+		padding: 4px;
+		outline: none;
+	}
+
+	input {
+		border: solid 1px black;
+		outline: none;
+		padding: 4px;
+		border-radius: 2px;
+	}
+
+	a {
+	    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    color: white;
+	    text-decoration: none;
+	    font-weight: bold;
+	}
+
+	a:hover {
+		color: #ffb600;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	marquee {
+		background-color: ghostwhite;
+	    margin: 10px 0px 0px 0px;
+	    padding: 12px;
+	    font-size: 14px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    border: solid 1px black;
+	}
+
+/* HASH ANIMATION */
+
+	@-webkit-keyframes hashAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
+	}
+
+	@keyframes hashAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #b50000;}
+	}
+
+/* FILE ANIMATION */
+
+	@-webkit-keyframes fileAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #ffb600;}
+	}
+
+	@keyframes fileAnimation {
+	  	100% {box-shadow: 0px 0px 8px 4px #ffb600;}
+	}
+
+/* ERROR - SUCCESS */
+
+	.error {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    display: block;
+	    font-weight: bold;
+	    color: #e80000;
+	    font-size: 14px;
+	}
+
+	.success {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	    display: block;
+	    font-weight: bold;
+	    color: limegreen;
+	    font-size: 14px;
+	}
+
+/* PAGINATOR */
+
+	.pageSelector li {	
+		display: inline-table;
+	}
+
+	.page-link {	
+		color: white;
+		background-color: #2F2F2F;
+		padding: 6px 10px;
+		text-decoration: none;
+		border: 1px solid black;
+		font-size: 22px;  
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+
+	.page-link:hover {	
+		background-color: #6b6b6b;
+		color: white;
+	}
+
+	.pagination > li.active > span {
+		background-color: #FFB600;
+	}
+
+	.pagination > li > * {
+		border-radius: 4px;
+	}
+
+	.pagination > li > *:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+	}
+
+/* EMOJI PANEL */
+
+	.emoji-panel {
+		height: 200px;
+		width: 100%;
+		border: solid 1px black;
+		background-color: ghostwhite;
+		overflow: hidden;
+		overflow-y: scroll;
+		margin: 10px 0px 10px 0px;
+		box-sizing: border-box;
+		display: none;
+	}
+
+	.emoji-panel::-webkit-scrollbar {
+		display: none;
+	}
+
+	.emoji-panel-close {
+		text-align: right;
+		cursor: pointer;
+	}
+
+	.emoji-panel-container {
+		padding: 0px 4px 4px 10px;
+		font-size: 18px;
+	}
+
+	.emoji-panel-title {
+		font-size: 14px;
+		font-weight: bold;
+		margin: 0px 0px 10px 10px;
+	}
+
+	.emoji-panel-selector {
+		margin: 0px 0px 20px 0px;
+	}
+
+	.emoji-panel label {
+		cursor: pointer;
+		display: inline-block;
+		transition: 0.25s;
+		-webkit-user-select: none;
+		   -moz-user-select: none;
+		    -ms-user-select: none;
+		        user-select: none;
+		font-size: 18px;
+		text-align: center;
+		height: 40px;
+		width: 45px;
+	}
+
+	.emoji-panel label:hover {
+		transform: scale(1.5);
+	}
+
+
+

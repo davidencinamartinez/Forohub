@@ -1,1 +1,350 @@
-.lateral-panel{width:50%;margin:20px}.lateral-cube{margin-bottom:10px;border-radius:10px;transition:.25s;font-size:14px;border:1px solid #000;width:350px;background-color:#6b6b6b}.lateral-cube:hover{box-shadow:1px 1px 5px 0 #2d2d2d;transition:.25s}.lateral-title{background-color:#ffb600;border-bottom:1px solid #000;border-radius:8px 8px 0 0;text-align:center;font-weight:700;padding:10px;font-size:16px}.top-communities{display:table;height:auto}.top-community{padding:0;text-align:center;width:33.3%;display:inline-grid;margin-bottom:10px}.top-community-logo{background-color:#f8f8ff;margin:10px auto;width:50px;height:50px;border:1px solid #000;border-radius:50%;box-shadow:1px 1px 5px 0 #2d2d2d}.user-actions{display:grid;text-align:center}.user-actions a{padding:10px}.user-actions a:not(:last-child){border-bottom:1px solid #000}.last-reply{padding:10px;display:block;cursor:pointer;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.last-reply:not(:last-child){border-bottom:1px solid #000}.last-reply>div{font-size:12px;font-weight:700}.forum-stats ul{text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000;color:#fff;font-weight:700}.lateral-community-procedures{padding:10px;text-align:center}.lateral-community-data{text-align:center;display:grid}.lateral-community-title{font-size:16px}.lateral-community-logo{margin:10px auto;width:50px;height:50px;border:1px solid #000;border-radius:50%;box-shadow:1px 1px 5px 0 #2d2d2d;background-color:#f8f8ff}.lateral-community-tag{font-style:italic;font-weight:700}.lateral-community-description{border:1px solid #000;text-align:left;margin:10px;padding:10px;border-radius:6px;background-color:#f8f8ff;white-space:pre-line}.lateral-community-users{margin:10px 0;vertical-align:middle;width:32px}.lateral-community-info{width:33.3%}.lateral-community-rule{text-align:justify}.lateral-community-moderators{padding:10px;text-align:justify}.lateral-community-moderators>img{width:24px;margin-left:4px;vertical-align:top}.lateral-community-moderators:not(:last-child),.lateral-community-rule:not(:last-child){border-bottom:1px solid #000}.lateral-community-rule{font-weight:700;padding:10px;cursor:pointer}.lateral-community-rule label{color:#ffb600;float:right;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000}.lateral-community-rule .rule-description{display:none;font-weight:400;margin-top:6px;text-align:justify}.lateral-community-tags{display:table;margin:10px 6px;text-align:justify}.lateral-community-keyword{border:1px solid #000;display:inline-table;margin:6px;background-color:#2f2f2f;color:#fff;padding:4px;border-radius:6px;transition:.25s}.lateral-community-keyword:hover{background-color:#4a4a4a;transition:.25s;cursor:pointer}.profile-cube{text-align:center;display:grid}.profile-cube>img{background-color:#f8f8ff;width:180px;height:180px;margin:10px auto auto;border-radius:10px;border:1px solid #000}.profile-cube>div{background:#ffb600;display:grid;padding:6px;margin-top:10px;border-radius:0 0 8px 8px;border-top:1px solid #000}.profile-cube>div>b{font-size:16px}.profile-cube>div>i{font-size:12px;font-weight:700}.profile-panel-buttons{padding:10px;text-align:center}.profile-panel-buttons button{margin:2px;cursor:pointer}.profile-stats-cube{display:inline-flex;text-align:center}.profile-stats-cube div{width:100%;padding:10px}.profile-stats-cube img{width:32px}.profile-rewards-text{display:grid;background:#4f4f4f;text-align:center;padding:10px 6px;color:#fff;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000;border-bottom:1px solid #000}.profile-rewards-text>label{font-size:12px}.profile-rewards-cube{border:1px solid #000;background:#afafaf;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;display:flex;text-align:center;margin:10px auto;padding:2px;border-radius:10px}.profile-rewards-cube img{border:1px solid #000;border-radius:6px;background-image:linear-gradient(0deg,#bf953f 10%,#ffef50 45%,#bf953f);margin:6px;width:50px!important;height:50px!important;cursor:pointer}.profile-rewards-cube img:hover{box-shadow:0 0 4px 2px green}.lateral-thread-options{padding:10px;text-align:center}.help-center{padding:10px;display:flex;text-align:left}.help-center-left,.help-center-right{width:50%;display:grid}.help-center a{text-decoration:none;color:#000;text-shadow:none;font-weight:400;font-size:12px}.help-center a:hover{color:#ffb600;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000}
+/* LATERAL PANEL */
+
+	.lateral-panel {
+		width: 50%;
+		margin: 20px;
+	}
+
+	.lateral-cube {
+		margin-bottom: 10px;
+		border-radius: 10px;
+		transition: 0.25s;
+		font-size: 14px;
+		border: solid 1px black;
+		width: 350px;
+		background-color: #6B6B6B;
+	}
+
+	.lateral-cube:hover {
+	    box-shadow: 1px 1px 5px 0px #2d2d2d;
+		transition: 0.25s;
+	}
+
+	.lateral-title {
+		background-color: #FFB600;
+		border-bottom: solid 1px black;
+		border-radius: 8px 8px 0px 0px;
+		text-align: center;
+		font-weight: bold;
+		padding: 10px;
+		font-size: 16px;
+	}
+
+	/* TOP COMMUNITIES */
+
+		.top-communities {
+			display: table;
+			height: auto;
+		}
+
+
+		.top-community {
+			padding: 0px;
+		    text-align: center;
+		    width: 33.3%;
+		    display: inline-grid;
+		    margin-bottom: 10px;
+		}
+
+		.top-community-logo {
+			background-color: ghostwhite;
+			margin: 10px auto 10px auto;
+			width: 50px;
+			height: 50px;
+			border: solid 1px black;
+			border-radius: 50%;
+			box-shadow: 1px 1px 5px 0px #2d2d2d;
+		}
+
+	/* USER ACTIONS */
+
+		.user-actions {
+			display: grid;
+			text-align: center;
+		}
+
+		.user-actions a {
+			padding: 10px 10px 10px 10px;
+		}
+
+		.user-actions a:not(:last-child) {
+			border-bottom: solid 1px black;
+		}
+
+	/* LAST REPLIES */
+		
+		.last-reply {
+			padding: 10px;
+			display: block;
+		    cursor: pointer;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    overflow: hidden;
+		}
+
+		.last-reply:not(:last-child) {
+			border-bottom: solid 1px black;
+		}
+
+		.last-reply > div {
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+	/* FORUM STATS */
+
+		.forum-stats ul {
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+			color: white;
+			font-weight: bold;
+		}
+
+	/* LATERAL COMMUNITY */
+
+		.lateral-community-procedures {
+			padding: 10px;
+			text-align: center;
+		}
+
+		.lateral-community-data {
+		    text-align: center;
+		    display: grid;
+		}
+
+		.lateral-community-title {
+		    font-size: 16px;
+		}
+
+		.lateral-community-logo {
+			margin: 10px auto 10px auto;
+			width: 50px;
+			height: 50px;
+			border: solid 1px black;
+			border-radius: 50%;
+			box-shadow: 1px 1px 5px 0px #2d2d2d;
+			background-color: ghostwhite;
+		}
+
+		.lateral-community-tag {
+		    font-style: italic;
+		    font-weight: bold;
+		}
+
+		.lateral-community-description {
+		    border: solid 1px black;
+	        text-align: left;
+	        margin: 10px;
+	        padding: 10px;
+	        border-radius: 6px;
+	        background-color: ghostwhite;
+	        white-space: pre-line;
+		}
+
+		.lateral-community-users {
+		    margin: 10px 0px 10px 0px;
+		    vertical-align: middle;
+		    width: 32px;
+		}
+
+		.lateral-community-info {
+			width: 33.3%;
+		}
+
+		.lateral-community-rule {
+			padding: 10px;
+			text-align: justify;
+		}
+
+		.lateral-community-moderators {
+			padding: 10px;
+			text-align: justify;
+		}
+
+		.lateral-community-moderators > img {
+			width: 24px;
+			margin-left: 4px;
+			vertical-align: top;
+		}
+
+		.lateral-community-rule:not(:last-child),
+		.lateral-community-moderators:not(:last-child) {
+			border-bottom: solid 1px black;
+		}
+
+		.lateral-community-rule {
+			font-weight: bold;
+			padding: 10px;
+			cursor: pointer;
+		}
+
+		.lateral-community-rule label {
+			color: #ffb600;
+		    float: right;
+		    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		}
+
+		.lateral-community-rule .rule-description {
+			display: none;
+		    font-weight: normal;
+		    margin-top: 6px;
+		    text-align: justify;
+		}
+
+		.lateral-community-tags {
+			display: table;
+		    margin: 10px 6px 10px 6px;
+		    text-align: justify;
+		}
+
+		.lateral-community-keyword {
+			border: solid 1px black;
+		    display: inline-table;
+		    margin: 6px;
+		    background-color: #2F2F2F;
+		    color: white;
+		    padding: 4px;
+		    border-radius: 6px;
+		    transition: 0.25s;
+		}
+
+		.lateral-community-keyword:hover {
+			background-color: #4A4A4A;
+			transition: 0.25s;
+			cursor: pointer;
+		}
+
+	/* LATERAL PROFILE */
+
+		.profile-cube {
+			text-align: center;
+			display: grid;
+		}
+
+		.profile-cube > img {
+			background-color: ghostwhite;
+			margin: auto;
+			width: 180px;
+			height: 180px;
+			margin-top: 10px;
+			border-radius: 10px;
+			border: solid 1px black;
+		}
+
+		.profile-cube > div {
+			background: #ffb600;
+		    display: grid;
+		    padding: 6px;
+		    margin-top: 10px;
+		    border-radius: 0px 0px 8px 8px;
+		    border-top: solid 1px black;
+		}
+
+		.profile-cube > div > b {
+			font-size: 16px;
+		}
+
+		.profile-cube > div > i {
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+		.profile-panel-buttons {
+			padding: 10px;
+			text-align: center;
+		}
+
+		.profile-panel-buttons button {
+			margin: 2px;
+			cursor: pointer;
+		}
+
+		.profile-stats-cube {
+			display: inline-flex;
+		    text-align: center;
+		}
+
+		.profile-stats-cube div {
+			width: 100%;
+			padding: 10px;
+		}
+
+		.profile-stats-cube img {
+			width: 32px;
+		}
+
+		.profile-rewards-text {
+			display: grid;
+			background: #4f4f4f;
+			text-align: center;
+			padding: 10px 6px 10px 6px;
+			color: white;
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+			border-bottom: solid 1px black;
+		}
+
+		.profile-rewards-text > label {
+			font-size: 12px;
+		}
+
+		.profile-rewards-cube {
+			border: solid 1px black;
+			background: #AFAFAF;
+			width: -webkit-fit-content;
+			width: -moz-fit-content;
+			width: fit-content;
+			display: flex;
+			/* margin: 10px; */
+			margin: 0 auto;
+			text-align: center;
+			margin: 10px auto;
+			padding: 2px;
+			border-radius: 10px;
+		}
+
+		.profile-rewards-cube img {
+			border: solid 1px black;
+			border-radius: 6px;
+			background-image: linear-gradient(to top, #BF953F 10%, #ffef50 45%, #BF953F);
+			margin: 6px;
+			width: 50px !important;
+			height: 50px !important;
+			cursor: pointer;
+		}
+
+		.profile-rewards-cube img:hover {
+			box-shadow: 0px 0px 4px 2px green;
+		}
+
+	/* LATERAL THREAD USER ACTIONS */
+
+		.lateral-thread-options {
+			padding: 10px;
+			text-align: center;
+		}
+
+	/* HELP CENTER */
+
+		.help-center {
+			padding: 10px;
+			display: flex;
+			text-align: left;
+		}
+
+		.help-center-left, .help-center-right {
+			width: 50%;
+			display: grid;
+		}
+
+		.help-center a {
+			text-decoration: none;
+			color: black;
+			text-shadow: none;
+			font-weight: normal;
+			font-size: 12px;
+		}
+
+		.help-center a:hover {
+			color: #ffb600;
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		}
+

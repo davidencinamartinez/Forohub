@@ -90,6 +90,7 @@
                                 <label>0</label>
                                 <label>/3000</label>
                             </div>
+                            @include('layouts.desktop.templates.thread.emojis')
                             <button class="thread-quick-reply-send" type="submit">Responder</button>
                             <button class="thread-quick-reply-cancel">Cancelar</button>
                             <button class="thread-quick-reply-emoji"><span>🙂</span></button>

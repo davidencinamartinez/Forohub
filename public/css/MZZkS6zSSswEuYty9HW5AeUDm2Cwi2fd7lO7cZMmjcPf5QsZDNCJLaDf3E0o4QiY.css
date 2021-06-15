@@ -1,1 +1,167 @@
-.community-configuration,.profile-configuration{float:right;width:80%;border-radius:10px;border:1px solid #000;min-width:600px;display:none;background-color:#6b6b6b}.community-configuration-title,.profile-configuration-title{float:right;min-width:600px;transition:.25s;border-top:none;width:100%;border-bottom:1px solid #000;background-color:#ffb600;border-radius:8px 8px 0 0;text-align:center;font-weight:700;padding:10px;font-size:16px;box-sizing:border-box}.community-configuration>form,.profile-configuration>form{margin-top:40px;padding:20px}.community-configuration-set,.profile-configuration-set{background-color:#a9a9a9;padding:20px 20px 10px;border:1px solid #000}.configuration-panel{float:right;width:80%;border-radius:10px;border:1px solid #000;min-width:600px;display:none;background-color:#6b6b6b}.panel-title{float:right;min-width:600px;transition:.25s;border-top:none;width:100%;border-bottom:1px solid #000;background-color:#ffb600;border-radius:8px 8px 0 0;text-align:center;font-weight:700;padding:10px;font-size:16px;box-sizing:border-box}.configuration-set{padding:20px;margin-top:40px}.configuration-element{background-color:#a9a9a9;padding:20px;border:1px solid #000}.configuration-datafield{display:none}.configuration-background,.configuration-logo{display:flex;margin:20px 0 20px 10px}.configuration-background>img,.configuration-logo>img{width:150px;height:150px;background-color:#f8f8ff;border:1px solid #000;border-radius:50%;align-self:center}.configuration-background>div,.configuration-logo>div{width:70%;margin-left:10px;font-size:14px;font-weight:700}.configuration-set input[type=file]{width:100%;box-sizing:border-box;background-color:#f8f8ff}.configuration-datafield textarea{width:100%;padding:10px 6px 0;outline:none;border-radius:2px;resize:none;border:1px solid #000;box-sizing:border-box;margin-top:6px}.configuration-rule{border:1px solid #000;padding:10px;border-radius:4px;background-color:#6b6b6b;margin-bottom:10px;display:flex}.configuration-rule div:first-child{width:100%;text-align:justify}.configuration-rule div:nth-child(2){display:grid;padding:10px 0 10px 20px;align-content:center}.configuration-rule div:nth-child(2) button:first-child{height:32px;width:32px;margin-bottom:4px}.configuration-rule div:nth-child(2) button:first-child img{width:20px}.configuration-add-rule-textarea{resize:none;width:400px;height:70px;margin-top:4px;border:1px solid #000;outline:none;padding:10px;text-align:justify;border-radius:6px;display:block;margin-bottom:4px}
+.profile-configuration, .community-configuration {
+	float: right;
+	width: 80%;
+	border-radius: 10px;
+	border: solid 1px black;
+	min-width: 600px;
+	display: none;
+	background-color: #6B6B6B;
+}
+
+.profile-configuration-title, .community-configuration-title {
+	float: right;
+    min-width: 600px;
+    transition: 0.25s;
+    border-top: none;
+    width: 100%;
+    border-bottom: solid 1px black;
+    background-color: #FFB600;
+    border-radius: 8px 8px 0px 0px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.profile-configuration > form, .community-configuration > form {
+	margin-top: 40px;
+	padding: 20px;
+}
+
+.profile-configuration-set, .community-configuration-set {
+	background-color: darkgrey;
+    padding: 20px 20px 10px 20px;
+    border: solid 1px black;
+}
+
+.configuration-panel {
+	display: none;
+}
+
+/* ---------------------------------------------------------- */
+
+.configuration-panel {
+	display: none;
+    float: right;
+    width: 80%;
+    border-radius: 10px;
+    border: solid 1px black;
+    min-width: 600px;
+    display: none;
+    background-color: #6B6B6B;
+}
+
+.panel-title {
+	float: right;
+    min-width: 600px;
+    transition: 0.25s;
+    border-top: none;
+    width: 100%;
+    border-bottom: solid 1px black;
+    background-color: #FFB600;
+    border-radius: 8px 8px 0px 0px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.configuration-set {
+	padding: 20px;
+    margin-top: 40px;
+}
+
+.configuration-element {
+	background-color: darkgrey;
+    padding: 20px;
+    border: solid 1px black;
+}
+
+.configuration-datafield {
+	display: none;
+}
+
+.configuration-logo, .configuration-background {
+	display: flex;
+	margin: 20px 0px 20px 10px;
+}
+
+.configuration-logo > img, .configuration-background > img {
+	width: 150px;
+	height: 150px;
+	background-color: ghostwhite;
+	border: solid 1px black;
+	border-radius: 50%;
+	align-self: center;
+}
+
+.configuration-logo > div, .configuration-background > div {
+	width: 70%;
+	margin-left: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.configuration-set input[type="file"] {
+	width: 100%;
+	box-sizing: border-box;
+	background-color: ghostwhite;
+}
+
+.configuration-datafield textarea {
+	width: 100%;
+    padding: 10px 6px 0px 6px;
+    outline: none;
+    border-radius: 2px;
+    resize: none;
+    border: solid 1px black;
+    box-sizing: border-box;
+    margin-top: 6px;
+}
+
+.configuration-rule {
+	border: solid 1px black;
+	padding: 10px;
+	border-radius: 4px;
+	background-color: #6b6b6b;
+	margin-bottom: 10px;
+	display: flex;
+}
+
+.configuration-rule div:first-child {
+	width: 100%;
+	text-align: justify;
+}
+
+.configuration-rule div:nth-child(2) {
+	display: grid;
+	padding: 10px 0px 10px 20px;
+	align-content: center;
+}
+
+.configuration-rule div:nth-child(2) button:first-child {
+	height: 32px;
+	width: 32px;
+	margin-bottom: 4px;
+}
+
+.configuration-rule div:nth-child(2) button:first-child img {
+	width: 20px;
+}
+
+.configuration-add-rule-textarea {
+	resize: none;
+    width: 400px;
+    height: 70px;
+    margin-top: 4px;
+    border: solid 1px black;
+    outline: none;
+    padding: 10px;
+    text-align: justify;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: 4px;
+}
+

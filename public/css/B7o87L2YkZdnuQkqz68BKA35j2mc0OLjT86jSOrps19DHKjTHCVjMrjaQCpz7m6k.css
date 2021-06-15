@@ -1,1 +1,13 @@
-.threads-panel{width:50%;margin:20px}.index-panel{display:flex}
+/* INDEX PANEL */
+
+	/* THREADS PANEL */
+
+        .threads-panel {
+            width: 50%;
+            margin: 20px;
+        }
+
+	    .index-panel {
+	        display: flex;
+	    }
+

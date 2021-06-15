@@ -1,1 +1,171 @@
-.guide-selection{margin:auto;text-align:center;border:1px solid #000;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;display:flex;border-radius:6px;background-color:#2f2f2f}.guide-selection a{padding:6px}.guide-selection a:hover{transition:.2s;box-shadow:1px 1px 5px 0 #2d2d2d;background-color:#6b6b6b;color:#fff}.guide-selection a:not(:last-child){border-right:1px solid #000}.guide-selection a:first-child{border-radius:4px 0 0 4px}.guide-selection a:last-child{border-radius:0 4px 4px 0}.empty-data{text-align:center}.element-container{width:800px;border:1px solid #000;background-color:#6b6b6b;margin:40px auto}.element{background-color:#6b6b6b;display:flex;cursor:pointer;border-bottom:1px solid #000!important;color:#000;text-shadow:none}.element:hover{transition:.25s;background-color:#4f4f4f;color:#fff;text-shadow:-1px 0 #000,0 1px #000,1px 0 #000,0 -1px #000}.element:hover .element-extra{text-shadow:none}.element *{cursor:pointer}.guide-community{float:right;margin:20px;height:80px;width:300px;border:1px solid #000;display:inline-flex;background:linear-gradient(180deg,#a2a2a2,#e2e2e2,#6f6f6f);border-radius:6px;font-weight:700}.guide-community-logo{width:30%;text-align:center}.guide-community-logo>img{background-color:#f8f8ff;margin:10px auto;width:50px;border:1px solid #000;border-radius:50%;box-shadow:1px 1px 5px 0 #2d2d2d}.guide-community-data{align-self:center;display:grid;width:70%}.element-logo{text-align:center;margin-left:20px;padding:10px}.element-logo img{width:70px;height:70px}.element-logo.round img{border-radius:50%;border:1px solid #000}.element-data{display:grid;padding:10px;width:50%}.element-data b{text-overflow:ellipsis;font-size:20px;white-space:nowrap;overflow:hidden}.element-data i,.element-data label{font-weight:400;font-size:14px}.element-extra{font-style:normal}.element-stats{display:flex;width:40%}.element-stats div{width:33.3%;margin:auto}.element-stats div img{width:32px;height:32px;vertical-align:bottom}
+/* GUIDE SELECTION */
+
+	.guide-selection {
+		margin: auto;
+		text-align: center;
+		border: solid 1px black;
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
+		width: fit-content;
+		display: flex;
+		border-radius: 6px;
+		background-color: #2F2F2F;
+	}
+
+	.guide-selection a {
+		padding: 6px;
+	}
+
+	.guide-selection a:hover {
+		transition: 0.2s;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+		background-color: #6b6b6b;
+		color: white;
+	}
+
+	.guide-selection a:not(:last-child) {
+		border-right: solid 1px black;
+	}
+
+	.guide-selection a:first-child {
+		border-radius: 4px 0px 0px 4px;
+	}
+
+	.guide-selection a:last-child {
+		border-radius: 0px 4px 4px 0px;
+	}
+
+.empty-data {
+	text-align: center;
+}
+
+.element-container {
+	width: 800px;
+    border: solid 1px black;
+    background-color: #6b6b6b;
+    margin: 40px auto;
+}
+
+
+.element {
+	background-color: #6b6b6b;
+	display: flex;
+	cursor: pointer;
+	border-bottom: solid 1px black !important;
+	color: black;
+	text-shadow: none;
+}
+
+.element:hover {
+	transition: 0.25s;
+    background-color: #4F4F4F;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.element:hover .element-extra {
+	text-shadow: none;
+}
+
+.element * {
+	cursor: pointer;
+}
+
+/* COMMUNITY */
+
+	.guide-community {
+		float: right;
+		margin: 20px;
+		height: 80px;
+		width: 300px;
+		border: solid 1px black;
+		display: inline-flex;
+		background: linear-gradient( to bottom, #a2a2a2, #e2e2e2, #6f6f6f);
+		border-radius: 6px;
+		font-weight: bold;
+	}
+
+	.guide-community-logo {
+		width: 30%;
+		text-align: center;
+	}
+
+	.guide-community-logo > img {
+		background-color: ghostwhite;
+		margin: 10px auto 10px auto;
+		width: 50px;
+		border: solid 1px black;
+		border-radius: 50%;
+		box-shadow: 1px 1px 5px 0px #2d2d2d;
+	}
+
+	.guide-community-data {
+		align-self: center;
+		display: grid;
+		width: 70%;
+	}
+
+/* LOGO */
+
+	.element-logo {
+		text-align: center;
+		margin-left: 20px;
+		padding: 10px;
+	}
+
+	.element-logo img {
+		width: 70px;
+		height: 70px;
+	}
+
+	.element-logo.round img {
+		border-radius: 50%;
+		border: solid 1px black;
+	}
+
+/* DATA */
+
+	.element-data {
+		display: grid;
+		padding: 10px;
+		width: 50%;
+	}
+
+	.element-data b {
+		text-overflow: ellipsis;
+	    font-size: 20px;
+	    white-space: nowrap;
+	    overflow: hidden;
+	}
+
+	.element-data i, .element-data label {
+		font-weight: normal;
+		font-size: 14px;
+	}
+
+	.element-extra {
+		font-style: normal;
+	}
+
+/* STATS */
+
+	.element-stats {
+		display: flex;
+		width: 40%;
+	}
+
+	.element-stats div {
+		width: 33.3%;
+		margin: auto;
+	}
+
+	.element-stats div img {
+		width: 32px;
+		height: 32px;
+		vertical-align: bottom;
+	}
+
+
+
+
+
