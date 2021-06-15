@@ -47,6 +47,7 @@
             <a class="required-auth" href="/crear/tema">Crear Tema</a>
             <a class="required-auth" href="/crear/comunidad">Crear Comunidad</a>
         </div>
+        @include('layouts.desktop.templates.lateral.lateral_ad_1')
         <div class="lateral-cube last-replies">
             <div class="lateral-title">Últimos mensajes</div>
                 @foreach ($latest_replies as $last_reply)
