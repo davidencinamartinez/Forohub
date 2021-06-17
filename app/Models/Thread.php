@@ -118,7 +118,7 @@ class Thread extends Model {
         }
         if ($request->type == "post") {
             $type = "THREAD_POST";
-            $body .= strip_tags($request->post);
+            $body .= '<div class="thread-body-text">'.strip_tags($request->post).'</div>';
         }
         if ($request->type == "multimedia") {
             $type = "THREAD_MEDIA";

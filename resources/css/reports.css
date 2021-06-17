@@ -15,6 +15,8 @@
 	background: linear-gradient( to bottom, #a2a2a2, #e2e2e2, #6f6f6f);
 	border-radius: 6px;
 	font-weight: bold;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .reports-community-logo {
@@ -26,6 +28,7 @@
 	background-color: ghostwhite;
 	margin: 10px auto 10px auto;
 	width: 50px;
+	height: 50px;
 	border: solid 1px black;
 	border-radius: 50%;
 	box-shadow: 1px 1px 5px 0px #2d2d2d;
@@ -35,6 +38,11 @@
 	align-self: center;
 	display: grid;
 	width: 70%;
+}
+
+.reports-community-data > a {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .highlighted-title {

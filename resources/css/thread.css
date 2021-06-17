@@ -193,6 +193,13 @@
                         overflow: hidden;
                     }
 
+                    .thread-body-text {
+                        background: rgb(255 255 255 / 75%);
+                        padding: 6px;
+                        border: solid 1px black;
+                        border-radius: 4px;
+                    }
+
                     .thread-body .picture {
                         box-sizing: border-box;
                         width: 100%;
