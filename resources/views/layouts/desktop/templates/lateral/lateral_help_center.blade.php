@@ -8,7 +8,7 @@
 			<a href="">Guía de tags</a>
 		</div>
 		<div class=" help-center-right">
-			<a href="/privacy">Política de privacidad</a>
+			<a href="/politicas">Política de privacidad</a>
 			<a href="">Política de contenido</a>
 			<a href="">Política de moderación</a>
 			<a href="">Contacto</a>

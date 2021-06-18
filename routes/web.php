@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 	Route::get('/destacados', [App\Http\Controllers\Site\IndexController::class, 'relevantIndex']);
 
+	Route::get('/politicas', function () {
+		return view('layouts.desktop.policy');
+	});
+
 /* USER ROUTES */
 
 	Route::get('/register', function () {

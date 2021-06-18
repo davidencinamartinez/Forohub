@@ -401,7 +401,7 @@ function registerModal() {
 		// Terms Checkbox
 			createElement('div', {class: 'modal-input', style: 'text-align: left;'}, '.modal-register-form');
 			createElement('input', {type: 'checkbox', name: 'checkbox', style: 'vertical-align: middle;'}, '.modal-input:last');
-			createElement('label', {style: 'font-size: 12px;'}, '.modal-input:last', 'Acepto los <a href="" target="_blank">términos y condiciones</a>');
+			createElement('label', {style: 'font-size: 12px;'}, '.modal-input:last', 'Acepto los <a href="/politicas" target="_blank">términos y condiciones</a>');
 		// Submit Button
 			createElement('button', {type: 'submit', style: 'margin-top: 10px;'}, '.modal-register-form', 'Registrarse');
 }
