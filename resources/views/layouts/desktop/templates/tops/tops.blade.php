@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div>
-					<b style="margin-left: 20px;">Estadísticas de los últimos 7 días:</b>
+					<b style="margin-left: 20px;">Estadísticas:</b>
 				</div>
 				<div class="top-element-stats">
 					<div style="width: 25%; text-align: center;" title="Usuarios">
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 				<div>
-					<b style="margin-left: 20px;">Estadísticas de los últimos 7 días:</b>
+					<b style="margin-left: 20px;">Estadísticas:</b>
 				</div>
 				<div style="display: flex; margin: 10px 0px; font-weight: bold; width: 85%; margin: 20px auto;">
 					<div style="width: 25%; text-align: center;" title="Karma">
@@ -136,8 +136,7 @@
 						@endif
 					</div>
 					<div class="top-element-data">
-						<b style="font-size: 20px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ $thread->title }}</b>
-						<i style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">c/{{ $thread->id }}</i>
+						<b style="font-size: 20px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="{{ $thread->title }}">{{ $thread->title }}</b>
 					</div>
 					<div style="width: 30%; font-size: 30px; text-align: center;">
 					@if ($loop->index == 0)
@@ -150,7 +149,7 @@
 					</div>
 				</div>
 				<div>
-					<b style="margin-left: 20px;">Estadísticas de los últimos 7 días:</b>
+					<b style="margin-left: 20px;">Estadísticas:</b>
 				</div>
 				<div style="display: flex; margin: 10px 0px; font-weight: bold; width: 85%; margin: 20px auto;">
 					<div style="width: 25%; text-align: center;" title="Votos Positivos">
